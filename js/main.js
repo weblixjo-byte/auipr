@@ -359,6 +359,16 @@ async function loadDynamicNews() {
                 return isSubfolder ? '../' + url : url;
             };
 
+            const getNewsUrl = (item, isSubfolder = false) => {
+                if (item.slug) {
+                    if (item.slug.endsWith('.html')) {
+                        return isSubfolder ? item.slug : `news/${item.slug}`;
+                    }
+                    return isSubfolder ? `view.html?slug=${encodeURIComponent(item.slug)}` : `news/view.html?slug=${encodeURIComponent(item.slug)}`;
+                }
+                return isSubfolder ? `view.html?id=${item._id}` : `news/view.html?id=${item._id}`;
+            };
+
             // 1. تحديث سكشن الأخبار في الصفحة الرئيسية (index.html) - أحدث 3 أخبار
             if (homeGrid) {
                 const latestNews = data.news.slice(0, 3);
@@ -370,7 +380,7 @@ async function loadDynamicNews() {
                         <div class="news-item-bottom">
                             <h3>${item.title}</h3>
                             <p>${item.summary || ''}</p>
-                            <a href="news/view.html?id=${item._id}" class="news-action-btn" title="قراءة تفاصيل الخبر"><span class="icon-circle-news">←</span><span class="txt">اقرأ المزيد</span></a>
+                            <a href="${getNewsUrl(item, false)}" class="news-action-btn" title="قراءة تفاصيل الخبر"><span class="icon-circle-news">←</span><span class="txt">اقرأ المزيد</span></a>
                         </div>
                     </div>
                 `).join('');
@@ -386,7 +396,7 @@ async function loadDynamicNews() {
                         <div class="news-card-body">
                             <h3>${item.title}</h3>
                             <p>${item.summary || ''}</p>
-                            <a href="view.html?id=${item._id}" class="news-read-more" title="قراءة تفاصيل الخبر"><span class="btn-icon">←</span><span class="btn-text">اقرأ المزيد</span></a>
+                            <a href="${getNewsUrl(item, true)}" class="news-read-more" title="قراءة تفاصيل الخبر"><span class="btn-icon">←</span><span class="btn-text">اقرأ المزيد</span></a>
                         </div>
                     </div>
                 `).join('');

@@ -302,6 +302,17 @@
             </div>
 
             <div class="form-group">
+              <label for="slug"><i class="fa-solid fa-link"></i> رابط الخبر المخصص (Slug / URL)</label>
+              <div style="position: relative; display: flex; align-items: center;">
+                <span style="position: absolute; right: 12px; color: #94a3b8; font-size: 0.88rem; pointer-events: none; direction: ltr;">/news/</span>
+                <input type="text" id="slug" class="form-control" placeholder="example-article-link أو اسم-الخبر-بالعربي" style="padding-right: 65px; direction: ltr; text-align: right;">
+              </div>
+              <small style="color: #64748b; font-size: 0.8rem; margin-top: 6px; display: block;">
+                <i class="fa-solid fa-wand-magic-sparkles" style="color: #00c4a7;"></i> المسافات تتحول تلقائياً إلى شرطة (-). يمكنك تركه ليتولد تلقائياً من العنوان.
+              </small>
+            </div>
+
+            <div class="form-group">
               <label for="summary">ملخص الخبر (يظهر في الكارت الرئيسي) *</label>
               <textarea id="summary" class="form-control" rows="2" placeholder="أدخل نبذة مختصرة تظهر في بطاقة الخبر..." required></textarea>
             </div>
@@ -391,6 +402,21 @@
 
     window.addEventListener('DOMContentLoaded', () => {
       document.getElementById('newsDate').valueAsDate = new Date();
+
+      const titleInput = document.getElementById('title');
+      const slugInput = document.getElementById('slug');
+      if (titleInput && slugInput) {
+        slugInput.addEventListener('input', function() {
+          this.value = this.value.replace(/\s+/g, '-');
+          this.dataset.custom = 'true';
+        });
+        titleInput.addEventListener('input', function() {
+          if (!slugInput.dataset.custom) {
+            slugInput.value = this.value.trim().replace(/\s+/g, '-');
+          }
+        });
+      }
+
       if (adminToken) {
         document.getElementById('authModal').style.display = 'none';
         fetchNewsList();
@@ -429,6 +455,11 @@
       const file = event.target.files[0];
       if (!file) return;
 
+      if (!file.type.startsWith('image/')) {
+        alert('الملف المختار ليس صورة صالحة!');
+        return;
+      }
+
       const reader = new FileReader();
       reader.onload = function(e) {
         const img = new Image();
@@ -436,25 +467,27 @@
           const canvas = document.createElement('canvas');
           let width = img.width;
           let height = img.height;
-          const maxDim = 1200;
+          const maxDim = 1000;
 
-          if (width > height && width > maxDim) {
-            height = Math.round((height * maxDim) / width);
-            width = maxDim;
-          } else if (height > maxDim) {
-            width = Math.round((width * maxDim) / height);
-            height = maxDim;
+          if (width > maxDim || height > maxDim) {
+            if (width > height) {
+              height = Math.round((height * maxDim) / width);
+              width = maxDim;
+            } else {
+              width = Math.round((width * maxDim) / height);
+              height = maxDim;
+            }
           }
 
           canvas.width = width;
           canvas.height = height;
-
           const ctx = canvas.getContext('2d');
           ctx.drawImage(img, 0, 0, width, height);
 
-          const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.82);
-          document.getElementById('imageUrl').value = compressedDataUrl;
-          previewImage(compressedDataUrl);
+          // Compress to JPEG with 0.8 quality
+          const compressedBase64 = canvas.toDataURL('image/jpeg', 0.8);
+          document.getElementById('imageUrl').value = compressedBase64;
+          previewImage(compressedBase64);
         };
         img.src = e.target.result;
       };
@@ -463,28 +496,24 @@
 
     // Fetch News List
     async function fetchNewsList() {
-      const statusBadge = document.getElementById('dbStatus');
       try {
         const res = await fetch(API_URL);
         const data = await res.json();
-
-        if (data.status === 'warning') {
-          statusBadge.className = 'status-badge status-warn';
-          statusBadge.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> إعدادات MONGODB_URI غير متصلة';
-          renderNewsGrid([]);
-          return;
-        }
-
-        statusBadge.className = 'status-badge status-ok';
-        statusBadge.innerHTML = '<i class="fa-solid fa-circle-check"></i> قاعدة البيانات متصلة وجاهزة';
-
         renderNewsGrid(data.news || []);
       } catch (err) {
-        console.error(err);
-        statusBadge.className = 'status-badge status-warn';
-        statusBadge.innerHTML = '<i class="fa-solid fa-signal"></i> وضع المعاينة المحلي';
-        renderNewsGrid([]);
+        console.error('Error fetching news:', err);
+        document.getElementById('newsGrid').innerHTML = '<div style="grid-column:1/-1; text-align:center; color:#e11d48; padding:30px;">تعذر جلب الأخبار من الخادم. تأكد من إعدادات الاتصال.</div>';
       }
+    }
+
+    function getAdminNewsUrl(item) {
+      if (item.slug) {
+        if (item.slug.endsWith('.html')) {
+          return `news/${item.slug}`;
+        }
+        return `news/view.html?slug=${encodeURIComponent(item.slug)}`;
+      }
+      return `news/view.html?id=${item._id}`;
     }
 
     function renderNewsGrid(newsItems) {
@@ -497,16 +526,21 @@
         return;
       }
 
-      grid.innerHTML = newsItems.map(item => `
+      grid.innerHTML = newsItems.map(item => {
+        const targetUrl = getAdminNewsUrl(item);
+        return `
         <div class="admin-news-card">
           <img src="${item.imageUrl}" class="admin-news-img" onerror="this.src='img/ip_conference_2026.png'" alt="${item.title}">
           <div class="admin-news-body">
             <span class="admin-news-category">${item.category || 'أخبار الاتحاد'}</span>
             <h3 class="admin-news-title">${item.title}</h3>
             <span class="admin-news-date"><i class="fa-regular fa-calendar"></i> ${item.date || ''}</span>
-            <p style="font-size: 0.9rem; color: #475569; line-height: 1.5; margin-bottom: 15px;">${item.summary ? item.summary.substring(0, 75) + '...' : ''}</p>
+            <p style="font-size: 0.9rem; color: #475569; line-height: 1.5; margin-bottom: 8px;">${item.summary ? item.summary.substring(0, 75) + '...' : ''}</p>
+            <div style="font-size: 0.78rem; color: #0284c7; margin-bottom: 12px; direction: ltr; text-align: right; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+              <i class="fa-solid fa-link" style="font-size: 0.72rem;"></i> /${targetUrl}
+            </div>
             <div class="admin-news-footer">
-              <a href="news/view.html?id=${item._id}" target="_blank" style="color: #0f766e; text-decoration: none; font-weight: 600; font-size: 0.88rem;">
+              <a href="${targetUrl}" target="_blank" style="color: #0f766e; text-decoration: none; font-weight: 600; font-size: 0.88rem; display: inline-flex; align-items: center; gap: 5px;">
                 معاينة الخبر <i class="fa-solid fa-arrow-up-right-from-square"></i>
               </a>
               <button onclick="deleteNews('${item._id}')" class="btn-outline-danger">
@@ -515,7 +549,7 @@
             </div>
           </div>
         </div>
-      `).join('');
+      `;}).join('');
     }
 
     // Submit News
@@ -523,6 +557,10 @@
       event.preventDefault();
 
       const title = document.getElementById('title').value.trim();
+      let slug = document.getElementById('slug').value.trim().replace(/\s+/g, '-');
+      if (!slug) {
+        slug = title.replace(/\s+/g, '-');
+      }
       const summary = document.getElementById('summary').value.trim();
       const content = document.getElementById('content').value.trim();
       const imageUrl = document.getElementById('imageUrl').value.trim();
@@ -534,7 +572,7 @@
         return;
       }
 
-      const payload = { title, summary, content, imageUrl, date, category };
+      const payload = { title, slug, summary, content, imageUrl, date, category };
 
       const btn = document.getElementById('btnSubmit');
       btn.disabled = true;
@@ -555,6 +593,8 @@
           alert('تم نشر الخبر بنجاح في الموقع وقاعدة البيانات!');
           document.getElementById('newsForm').reset();
           document.getElementById('imageUrl').value = '';
+          document.getElementById('slug').value = '';
+          delete document.getElementById('slug').dataset.custom;
           document.getElementById('previewContainer').style.display = 'none';
           document.getElementById('newsDate').valueAsDate = new Date();
           fetchNewsList();

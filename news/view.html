@@ -66,16 +66,27 @@
   <script>
     async function loadSingleNews() {
       const urlParams = new URLSearchParams(window.location.search);
+      let slug = urlParams.get('slug');
       const id = urlParams.get('id');
 
-      if (!id) {
+      if (!slug && !id) {
+        const pathSegments = window.location.pathname.split('/').filter(Boolean);
+        const lastSegment = pathSegments[pathSegments.length - 1];
+        if (lastSegment && lastSegment !== 'view.html' && lastSegment !== 'index.html') {
+          slug = lastSegment;
+        }
+      }
+
+      if (!slug && !id) {
         document.getElementById('newsTitle').innerText = 'لم يتم العثور على الخبر';
         document.getElementById('newsSummary').innerText = 'يرجى العودة إلى صفحة الأخبار واختيار خبر صحيح.';
         return;
       }
 
+      const query = slug ? `slug=${encodeURIComponent(slug)}` : `id=${encodeURIComponent(id)}`;
+
       try {
-        const res = await fetch(`/.netlify/functions/news?id=${id}`);
+        const res = await fetch(`/.netlify/functions/news?${query}`);
         if (!res.ok) throw new Error('News not found');
         const item = await res.json();
 

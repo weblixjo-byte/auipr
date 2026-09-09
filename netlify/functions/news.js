@@ -63,19 +63,30 @@ exports.handler = async (event, context) => {
     const { db } = await connectToDatabase();
     const collection = db.collection('news');
 
-    // GET: Fetch all news or single news by ID
+    // GET: Fetch all news or single news by ID / Slug
     if (method === 'GET') {
-      const newsId = event.queryStringParameters && event.queryStringParameters.id;
+      const params = event.queryStringParameters || {};
+      const newsId = params.id;
+      const newsSlug = params.slug;
+
+      if (newsSlug) {
+        const singleItem = await collection.findOne({ slug: newsSlug });
+        if (singleItem) {
+          return { statusCode: 200, headers, body: JSON.stringify(singleItem) };
+        }
+      }
+
       if (newsId) {
         try {
           const singleItem = await collection.findOne({ _id: new ObjectId(newsId) });
-          if (!singleItem) {
-            return { statusCode: 404, headers, body: JSON.stringify({ error: 'News item not found' }) };
+          if (singleItem) {
+            return { statusCode: 200, headers, body: JSON.stringify(singleItem) };
           }
-          return { statusCode: 200, headers, body: JSON.stringify(singleItem) };
-        } catch (e) {
-          return { statusCode: 400, headers, body: JSON.stringify({ error: 'Invalid ID format' }) };
-        }
+        } catch (e) {}
+      }
+
+      if (newsSlug || newsId) {
+        return { statusCode: 404, headers, body: JSON.stringify({ error: 'News item not found' }) };
       }
 
       const allNews = await collection.find({}).sort({ createdAt: -1 }).toArray();
@@ -105,8 +116,12 @@ exports.handler = async (event, context) => {
         return { statusCode: 400, headers, body: JSON.stringify({ error: 'Title and Summary are required' }) };
       }
 
+      let rawSlug = (data.slug && data.slug.trim()) || data.title.trim();
+      let cleanSlug = rawSlug.replace(/\s+/g, '-');
+
       const newsItem = {
         title: data.title,
+        slug: cleanSlug,
         summary: data.summary,
         content: data.content || data.summary,
         imageUrl: data.imageUrl || 'img/ip_conference_2026.png',

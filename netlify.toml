@@ -12,3 +12,9 @@
   to = "/Sitemap.xml"
   status = 200
 
+[[redirects]]
+  from = "/news/:slug"
+  to = "/news/view.html?slug=:slug"
+  status = 200
+
+
