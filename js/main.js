@@ -473,15 +473,15 @@ const AUIPR_BRANCHES = {
     lebanon: {
         id: 'lebanon',
         name: 'الاتحاد العربي لحماية حقوق الملكية الفكرية',
-        subName: 'فرع الجمهورية اللبنانية',
-        shortName: 'فرع لبنان',
+        subName: 'ممثلية الجمهورية اللبنانية',
+        shortName: 'ممثلية الجمهورية اللبنانية',
         flag: '🇱🇧',
-        badgeText: 'فرع لبنان 🇱🇧',
+        badgeText: 'ممثلية الجمهورية اللبنانية 🇱🇧',
         phone: '+961 1 000 000',
         email: 'lebanon@auipr.org',
         address: 'بيروت - الجمهورية اللبنانية',
-        contactTitle: 'تواصل مع فرع لبنان',
-        titleSuffix: ' | فرع لبنان 🇱🇧'
+        contactTitle: 'تواصل مع ممثلية الجمهورية اللبنانية',
+        titleSuffix: ' | ممثلية الجمهورية اللبنانية 🇱🇧'
     }
 };
 
@@ -514,34 +514,34 @@ function initBranchSystem() {
     const branchId = getActiveBranchId();
     const isLebanon = branchId === 'lebanon';
 
-    // تطبيق تخصيصات فرع لبنان فقط في حال كان الفرع النشط هو لبنان
+    // تطبيق تخصيصات ممثلية لبنان فقط في حال كانت الممثلية النشطة هي لبنان
     if (isLebanon) {
         document.body.classList.add('branch-mode-lebanon');
 
         // تحديث عنوان الصفحة
-        if (!document.title.includes('فرع لبنان')) {
-            document.title = document.title + ' | فرع لبنان 🇱🇧';
+        if (!document.title.includes('ممثلية الجمهورية اللبنانية')) {
+            document.title = document.title + ' | ممثلية الجمهورية اللبنانية 🇱🇧';
         }
 
-        // تحديث اسم الهيدر لفرع لبنان
+        // تحديث اسم الهيدر لممثلية لبنان
         const applyHeaderLebanon = () => {
             const orgNames = document.querySelectorAll('.org-name');
             orgNames.forEach(el => {
-                el.innerHTML = `الاتحاد العربي لحماية حقوق الملكية الفكرية <span class="branch-pill-header" style="background: rgba(60,235,195,0.18); color: #00876c; border: 1px solid rgba(60,235,195,0.5); padding: 3px 12px; border-radius: 20px; font-size: 0.82rem; font-weight: 700; margin-right: 8px; display: inline-block;">🇱🇧 فرع لبنان</span>`;
+                el.innerHTML = `الاتحاد العربي لحماية حقوق الملكية الفكرية <span class="branch-pill-header" style="background: rgba(60,235,195,0.18); color: #00876c; border: 1px solid rgba(60,235,195,0.5); padding: 3px 12px; border-radius: 20px; font-size: 0.82rem; font-weight: 700; margin-right: 8px; display: inline-block;">🇱🇧 ممثلية الجمهورية اللبنانية</span>`;
             });
         };
 
         applyHeaderLebanon();
         setTimeout(applyHeaderLebanon, 300);
 
-        // تخصيص صفحة تواصل معنا لفرع لبنان
+        // تخصيص صفحة تواصل معنا لممثلية لبنان
         if (window.location.pathname.includes('contact.html')) {
             setTimeout(() => {
                 const pageTitle = document.querySelector('.page-title');
-                if (pageTitle) pageTitle.innerText = 'تواصل مع فرع لبنان';
+                if (pageTitle) pageTitle.innerText = 'تواصل مع ممثلية الجمهورية اللبنانية';
 
                 const breadcrumbCurrent = document.querySelector('.breadcrumbs .current');
-                if (breadcrumbCurrent) breadcrumbCurrent.innerText = 'تواصل مع فرع لبنان 🇱🇧';
+                if (breadcrumbCurrent) breadcrumbCurrent.innerText = 'ممثلية الجمهورية اللبنانية 🇱🇧';
 
                 const infoTexts = document.querySelectorAll('.info-text');
                 infoTexts.forEach(box => {
@@ -556,7 +556,7 @@ function initBranchSystem() {
         }
     }
 
-    // إضافة خيار التنقل بين الفروع في القائمة المنسدلة
+    // إضافة خيار التنقل بين الممثليات في القائمة المنسدلة
     const injectBranchNav = () => {
         const dropdownList = document.querySelector('.dropdown-list');
         if (dropdownList && !dropdownList.querySelector('.branch-switch-item')) {
@@ -566,7 +566,7 @@ function initBranchSystem() {
             const isLb = branchId === 'lebanon';
             switchLi.innerHTML = `
                 <a href="#" style="color: #7251cd; font-weight: 700;">
-                    <i class="fa-solid fa-globe"></i> ${isLb ? '🇱🇧 فرع لبنان' : 'فروع الاتحاد'} 
+                    <i class="fa-solid fa-globe"></i> ${isLb ? '🇱🇧 ممثلية لبنان' : 'الممثليات الإقليمية'} 
                     <i class="fa-solid fa-chevron-down submenu-icon"></i>
                 </a>
                 <ul class="sub-menu">
@@ -577,7 +577,7 @@ function initBranchSystem() {
                     </li>
                     <li>
                         <a href="?branch=lebanon" onclick="sessionStorage.setItem('auipr_active_branch','lebanon');" style="${isLb ? 'font-weight: bold; color: #00c4a7;' : ''}">
-                            🇱🇧 فرع لبنان ${isLb ? '(الحالي)' : ''}
+                            🇱🇧 ممثلية الجمهورية اللبنانية ${isLb ? '(الحالي)' : ''}
                         </a>
                     </li>
                 </ul>
