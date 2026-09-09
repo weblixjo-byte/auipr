@@ -94,12 +94,22 @@ exports.handler = async (event, context) => {
     }
 
     // Auth check for POST and DELETE
-    const token = event.headers['x-admin-token'] || event.headers['X-Admin-Token'];
-    if (token !== ADMIN_TOKEN) {
+    const getHeader = (headers, name) => {
+      const lower = name.toLowerCase();
+      for (const k of Object.keys(headers || {})) {
+        if (k.toLowerCase() === lower) return headers[k];
+      }
+      return null;
+    };
+    const rawToken = getHeader(event.headers, 'x-admin-token') || getHeader(event.headers, 'authorization');
+    const token = rawToken ? rawToken.trim() : '';
+    const expectedToken = (ADMIN_TOKEN || 'auipr2026admin').trim();
+
+    if (token !== expectedToken) {
       return {
         statusCode: 401,
         headers,
-        body: JSON.stringify({ error: 'Unauthorized: Invalid Admin Token' })
+        body: JSON.stringify({ error: 'رمز الدخول غير صحيح (Invalid Admin Token)' })
       };
     }
 
