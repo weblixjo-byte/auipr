@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <url>
+    <loc>https://auipr.org/</loc>
+    <priority>1.00</priority>
+  </url>
+  <url>
+    <loc>https://auipr.org/events</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://auipr.org/objectives</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://auipr.org/structure</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://auipr.org/contact</loc>
+    <priority>0.70</priority>
+  </url>
+  <url>
+    <loc>https://auipr.org/terms</loc>
+    <priority>0.50</priority>
+  </url>
+  <url>
+    <loc>https://auipr.org/refund</loc>
+    <priority>0.50</priority>
+  </url>
+
+  <url>
+    <loc>https://auipr.org/news/</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://auipr.org/news/ai</loc>
+    <priority>0.70</priority>
+  </url>
+  <url>
+    <loc>https://auipr.org/news/ramadan2026</loc>
+    <priority>0.70</priority>
+  </url>
+
+</urlset>

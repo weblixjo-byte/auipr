@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id="pageTitle">تفاصيل الخبر - الاتحاد العربي للملكية الفكرية</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <div id="header-placeholder"></div>
+
+  <main>
+    <section class="news-hero" id="newsHero" style="background-image:url('../img/ip_conference_2026.png');">
+      <div class="hero-overlay"></div>
+      <div class="container hero-content">
+        <span class="news-category" id="newsCategory">أخبار الاتحاد</span>
+        <h1 class="news-main-title" id="newsTitle">جاري تحميل الخبر...</h1>
+        <div class="news-meta" id="newsMeta"></div>
+      </div>
+    </section>
+
+    <section class="news-body-content container">
+      <div class="article-container">
+        <div class="article-text">
+          <p class="lead-text" id="newsSummary"></p>
+          <div id="newsFullContent" style="font-size: 1.05rem; line-height: 1.8; color: #334155; white-space: pre-line;"></div>
+        </div>
+
+        <div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center;">
+          <a href="index.html" class="news-action-btn" style="display: inline-flex; align-items: center; gap: 8px; text-decoration: none; font-weight: 600; color: #1a2b4b;">
+            <span>→</span> العودة لجميع الأخبار
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="footer-placeholder"></div>
+  <script src="../js/main.js"></script>
+
+  <script>
+    async function loadSingleNews() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const id = urlParams.get('id');
+
+      if (!id) {
+        document.getElementById('newsTitle').innerText = 'لم يتم العثور على الخبر';
+        document.getElementById('newsSummary').innerText = 'يرجى العودة إلى صفحة الأخبار واختيار خبر صحيح.';
+        return;
+      }
+
+      try {
+        const res = await fetch(`/.netlify/functions/news?id=${id}`);
+        if (!res.ok) throw new Error('News not found');
+        const item = await res.json();
+
+        // Populate elements
+        document.getElementById('pageTitle').innerText = `${item.title} - الاتحاد العربي للملكية الفكرية`;
+        document.getElementById('newsTitle').innerText = item.title;
+        document.getElementById('newsCategory').innerText = item.category || 'أخبار الاتحاد';
+        if (item.date) {
+          document.getElementById('newsMeta').innerHTML = `<time><i class="fa-regular fa-calendar"></i> ${item.date}</time>`;
+        }
+        document.getElementById('newsSummary').innerText = item.summary || '';
+        document.getElementById('newsFullContent').innerText = item.content || '';
+
+        if (item.imageUrl) {
+          document.getElementById('newsHero').style.backgroundImage = `url('${item.imageUrl}')`;
+        }
+      } catch (err) {
+        console.error('Error loading news item:', err);
+        document.getElementById('newsTitle').innerText = 'تعذر تحميل الخبر';
+        document.getElementById('newsSummary').innerText = 'حدث خطأ أثناء جلب تفاصيل الخبر من قاعدة البيانات.';
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', loadSingleNews);
+  </script>
+</body>
+</html>

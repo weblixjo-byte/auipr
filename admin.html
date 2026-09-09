@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>لوحة تحكم الأخبار - الاتحاد العربي للملكية الفكرية</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    body {
+      background-color: #f8fafc;
+      color: #1e293b;
+      font-family: 'IBM Plex Sans Arabic', sans-serif;
+    }
+    .admin-container {
+      max-width: 1100px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+    .admin-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #1a2b4b;
+      color: white;
+      padding: 20px 30px;
+      border-radius: 16px;
+      margin-bottom: 30px;
+      box-shadow: 0 10px 25px rgba(26, 43, 75, 0.15);
+    }
+    .admin-header h1 {
+      font-size: 1.5rem;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .admin-card {
+      background: white;
+      border-radius: 16px;
+      padding: 30px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+      margin-bottom: 30px;
+      border: 1px solid #e2e8f0;
+    }
+    .admin-card h2 {
+      font-size: 1.25rem;
+      color: #1a2b4b;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #e2e8f0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .form-group {
+      margin-bottom: 20px;
+    }
+    .form-group label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #334155;
+    }
+    .form-control {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1px solid #cbd5e1;
+      border-radius: 10px;
+      font-family: inherit;
+      font-size: 0.95rem;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      box-sizing: border-box;
+    }
+    .form-control:focus {
+      outline: none;
+      border-color: #00d2b3;
+      box-shadow: 0 0 0 3px rgba(0, 210, 179, 0.15);
+    }
+    textarea.form-control {
+      min-height: 120px;
+      resize: vertical;
+    }
+    .btn-submit {
+      background: #1a2b4b;
+      color: white;
+      border: none;
+      padding: 14px 28px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      transition: background-color 0.2s, transform 0.1s;
+    }
+    .btn-submit:hover {
+      background: #00d2b3;
+      color: #1a2b4b;
+    }
+    .btn-danger {
+      background: #ef4444;
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.85rem;
+    }
+    .btn-danger:hover {
+      background: #dc2626;
+    }
+    .image-preview {
+      margin-top: 12px;
+      max-width: 260px;
+      max-height: 180px;
+      border-radius: 10px;
+      display: none;
+      object-fit: cover;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+      border: 2px solid #e2e8f0;
+    }
+    .news-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+    }
+    .news-table th, .news-table td {
+      padding: 12px 15px;
+      text-align: right;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    .news-table th {
+      background-color: #f1f5f9;
+      color: #475569;
+      font-weight: 700;
+    }
+    .table-img {
+      width: 65px;
+      height: 45px;
+      object-fit: cover;
+      border-radius: 6px;
+    }
+    .auth-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(8px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+    .auth-box {
+      background: white;
+      padding: 35px;
+      border-radius: 20px;
+      width: 90%;
+      max-width: 420px;
+      text-align: center;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    }
+    .status-badge {
+      display: inline-block;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+    .status-ok { background: #dcfce7; color: #166534; }
+    .status-warn { background: #fef3c7; color: #92400e; }
+  </style>
+</head>
+<body>
+
+  <!-- Auth Modal -->
+  <div id="authModal" class="auth-overlay">
+    <div class="auth-box">
+      <i class="fa-solid fa-shield-halved" style="font-size: 2.5rem; color: #1a2b4b; margin-bottom: 15px;"></i>
+      <h2 style="margin-bottom: 10px; color: #1a2b4b;">لوحة الإدارة المباشرة</h2>
+      <p style="color: #64748b; font-size: 0.9rem; margin-bottom: 20px;">أدخل رمز الأمان المعتمد (Admin Passcode)</p>
+      <input type="password" id="passcodeInput" class="form-control" placeholder="رمز الأمان..." style="margin-bottom: 15px; text-align: center;">
+      <button onclick="saveToken()" class="btn-submit" style="width: 100%; justify-content: center;">تأكيد الدخول</button>
+    </div>
+  </div>
+
+  <div class="admin-container">
+    <div class="admin-header">
+      <h1><i class="fa-solid fa-newspaper"></i> لوحة إدارة الأخبار (محلية مائة بالمائة)</h1>
+      <div>
+        <span id="dbStatus" class="status-badge status-warn">جاري التحقق من قاعدة البيانات...</span>
+        <button onclick="logout()" class="btn-danger" style="margin-right: 10px;"><i class="fa-solid fa-right-from-bracket"></i> خروج</button>
+      </div>
+    </div>
+
+    <!-- Add News Form -->
+    <div class="admin-card">
+      <h2><i class="fa-solid fa-plus-circle"></i> إضافة خبر جديد</h2>
+      <form id="newsForm" onsubmit="handleFormSubmit(event)">
+        <div class="form-group">
+          <label for="title">عنوان الخبر *</label>
+          <input type="text" id="title" class="form-control" placeholder="أدخل عنوان الخبر..." required>
+        </div>
+
+        <div class="form-group">
+          <label for="summary">ملخص قصير *</label>
+          <textarea id="summary" class="form-control" rows="2" placeholder="ملخص موجز يظهر في الكارت الرئيسي..." required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="content">التفاصيل الكاملة للخبر</label>
+          <textarea id="content" class="form-control" rows="4" placeholder="تفاصيل الخبر بالكامل..."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="imageFile"><i class="fa-solid fa-image"></i> اختيار صورة من الجهاز محلياً *</label>
+          <input type="file" id="imageFile" accept="image/*" class="form-control" onchange="handleLocalImageSelect(event)">
+          <p style="font-size: 0.85rem; color: #64748b; margin: 6px 0 0 0;">يتم معالجة الصورة وضغطها محلياً في جهازك قبل التخزين المباشر لضمان أعلى جودة وأسرع أداء.</p>
+          <input type="hidden" id="imageUrl">
+          <img id="imgPreview" class="image-preview" alt="معاينة الصورة المحددة">
+        </div>
+
+        <div class="form-group" style="display: flex; gap: 20px;">
+          <div style="flex: 1;">
+            <label for="newsDate">تاريخ النشر</label>
+            <input type="date" id="newsDate" class="form-control">
+          </div>
+          <div style="flex: 1;">
+            <label for="category">التصنيف</label>
+            <select id="category" class="form-control">
+              <option value="أخبار العامة">أخبار عامة</option>
+              <option value="مؤتمرات">مؤتمرات وفعاليات</option>
+              <option value="دورات">دورات تدريبية</option>
+            </select>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-submit" id="btnSubmit">
+          <i class="fa-solid fa-paper-plane"></i> نشر الخبر في قاعدة البيانات
+        </button>
+      </form>
+    </div>
+
+    <!-- News List -->
+    <div class="admin-card">
+      <h2><i class="fa-solid fa-list"></i> الأخبار المنشورة في قاعدة البيانات</h2>
+      <div style="overflow-x: auto;">
+        <table class="news-table">
+          <thead>
+            <tr>
+              <th>الصورة</th>
+              <th>العنوان</th>
+              <th>التاريخ</th>
+              <th>التصنيف</th>
+              <th>الإجراء</th>
+            </tr>
+          </thead>
+          <tbody id="newsTableBody">
+            <tr>
+              <td colspan="5" style="text-align: center; color: #64748b;">جاري جلب الأخبار...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const API_URL = '/.netlify/functions/news';
+    let adminToken = localStorage.getItem('auipr_admin_token');
+
+    window.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('newsDate').valueAsDate = new Date();
+      if (adminToken) {
+        document.getElementById('authModal').style.display = 'none';
+        fetchNewsList();
+      } else {
+        document.getElementById('authModal').style.display = 'flex';
+      }
+    });
+
+    function saveToken() {
+      const input = document.getElementById('passcodeInput').value.trim();
+      if (!input) return alert('يرجى إدخال رمز الأمان!');
+      adminToken = input;
+      localStorage.setItem('auipr_admin_token', input);
+      document.getElementById('authModal').style.display = 'none';
+      fetchNewsList();
+    }
+
+    function logout() {
+      localStorage.removeItem('auipr_admin_token');
+      location.reload();
+    }
+
+    function previewImage(url) {
+      const img = document.getElementById('imgPreview');
+      if (url && (url.startsWith('data:image') || url.startsWith('http') || url.startsWith('img/'))) {
+        img.src = url;
+        img.style.display = 'block';
+      } else {
+        img.style.display = 'none';
+      }
+    }
+
+    // Process local image selection with built-in client-side canvas compression
+    function handleLocalImageSelect(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const img = new Image();
+        img.onload = function() {
+          const canvas = document.createElement('canvas');
+          let width = img.width;
+          let height = img.height;
+          const maxDim = 1200; // Optimal dimensions for web
+
+          if (width > height && width > maxDim) {
+            height = Math.round((height * maxDim) / width);
+            width = maxDim;
+          } else if (height > maxDim) {
+            width = Math.round((width * maxDim) / height);
+            height = maxDim;
+          }
+
+          canvas.width = width;
+          canvas.height = height;
+
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, width, height);
+
+          // Generate compressed JPEG Base64 Data URL
+          const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.82);
+          
+          document.getElementById('imageUrl').value = compressedDataUrl;
+          previewImage(compressedDataUrl);
+        };
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    // Fetch News List from Serverless Function / MongoDB
+    async function fetchNewsList() {
+      const statusBadge = document.getElementById('dbStatus');
+      try {
+        const res = await fetch(API_URL);
+        const data = await res.json();
+
+        if (data.status === 'warning') {
+          statusBadge.className = 'status-badge status-warn';
+          statusBadge.innerText = 'MongoDB غير متصل (يرجى إضافة MONGODB_URI بـ Netlify)';
+          renderNewsTable([]);
+          return;
+        }
+
+        statusBadge.className = 'status-badge status-ok';
+        statusBadge.innerText = 'MongoDB متصل بنجاح 🟢';
+
+        renderNewsTable(data.news || []);
+      } catch (err) {
+        console.error(err);
+        statusBadge.className = 'status-badge status-warn';
+        statusBadge.innerText = 'وضع المعاينة المحلي';
+        renderNewsTable([]);
+      }
+    }
+
+    function renderNewsTable(newsItems) {
+      const tbody = document.getElementById('newsTableBody');
+      if (!newsItems || newsItems.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; color: #64748b; padding: 20px;">لا توجد أخبار منشورة حالياً في قاعدة البيانات.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = newsItems.map(item => `
+        <tr>
+          <td><img src="${item.imageUrl}" class="table-img" onerror="this.src='img/ip_conference_2026.png'"></td>
+          <td><strong>${item.title}</strong><br><small style="color:#64748b;">${item.summary ? item.summary.substring(0, 50) + '...' : ''}</small></td>
+          <td>${item.date || ''}</td>
+          <td><span class="status-badge" style="background:#e0f2fe; color:#0369a1;">${item.category || 'عام'}</span></td>
+          <td>
+            <button onclick="deleteNews('${item._id}')" class="btn-danger"><i class="fa-solid fa-trash"></i> حذف</button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    // Handle Form Submit
+    async function handleFormSubmit(event) {
+      event.preventDefault();
+
+      const title = document.getElementById('title').value.trim();
+      const summary = document.getElementById('summary').value.trim();
+      const content = document.getElementById('content').value.trim();
+      const imageUrl = document.getElementById('imageUrl').value.trim();
+      const date = document.getElementById('newsDate').value;
+      const category = document.getElementById('category').value;
+
+      if (!imageUrl) {
+        alert('يرجى اختيار صورة للخبر من جهازك محلياً!');
+        return;
+      }
+
+      const payload = { title, summary, content, imageUrl, date, category };
+
+      const btn = document.getElementById('btnSubmit');
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> جاري التخزين والنشر...';
+
+      try {
+        const res = await fetch(API_URL, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'x-admin-token': adminToken
+          },
+          body: JSON.stringify(payload)
+        });
+
+        const result = await res.json();
+        if (res.ok) {
+          alert('تم نشر الخبر وتخزينه في قاعدة البيانات بنجاح!');
+          document.getElementById('newsForm').reset();
+          document.getElementById('imageUrl').value = '';
+          document.getElementById('imgPreview').style.display = 'none';
+          document.getElementById('newsDate').valueAsDate = new Date();
+          fetchNewsList();
+        } else {
+          alert('خطأ: ' + (result.error || 'تعذر إضافة الخبر'));
+        }
+      } catch (err) {
+        console.error(err);
+        alert('حدث خطأ في الاتصال بالخادم.');
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> نشر الخبر في قاعدة البيانات';
+      }
+    }
+
+    // Delete News
+    async function deleteNews(id) {
+      if (!confirm('هل أنت تأكد من رغبتك في حذف هذا الخبر نهائياً من قاعدة البيانات؟')) return;
+
+      try {
+        const res = await fetch(`${API_URL}?id=${id}`, {
+          method: 'DELETE',
+          headers: {
+            'x-admin-token': adminToken
+          }
+        });
+
+        const result = await res.json();
+        if (res.ok) {
+          alert('تم حذف الخبر بنجاح!');
+          fetchNewsList();
+        } else {
+          alert('خطأ: ' + (result.error || 'تعذر حذف الخبر'));
+        }
+      } catch (err) {
+        console.error(err);
+        alert('حدث خطأ أثناء الاتصال بالخادم.');
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+{
+  "name": "auipr-live",
+  "version": "1.0.0",
+  "description": "AUIPR Website with Netlify Serverless Functions and MongoDB integration",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "mongodb": "^6.3.0"
+  }
+}

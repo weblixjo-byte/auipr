@@ -1,0 +1,17 @@
+# robots.txt for auipr.org
+User-agent: *
+
+# منع أرشفة صفحة النشاطات بشكل نهائي
+Disallow: /activities.html
+
+# منع أرشفة الملفات الملحقة (Header & Footer) لأنها محتوى مكرر
+Disallow: /header.html
+Disallow: /footer.html
+Disallow: /news/header.html
+Disallow: /news/footer.html
+
+# السماح لجميع محركات البحث بالوصول لباقي الموقع
+Allow: /
+
+# رابط خريطة الموقع لزيادة سرعة الأرشفة
+Sitemap: https://auipr.org/sitemap.xml

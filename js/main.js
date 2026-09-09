@@ -1,0 +1,393 @@
+document.addEventListener('DOMContentLoaded', () => {
+    // 1. تشغيل الوظائف الأساسية
+    initApp();
+    
+    // 2. تفعيل مراقب التمرير (Scroll Reveal)
+    initScrollReveal();
+
+    // 3. تفعيل بطاقات المبدعين (Modal)
+    initCreatorsModal();
+});
+
+// =========================================
+// 1. دالة تحميل الهيدر والفوتر
+// =========================================
+async function initApp() {
+    // تحميل الهيدر
+    try {
+        const headerRes = await fetch('header.html');
+        if (headerRes.ok) {
+            document.getElementById('header-placeholder').innerHTML = await headerRes.text();
+            initHeaderScroll(); // تفعيل تأثير السكرول للهيدر بعد تحميله
+        }
+    } catch (err) {
+        console.error('خطأ في تحميل الهيدر:', err);
+    }
+
+    // تحميل الفوتر
+    try {
+        const footerRes = await fetch('footer.html');
+        if (footerRes.ok) {
+            document.getElementById('footer-placeholder').innerHTML = await footerRes.text();
+        }
+    } catch (err) {
+        console.error('خطأ في تحميل الفوتر:', err);
+    }
+}
+
+// =========================================
+// 2. دالة حركات الظهور (Scroll Reveal)
+// =========================================
+function initScrollReveal() {
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+                // خيار: إلغاء المراقبة بعد الظهور الأول لتقليل الضغط على المتصفح
+                // observer.unobserve(entry.target); 
+            }
+        });
+    }, {
+        threshold: 0.1 // يبدأ الظهور عند رؤية 10% من العنصر
+    });
+
+    // مراقبة العناصر الموجودة حالياً
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    
+    // مراقبة العناصر التي قد تضاف ديناميكياً مستقبلاً
+    const observerDynamic = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+            mutation.addedNodes.forEach((node) => {
+                if (node.nodeType === 1 && node.classList.contains('reveal')) {
+                    observer.observe(node);
+                }
+            });
+        });
+    });
+    
+    observerDynamic.observe(document.body, { childList: true, subtree: true });
+}
+
+// =========================================
+// 3. دالة بطاقات المبدعين (Creators Modal) - هام جداً
+// =========================================
+function initCreatorsModal() {
+    const cards = document.querySelectorAll('.creator-card');
+    const modal = document.getElementById('creatorModal');
+    const closeBtn = document.querySelector('.close-modal-btn');
+    
+    // عناصر المودال الداخلية
+    const modalImg = document.getElementById('modalImg');
+    const modalName = document.getElementById('modalName');
+    const modalRole = document.getElementById('modalRole');
+    const modalDesc = document.getElementById('modalDesc');
+
+    if (cards.length > 0 && modal) {
+        
+        // فتح المودال عند الضغط على الكرت
+        cards.forEach(card => {
+            card.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // تعبئة البيانات من الـ Data Attributes
+                modalImg.src = this.getAttribute('data-img');
+                modalName.textContent = this.getAttribute('data-name');
+                modalRole.textContent = this.getAttribute('data-role');
+                modalDesc.textContent = this.getAttribute('data-desc');
+                
+                // إظهار النافذة
+                modal.classList.add('active');
+            });
+        });
+
+        // إغلاق المودال من زر X
+        if(closeBtn) {
+            closeBtn.addEventListener('click', () => {
+                modal.classList.remove('active');
+            });
+        }
+
+        // إغلاق المودال عند الضغط في الخلفية
+        window.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.classList.remove('active');
+            }
+        });
+    }
+}
+
+// =========================================
+// 4. دالة تأثير الهيدر عند السكرول
+// =========================================
+function initHeaderScroll() {
+    window.addEventListener('scroll', function() {
+        // نبحث عن الهيدر داخل الـ placeholder لأنه تم تحميله ديناميكياً
+        const header = document.querySelector('header') || document.querySelector('.main-header');
+        
+        if (header) {
+            if (window.scrollY > 20) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        }
+    });
+}
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    
+    // 1. تعريف العناصر من الـ HTML الذي أرسلته
+    const modal = document.getElementById('creatorModal'); // المودال الرئيسي
+    const closeBtn = document.querySelector('.close-modal-btn'); // زر الإغلاق
+    
+    // عناصر المحتوى داخل المودال
+    const modalImg = document.getElementById('modalImg');
+    const modalName = document.getElementById('modalName');
+    const modalRole = document.getElementById('modalRole');
+    const modalDesc = document.getElementById('modalDesc');
+
+    // جميع بطاقات المبدعين (التي يضغط عليها المستخدم)
+    const cards = document.querySelectorAll('.creator-card');
+
+    // 2. التحقق من وجود العناصر لتجنب الأخطاء
+    if (modal && cards.length > 0) {
+
+        // إضافة حدث النقر لكل بطاقة
+        cards.forEach(card => {
+            card.addEventListener('click', function(e) {
+                e.preventDefault(); // منع الرابط من تحديث الصفحة
+
+                // 3. سحب البيانات من البطاقة ووضعها داخل المودال
+                // ملاحظة: يجب أن تكون بطاقاتك تحتوي على data-name, data-role... إلخ
+                const name = this.getAttribute('data-name');
+                const role = this.getAttribute('data-role');
+                const desc = this.getAttribute('data-desc');
+                const img = this.getAttribute('data-img');
+
+                // تحديث نصوص وصورة المودال
+                if(modalName) modalName.textContent = name;
+                if(modalRole) modalRole.textContent = role;
+                if(modalDesc) modalDesc.textContent = desc;
+                if(modalImg) modalImg.src = img;
+
+                // 4. إظهار المودال
+                modal.classList.add('active');
+            });
+        });
+
+        // 5. إغلاق المودال عند الضغط على (X)
+        if (closeBtn) {
+            closeBtn.addEventListener('click', () => {
+                modal.classList.remove('active');
+            });
+        }
+
+        // 6. إغلاق المودال عند الضغط في المساحة السوداء (Overlay)
+        window.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.classList.remove('active');
+            }
+        });
+    }
+});
+
+
+// =========================================
+// 1. دالة تحميل الهيدر والفوتر
+// =========================================
+async function initApp() {
+    try {
+        const headerRes = await fetch('header.html');
+        if (headerRes.ok) {
+            document.getElementById('header-placeholder').innerHTML = await headerRes.text();
+            
+            // تشغيل الوظائف المعتمدة على الهيدر *بعد* تحميله
+            initHeaderScroll(); 
+            initDropdownMenu(); // <-- تم إضافة هذه السطر لتشغيل المنيو
+        }
+    } catch (err) {
+        console.error('خطأ في تحميل الهيدر:', err);
+    }
+
+    try {
+        const footerRes = await fetch('footer.html');
+        if (footerRes.ok) {
+            document.getElementById('footer-placeholder').innerHTML = await footerRes.text();
+        }
+    } catch (err) {
+        console.error('خطأ في تحميل الفوتر:', err);
+    }
+}
+
+// =========================================
+// دالة تشغيل القائمة المنسدلة (الجديدة)
+// =========================================
+function initDropdownMenu() {
+    const toggleBtn = document.getElementById('menuToggleBtn');
+    const menu = document.getElementById('mainDropdownMenu');
+    const overlay = document.getElementById('menuOverlay');
+    
+    // الأيقونة داخل الزر (عشان نغيرها لـ X)
+    const icon = toggleBtn ? toggleBtn.querySelector('.hamburger-icon i') : null;
+
+    if (!toggleBtn || !menu || !overlay) return;
+
+    // دالة الفتح والإغلاق
+    function toggleMenu() {
+        const isOpen = menu.classList.contains('active');
+        
+        if (isOpen) {
+            // إغلاق القائمة
+            menu.classList.remove('active');
+            overlay.classList.remove('active');
+            // إرجاع أيقونة الهامبرغر
+            if(icon) icon.className = 'fa-solid fa-bars';
+        } else {
+            // فتح القائمة
+            menu.classList.add('active');
+            overlay.classList.add('active');
+            // تحويل الأيقونة إلى X
+            if(icon) icon.className = 'fa-solid fa-xmark';
+        }
+    }
+
+    // عند الضغط على الزر
+    toggleBtn.addEventListener('click', toggleMenu);
+
+    // عند الضغط على الخلفية السوداء (إغلاق القائمة)
+    overlay.addEventListener('click', toggleMenu);
+
+    // تفعيل القوائم الفرعية (مثل: عن الاتحاد)
+    const subMenuToggles = document.querySelectorAll('.has-submenu > a');
+    subMenuToggles.forEach(item => {
+        item.addEventListener('click', function(e) {
+            e.preventDefault(); // منع الرابط من تحديث الصفحة
+            this.parentElement.classList.toggle('open');
+            
+            // قلب السهم للأسفل/الأعلى
+            const arrow = this.querySelector('.submenu-icon');
+            if(arrow) {
+                if(this.parentElement.classList.contains('open')) {
+                    arrow.classList.replace('fa-chevron-down', 'fa-chevron-up');
+                } else {
+                    arrow.classList.replace('fa-chevron-up', 'fa-chevron-down');
+                }
+            }
+        });
+    });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    loadDynamicNews();
+    const popup = document.getElementById('welcomePopup');
+    const closeBtn = document.getElementById('closePopup');
+
+    if (popup) {
+        // إظهار البوب اب عند كل زيارة ودخول للموقع
+        setTimeout(() => {
+            popup.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }, 1200);
+    }
+
+    if (popup) {
+        // إغلاق عند الضغط على زر X
+        closeBtn.addEventListener('click', () => {
+            popup.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        });
+
+        // إغلاق عند الضغط خارج محتوى البوب اب
+        popup.addEventListener('click', (e) => {
+            if (e.target === popup) {
+                popup.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        });
+    }
+});
+
+
+
+let lastScrollTop = 0; // متغير لتخزين آخر قيمة تمرير
+
+window.addEventListener('scroll', function() {
+    const header = document.querySelector('.main-header');
+    if (!header) return; // تأكد من وجود الهيدر
+
+    let currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+
+    // 1. إضافة ظل وتغيير خلفية الهيدر بمجرد التحرك عن الصفر
+    if (currentScroll > 50) {
+        header.classList.add('scrolled');
+    } else {
+        header.classList.remove('scrolled');
+    }
+
+    // 2. منطق الإخفاء والإظهار (Smart Sticky)
+    if (currentScroll > lastScrollTop && currentScroll > 150) {
+        // إذا كنت تنزل لأسفل وتجاوزت 150 بيكسل -> اختفي
+        header.classList.add('header-hide');
+    } else {
+        // إذا كنت تصعد لأعلى -> اظهر
+        header.classList.remove('header-hide');
+    }
+
+    // تحديث قيمة آخر تمرير (منع القيم السالبة في موبايلات آيفون)
+    lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
+}, { passive: true });
+
+// =========================================
+// تحميل الأخبار الديناميكية من MongoDB / Netlify API
+// =========================================
+async function loadDynamicNews() {
+    const homeGrid = document.querySelector('.news-cards-grid');
+    const newsPageGrid = document.querySelector('.news-grid');
+
+    if (!homeGrid && !newsPageGrid) return;
+
+    try {
+        const res = await fetch('/.netlify/functions/news');
+        if (!res.ok) return;
+        const data = await res.json();
+        
+        if (data.news && data.news.length > 0) {
+            // 1. تحديث سكشن الأخبار في الصفحة الرئيسية (index.html)
+            if (homeGrid) {
+                const homeHtml = data.news.map(item => `
+                    <div class="news-item">
+                        <div class="news-item-top">
+                            <img src="${item.imageUrl || 'img/ip_conference_2026.png'}" alt="${item.title}" style="width:100%; height:100%; object-fit:cover;" loading="lazy">
+                        </div>
+                        <div class="news-item-bottom">
+                            <h3>${item.title}</h3>
+                            <p>${item.summary || ''}</p>
+                            <a href="news/view.html?id=${item._id}" class="news-action-btn" title="قراءة تفاصيل الخبر"><span class="icon-circle-news">←</span><span class="txt">اقرأ المزيد</span></a>
+                        </div>
+                    </div>
+                `).join('');
+                homeGrid.innerHTML = homeHtml + homeGrid.innerHTML;
+            }
+
+            // 2. تحديث صفحة جميع الأخبار (news/index.html)
+            if (newsPageGrid) {
+                const newsPageHtml = data.news.map(item => `
+                    <div class="news-card">
+                        <div class="news-card-header">
+                            <img src="${item.imageUrl || '../img/ip_conference_2026.png'}" alt="${item.title}" style="width:100%;height:100%;object-fit:cover;" loading="lazy">
+                        </div>
+                        <div class="news-card-body">
+                            <h3>${item.title}</h3>
+                            <p>${item.summary || ''}</p>
+                            <a href="view.html?id=${item._id}" class="news-read-more" title="قراءة تفاصيل الخبر"><span class="btn-icon">←</span><span class="btn-text">اقرأ المزيد</span></a>
+                        </div>
+                    </div>
+                `).join('');
+                newsPageGrid.innerHTML = newsPageHtml + newsPageGrid.innerHTML;
+            }
+        }
+    } catch (e) {
+        console.log('Dynamic news offline or fallback active:', e);
+    }
+}
