@@ -4,6 +4,23 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title id="pageTitle">تفاصيل الخبر - الاتحاد العربي للملكية الفكرية</title>
+  <meta name="description" id="metaDescription" content="تفاصيل الخبر من الاتحاد العربي لحماية حقوق الملكية الفكرية.">
+  <link rel="canonical" id="canonicalLink" href="https://auipr.org/news/view.html">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" id="ogTitle" content="تفاصيل الخبر - الاتحاد العربي للملكية الفكرية">
+  <meta property="og:description" id="ogDescription" content="تفاصيل وتغطية الخبر من الاتحاد العربي لحماية حقوق الملكية الفكرية.">
+  <meta property="og:image" id="ogImage" content="https://static.wixstatic.com/media/215eb2_98e65620ebb04f4d96de0b8ae685fcee~mv2.png">
+  <meta property="og:url" id="ogUrl" content="https://auipr.org/news/view.html">
+  <meta property="og:site_name" content="الاتحاد العربي للملكية الفكرية">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" id="twTitle" content="تفاصيل الخبر - الاتحاد العربي للملكية الفكرية">
+  <meta name="twitter:description" id="twDescription" content="تفاصيل وتغطية الخبر من الاتحاد العربي لحماية حقوق الملكية الفكرية.">
+  <meta name="twitter:image" id="twImage" content="https://static.wixstatic.com/media/215eb2_98e65620ebb04f4d96de0b8ae685fcee~mv2.png">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -72,6 +89,51 @@
         if (item.imageUrl) {
           document.getElementById('newsHero').style.backgroundImage = `url('${item.imageUrl}')`;
         }
+
+        // Dynamic SEO & Open Graph Updates
+        if (item.summary) {
+          const cleanDesc = item.summary.substring(0, 160);
+          document.getElementById('metaDescription').setAttribute('content', cleanDesc);
+          document.getElementById('ogDescription').setAttribute('content', cleanDesc);
+          document.getElementById('twDescription').setAttribute('content', cleanDesc);
+        }
+        document.getElementById('ogTitle').setAttribute('content', item.title);
+        document.getElementById('twTitle').setAttribute('content', item.title);
+        document.getElementById('canonicalLink').setAttribute('href', window.location.href);
+        document.getElementById('ogUrl').setAttribute('content', window.location.href);
+
+        if (item.imageUrl && !item.imageUrl.startsWith('data:')) {
+          document.getElementById('ogImage').setAttribute('content', item.imageUrl);
+          document.getElementById('twImage').setAttribute('content', item.imageUrl);
+        }
+
+        // Inject Schema.org JSON-LD NewsArticle
+        const schemaData = {
+          "@context": "https://schema.org",
+          "@type": "NewsArticle",
+          "headline": item.title,
+          "description": item.summary || "",
+          "image": [item.imageUrl && !item.imageUrl.startsWith('data:') ? item.imageUrl : "https://static.wixstatic.com/media/215eb2_98e65620ebb04f4d96de0b8ae685fcee~mv2.png"],
+          "datePublished": item.date || new Date().toISOString().split('T')[0],
+          "author": {
+            "@type": "Organization",
+            "name": "الاتحاد العربي لحماية حقوق الملكية الفكرية",
+            "url": "https://auipr.org"
+          },
+          "publisher": {
+            "@type": "Organization",
+            "name": "الاتحاد العربي لحماية حقوق الملكية الفكرية",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://static.wixstatic.com/media/215eb2_98e65620ebb04f4d96de0b8ae685fcee~mv2.png"
+            }
+          }
+        };
+
+        const scriptTag = document.createElement('script');
+        scriptTag.type = 'application/ld+json';
+        scriptTag.textContent = JSON.stringify(schemaData);
+        document.head.appendChild(scriptTag);
       } catch (err) {
         console.error('Error loading news item:', err);
         document.getElementById('newsTitle').innerText = 'تعذر تحميل الخبر';

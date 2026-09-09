@@ -6,41 +6,49 @@
     <priority>1.00</priority>
   </url>
   <url>
-    <loc>https://auipr.org/events</loc>
+    <loc>https://auipr.org/events.html</loc>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://auipr.org/objectives</loc>
+    <loc>https://auipr.org/objectives.html</loc>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://auipr.org/structure</loc>
+    <loc>https://auipr.org/structure.html</loc>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://auipr.org/contact</loc>
-    <priority>0.70</priority>
+    <loc>https://auipr.org/contact.html</loc>
+    <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://auipr.org/terms</loc>
+    <loc>https://auipr.org/terms.html</loc>
     <priority>0.50</priority>
   </url>
   <url>
-    <loc>https://auipr.org/refund</loc>
+    <loc>https://auipr.org/refund.html</loc>
     <priority>0.50</priority>
   </url>
 
   <url>
-    <loc>https://auipr.org/news/</loc>
+    <loc>https://auipr.org/news/index.html</loc>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://auipr.org/news/ai</loc>
+    <loc>https://auipr.org/news/reem-rimouni-award-2026.html</loc>
     <priority>0.70</priority>
   </url>
   <url>
-    <loc>https://auipr.org/news/ramadan2026</loc>
+    <loc>https://auipr.org/news/ip-development-conference-2026.html</loc>
     <priority>0.70</priority>
   </url>
+  <url>
+    <loc>https://auipr.org/news/ai.html</loc>
+    <priority>0.70</priority>
+  </url>
+  <url>
+    <loc>https://auipr.org/news/ramadan2026.html</loc>
+    <priority>0.60</priority>
+  </url>
 
-</urlset>
+</urlset>

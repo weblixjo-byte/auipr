@@ -1,8 +1,10 @@
 # robots.txt for auipr.org
 User-agent: *
 
-# منع أرشفة صفحة النشاطات بشكل نهائي
+# منع أرشفة صفحة النشاطات وصفحة لوحة التحكم
 Disallow: /activities.html
+Disallow: /admin.html
+Disallow: /admin
 
 # منع أرشفة الملفات الملحقة (Header & Footer) لأنها محتوى مكرر
 Disallow: /header.html
