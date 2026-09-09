@@ -353,12 +353,19 @@ async function loadDynamicNews() {
         const data = await res.json();
         
         if (data.news && data.news.length > 0) {
-            // 1. تحديث سكشن الأخبار في الصفحة الرئيسية (index.html)
+            const resolveImg = (url, isSubfolder = false) => {
+                if (!url) return isSubfolder ? '../img/ip_conference_2026.png' : 'img/ip_conference_2026.png';
+                if (url.startsWith('http') || url.startsWith('data:') || url.startsWith('/')) return url;
+                return isSubfolder ? '../' + url : url;
+            };
+
+            // 1. تحديث سكشن الأخبار في الصفحة الرئيسية (index.html) - أحدث 3 أخبار
             if (homeGrid) {
-                const homeHtml = data.news.map(item => `
+                const latestNews = data.news.slice(0, 3);
+                homeGrid.innerHTML = latestNews.map(item => `
                     <div class="news-item">
                         <div class="news-item-top">
-                            <img src="${item.imageUrl || 'img/ip_conference_2026.png'}" alt="${item.title}" style="width:100%; height:100%; object-fit:cover;" loading="lazy">
+                            <img src="${resolveImg(item.imageUrl, false)}" alt="${item.title}" style="width:100%; height:100%; object-fit:cover;" loading="lazy">
                         </div>
                         <div class="news-item-bottom">
                             <h3>${item.title}</h3>
@@ -367,15 +374,14 @@ async function loadDynamicNews() {
                         </div>
                     </div>
                 `).join('');
-                homeGrid.innerHTML = homeHtml + homeGrid.innerHTML;
             }
 
-            // 2. تحديث صفحة جميع الأخبار (news/index.html)
+            // 2. تحديث صفحة جميع الأخبار (news/index.html) - جميع الأخبار
             if (newsPageGrid) {
-                const newsPageHtml = data.news.map(item => `
+                newsPageGrid.innerHTML = data.news.map(item => `
                     <div class="news-card">
                         <div class="news-card-header">
-                            <img src="${item.imageUrl || '../img/ip_conference_2026.png'}" alt="${item.title}" style="width:100%;height:100%;object-fit:cover;" loading="lazy">
+                            <img src="${resolveImg(item.imageUrl, true)}" alt="${item.title}" style="width:100%;height:100%;object-fit:cover;" loading="lazy">
                         </div>
                         <div class="news-card-body">
                             <h3>${item.title}</h3>
@@ -384,7 +390,6 @@ async function loadDynamicNews() {
                         </div>
                     </div>
                 `).join('');
-                newsPageGrid.innerHTML = newsPageHtml + newsPageGrid.innerHTML;
             }
         }
     } catch (e) {

@@ -1,4 +1,8 @@
 try { require('dotenv').config(); } catch (e) {}
+try {
+  const dns = require('dns');
+  dns.setServers(['8.8.8.8', '1.1.1.1']);
+} catch (e) {}
 const { MongoClient, ObjectId } = require('mongodb');
 
 let cachedClient = null;
