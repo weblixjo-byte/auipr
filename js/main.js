@@ -205,6 +205,7 @@ async function initApp() {
             // تشغيل الوظائف المعتمدة على الهيدر *بعد* تحميله
             initHeaderScroll(); 
             initDropdownMenu(); // <-- تم إضافة هذه السطر لتشغيل المنيو
+            initBranchSystem(); // <-- تفعيل نظام الفروع (فرع لبنان / المقر الرئيسي)
         }
     } catch (err) {
         console.error('خطأ في تحميل الهيدر:', err);
@@ -348,7 +349,9 @@ async function loadDynamicNews() {
     if (!homeGrid && !newsPageGrid) return;
 
     try {
-        const res = await fetch('/.netlify/functions/news');
+        const branchParam = typeof getActiveBranchId === 'function' ? getActiveBranchId() : 'main';
+        const queryParam = branchParam && branchParam !== 'main' ? `?branch=${encodeURIComponent(branchParam)}` : '';
+        const res = await fetch(`/.netlify/functions/news${queryParam}`);
         if (!res.ok) return;
         const data = await res.json();
         
@@ -402,4 +405,204 @@ async function loadDynamicNews() {
     } catch (e) {
         console.log('Dynamic news offline or fallback active:', e);
     }
+}
+
+// تصفية الأخبار حسب الفرع في صفحة الأخبار
+window.filterNewsByBranch = async function(branchCode, btnEl) {
+    if (btnEl) {
+        document.querySelectorAll('.branch-filter-btn').forEach(b => {
+            b.style.background = '#ffffff';
+            b.style.color = '#1a2b4b';
+            b.style.borderColor = '#cbd5e1';
+        });
+        btnEl.style.background = '#2b2346';
+        btnEl.style.color = '#ffffff';
+        btnEl.style.borderColor = 'rgba(255,255,255,0.2)';
+    }
+
+    const newsPageGrid = document.querySelector('.news-grid');
+    if (!newsPageGrid) return;
+
+    newsPageGrid.innerHTML = '<div style="grid-column: 1 / -1; text-align: center; color: #64748b; padding: 40px;"><i class="fa-solid fa-circle-notch fa-spin" style="font-size: 1.8rem; color: #00c4a7; margin-bottom: 12px; display: block;"></i> جاري تحميل الأخبار...</div>';
+
+    try {
+        const query = branchCode && branchCode !== 'all' ? `?branch=${branchCode}` : '';
+        const res = await fetch(`/.netlify/functions/news${query}`);
+        if (!res.ok) throw new Error('Fetch failed');
+        const data = await res.json();
+
+        if (data.news && data.news.length > 0) {
+            const resolveImg = (url) => {
+                if (!url) return '../img/ip_conference_2026.png';
+                if (url.startsWith('http') || url.startsWith('data:') || url.startsWith('/')) return url;
+                return '../' + url;
+            };
+
+            newsPageGrid.innerHTML = data.news.map(item => `
+                <div class="news-card">
+                    <div class="news-card-header">
+                        <img src="${resolveImg(item.imageUrl)}" alt="${item.title}" style="width:100%;height:100%;object-fit:cover;" loading="lazy">
+                    </div>
+                    <div class="news-card-body">
+                        <h3>${item.title}</h3>
+                        <p>${item.summary || ''}</p>
+                        <a href="${item.slug || `view.html?id=${item._id}`}" class="news-read-more" title="قراءة تفاصيل الخبر"><span class="btn-icon">←</span><span class="btn-text">اقرأ المزيد</span></a>
+                    </div>
+                </div>
+            `).join('');
+        } else {
+            newsPageGrid.innerHTML = '<div style="grid-column: 1 / -1; text-align: center; color: #64748b; padding: 40px; background: #fff; border-radius: 18px; border: 1px dashed #cbd5e1;">لا توجد أخبار منشورة لهذا الفرع حالياً.</div>';
+        }
+    } catch (e) {
+        console.error('Filter news error:', e);
+    }
+};
+
+// =========================================
+// نظام إدارة الفروع الإقليمية (فرع لبنان / المقر العام)
+// =========================================
+const AUIPR_BRANCHES = {
+    main: {
+        id: 'main',
+        name: 'الاتحاد العربي لحماية حقوق الملكية الفكرية (منظمة عربية)',
+        shortName: 'المقر الرئيسي',
+        flag: '',
+        email: 'info@auipr.org',
+        isDefault: true
+    },
+    lebanon: {
+        id: 'lebanon',
+        name: 'الاتحاد العربي لحماية حقوق الملكية الفكرية',
+        subName: 'فرع الجمهورية اللبنانية',
+        shortName: 'فرع لبنان',
+        flag: '🇱🇧',
+        badgeText: 'فرع لبنان 🇱🇧',
+        phone: '+961 1 000 000',
+        email: 'lebanon@auipr.org',
+        address: 'بيروت - الجمهورية اللبنانية',
+        contactTitle: 'تواصل مع فرع لبنان',
+        titleSuffix: ' | فرع لبنان 🇱🇧'
+    }
+};
+
+function getActiveBranchId() {
+    // 1. الفحص من خلال الرابط (e.g. ?branch=lebanon)
+    const params = new URLSearchParams(window.location.search);
+    const qBranch = params.get('branch');
+    if (qBranch && AUIPR_BRANCHES[qBranch]) {
+        sessionStorage.setItem('auipr_active_branch', qBranch);
+        return qBranch;
+    }
+
+    // 2. الفحص من خلال الدومين الفرعي (e.g. lebanon.auipr.org or lb.auipr.org)
+    const hostname = window.location.hostname.toLowerCase();
+    if (hostname.includes('lebanon') || hostname.startsWith('lb.')) {
+        return 'lebanon';
+    }
+
+    // 3. الفحص من خلال الجلسة المخزنة سابقاً
+    const stored = sessionStorage.getItem('auipr_active_branch');
+    if (stored && AUIPR_BRANCHES[stored]) {
+        return stored;
+    }
+
+    // الافتراضي: المقر العام (الموقع الأصلي دون أي تعديل)
+    return 'main';
+}
+
+function initBranchSystem() {
+    const branchId = getActiveBranchId();
+    const isLebanon = branchId === 'lebanon';
+
+    // تطبيق تخصيصات فرع لبنان فقط في حال كان الفرع النشط هو لبنان
+    if (isLebanon) {
+        document.body.classList.add('branch-mode-lebanon');
+
+        // تحديث عنوان الصفحة
+        if (!document.title.includes('فرع لبنان')) {
+            document.title = document.title + ' | فرع لبنان 🇱🇧';
+        }
+
+        // تحديث اسم الهيدر لفرع لبنان
+        const applyHeaderLebanon = () => {
+            const orgNames = document.querySelectorAll('.org-name');
+            orgNames.forEach(el => {
+                el.innerHTML = `الاتحاد العربي لحماية حقوق الملكية الفكرية <span class="branch-pill-header" style="background: rgba(60,235,195,0.18); color: #00876c; border: 1px solid rgba(60,235,195,0.5); padding: 3px 12px; border-radius: 20px; font-size: 0.82rem; font-weight: 700; margin-right: 8px; display: inline-block;">🇱🇧 فرع لبنان</span>`;
+            });
+        };
+
+        applyHeaderLebanon();
+        setTimeout(applyHeaderLebanon, 300);
+
+        // تخصيص صفحة تواصل معنا لفرع لبنان
+        if (window.location.pathname.includes('contact.html')) {
+            setTimeout(() => {
+                const pageTitle = document.querySelector('.page-title');
+                if (pageTitle) pageTitle.innerText = 'تواصل مع فرع لبنان';
+
+                const breadcrumbCurrent = document.querySelector('.breadcrumbs .current');
+                if (breadcrumbCurrent) breadcrumbCurrent.innerText = 'تواصل مع فرع لبنان 🇱🇧';
+
+                const infoTexts = document.querySelectorAll('.info-text');
+                infoTexts.forEach(box => {
+                    if (box.innerHTML.includes('info@auipr.org')) {
+                        box.innerHTML = '<a href="mailto:lebanon@auipr.org" dir="ltr">lebanon@auipr.org</a>';
+                    }
+                    if (box.innerText.includes('مصر') || box.innerText.includes('الأردن') || box.innerText.includes('عمان')) {
+                        box.innerHTML = '<p>بيروت - الجمهورية اللبنانية</p>';
+                    }
+                });
+            }, 350);
+        }
+    }
+
+    // إضافة خيار التنقل بين الفروع في القائمة المنسدلة
+    const injectBranchNav = () => {
+        const dropdownList = document.querySelector('.dropdown-list');
+        if (dropdownList && !dropdownList.querySelector('.branch-switch-item')) {
+            const switchLi = document.createElement('li');
+            switchLi.className = 'branch-switch-item has-submenu';
+            
+            const isLb = branchId === 'lebanon';
+            switchLi.innerHTML = `
+                <a href="#" style="color: #7251cd; font-weight: 700;">
+                    <i class="fa-solid fa-globe"></i> ${isLb ? '🇱🇧 فرع لبنان' : 'فروع الاتحاد'} 
+                    <i class="fa-solid fa-chevron-down submenu-icon"></i>
+                </a>
+                <ul class="sub-menu">
+                    <li>
+                        <a href="?branch=main" onclick="sessionStorage.setItem('auipr_active_branch','main');" style="${!isLb ? 'font-weight: bold; color: #7251cd;' : ''}">
+                            <i class="fa-solid fa-building-columns"></i> المقر الرئيسي ${!isLb ? '(الحالي)' : ''}
+                        </a>
+                    </li>
+                    <li>
+                        <a href="?branch=lebanon" onclick="sessionStorage.setItem('auipr_active_branch','lebanon');" style="${isLb ? 'font-weight: bold; color: #00c4a7;' : ''}">
+                            🇱🇧 فرع لبنان ${isLb ? '(الحالي)' : ''}
+                        </a>
+                    </li>
+                </ul>
+            `;
+            dropdownList.appendChild(switchLi);
+
+            // تفعيل السهم وفتح القائمة الفرعية
+            const toggleLink = switchLi.querySelector('> a');
+            if (toggleLink) {
+                toggleLink.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    switchLi.classList.toggle('open');
+                    const arrow = switchLi.querySelector('.submenu-icon');
+                    if (arrow) {
+                        if (switchLi.classList.contains('open')) {
+                            arrow.classList.replace('fa-chevron-down', 'fa-chevron-up');
+                        } else {
+                            arrow.classList.replace('fa-chevron-up', 'fa-chevron-down');
+                        }
+                    }
+                });
+            }
+        }
+    };
+
+    injectBranchNav();
+    setTimeout(injectBranchNav, 300);
 }

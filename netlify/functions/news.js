@@ -89,7 +89,20 @@ exports.handler = async (event, context) => {
         return { statusCode: 404, headers, body: JSON.stringify({ error: 'News item not found' }) };
       }
 
-      const allNews = await collection.find({}).sort({ createdAt: -1 }).toArray();
+      const branch = params.branch;
+      let queryFilter = {};
+
+      if (branch && branch !== 'all') {
+        queryFilter = {
+          $or: [
+            { branches: { $in: ['all', branch] } },
+            { branch: { $in: ['all', branch] } },
+            { branches: { $exists: false }, branch: { $exists: false } }
+          ]
+        };
+      }
+
+      const allNews = await collection.find(queryFilter).sort({ createdAt: -1 }).toArray();
       return { statusCode: 200, headers, body: JSON.stringify({ news: allNews }) };
     }
 
@@ -129,6 +142,10 @@ exports.handler = async (event, context) => {
       let rawSlug = (data.slug && data.slug.trim()) || data.title.trim();
       let cleanSlug = rawSlug.replace(/\s+/g, '-');
 
+      const targetBranches = Array.isArray(data.branches) && data.branches.length > 0
+        ? data.branches
+        : (data.branch ? [data.branch] : ['all']);
+
       const newsItem = {
         title: data.title,
         slug: cleanSlug,
@@ -136,7 +153,8 @@ exports.handler = async (event, context) => {
         content: data.content || data.summary,
         imageUrl: data.imageUrl || 'img/ip_conference_2026.png',
         date: data.date || new Date().toISOString().split('T')[0],
-        category: data.category || 'أخبار العامة',
+        category: data.category || 'أخبار الاتحاد',
+        branches: targetBranches,
         createdAt: new Date()
       };
 

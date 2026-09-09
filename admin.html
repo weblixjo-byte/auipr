@@ -353,6 +353,26 @@
               </div>
             </div>
 
+            <!-- Branch Targeting Selection -->
+            <div class="form-group" style="margin-bottom: 25px;">
+              <label style="display: block; margin-bottom: 10px; font-weight: 700; color: #1a2b4b;">
+                <i class="fa-solid fa-code-branch" style="color: #00c4a7;"></i> نطاق نشر الخبر (الفرع المستهدف):
+              </label>
+              <div style="display: flex; gap: 25px; flex-wrap: wrap; background: #f8fafc; padding: 14px 20px; border-radius: 14px; border: 1px solid #e2e8f0;">
+                <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; font-weight: 600; color: #1e293b;">
+                  <input type="checkbox" name="targetBranches" value="main" checked style="width: 18px; height: 18px; accent-color: #00c4a7;">
+                  <span>الموقع العام (المقر الرئيسي)</span>
+                </label>
+                <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; font-weight: 600; color: #1e293b;">
+                  <input type="checkbox" name="targetBranches" value="lebanon" checked style="width: 18px; height: 18px; accent-color: #00c4a7;">
+                  <span>🇱🇧 فرع لبنان</span>
+                </label>
+              </div>
+              <small style="color: #64748b; font-size: 0.8rem; margin-top: 6px; display: block;">
+                يمكنك تحديد ظهور الخبر في الموقع العام أو فرع لبنان أو كلاهما معاً.
+              </small>
+            </div>
+
             <div style="text-align: left;">
               <button type="submit" class="btn-brand-primary" id="btnSubmit">
                 <span>نشر الخبر</span> <span class="btn-icon-circle-dark">←</span>
@@ -527,11 +547,24 @@
 
       grid.innerHTML = newsItems.map(item => {
         const targetUrl = getAdminNewsUrl(item);
+
+        let branchBadge = '<span style="background: rgba(3,105,161,0.1); color: #0369a1; font-size: 0.75rem; font-weight: 700; padding: 2px 8px; border-radius: 12px; margin-right: 6px;">🌐 عام</span>';
+        if (item.branches && Array.isArray(item.branches)) {
+          if (item.branches.includes('lebanon') && !item.branches.includes('main') && !item.branches.includes('all')) {
+            branchBadge = '<span style="background: rgba(217,119,6,0.12); color: #b45309; font-size: 0.75rem; font-weight: 700; padding: 2px 8px; border-radius: 12px; margin-right: 6px;">🇱🇧 فرع لبنان</span>';
+          } else if (item.branches.includes('main') && !item.branches.includes('lebanon') && !item.branches.includes('all')) {
+            branchBadge = '<span style="background: rgba(100,116,139,0.12); color: #475569; font-size: 0.75rem; font-weight: 700; padding: 2px 8px; border-radius: 12px; margin-right: 6px;">المقر العام</span>';
+          }
+        }
+
         return `
         <div class="admin-news-card">
           <img src="${item.imageUrl}" class="admin-news-img" onerror="this.src='img/ip_conference_2026.png'" alt="${item.title}">
           <div class="admin-news-body">
-            <span class="admin-news-category">${item.category || 'أخبار الاتحاد'}</span>
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+              <span class="admin-news-category">${item.category || 'أخبار الاتحاد'}</span>
+              ${branchBadge}
+            </div>
             <h3 class="admin-news-title">${item.title}</h3>
             <span class="admin-news-date"><i class="fa-regular fa-calendar"></i> ${item.date || ''}</span>
             <p style="font-size: 0.9rem; color: #475569; line-height: 1.5; margin-bottom: 15px;">${item.summary ? item.summary.substring(0, 80) + '...' : ''}</p>
@@ -563,12 +596,18 @@
       const date = document.getElementById('newsDate').value;
       const category = document.getElementById('category').value;
 
+      const checkedBranches = Array.from(document.querySelectorAll('input[name="targetBranches"]:checked')).map(cb => cb.value);
+      const branches = checkedBranches.length > 0 ? checkedBranches : ['all'];
+      if (branches.includes('main') && branches.includes('lebanon')) {
+        branches.push('all');
+      }
+
       if (!imageUrl) {
         alert('يرجى اختيار صورة للخبر');
         return;
       }
 
-      const payload = { title, slug, summary, content, imageUrl, date, category };
+      const payload = { title, slug, summary, content, imageUrl, date, category, branches };
 
       const btn = document.getElementById('btnSubmit');
       btn.disabled = true;
