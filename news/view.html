@@ -235,12 +235,23 @@
           sumEl.style.display = 'block';
         }
 
-        // Full Content: Convert newlines to formatted paragraphs
+        // Full Content: Format paragraphs, subheadings, and quotes intelligently
         const contentEl = document.getElementById('newsFullContent');
         if (item.content) {
           const paras = item.content.split(/\n\s*\n/).filter(p => p.trim());
           if (paras.length > 0) {
-            contentEl.innerHTML = paras.map(p => `<p>${escapeHtml(p).replace(/\n/g, '<br>')}</p>`).join('');
+            contentEl.innerHTML = paras.map(p => {
+              const trimmed = p.trim();
+              if (trimmed.startsWith('> ') || trimmed.startsWith('» ') || (trimmed.startsWith('"') && trimmed.endsWith('"') && trimmed.length < 300)) {
+                const cleanQ = trimmed.replace(/^[>»]\s*/, '').replace(/^"|"$/g, '');
+                return `<blockquote class="article-quote"><span class="quote-icon"><i class="fa-solid fa-quote-right"></i></span><p>${escapeHtml(cleanQ)}</p></blockquote>`;
+              }
+              if (trimmed.startsWith('## ') || trimmed.startsWith('### ')) {
+                const cleanH = trimmed.replace(/^#+\s*/, '');
+                return `<h2 class="sub-title">${escapeHtml(cleanH)}</h2>`;
+              }
+              return `<p>${escapeHtml(trimmed).replace(/\n/g, '<br>')}</p>`;
+            }).join('');
           } else {
             contentEl.innerHTML = `<p>${escapeHtml(item.content).replace(/\n/g, '<br>')}</p>`;
           }
@@ -257,6 +268,9 @@
           captionText.innerText = item.title;
           featuredMedia.style.display = 'block';
         }
+
+        // Load Dynamic Related News (excluding current article)
+        loadDynamicRelatedNews(item._id, item.slug);
 
         // Calculate Reading Time
         const fullWordCount = ((item.summary || '') + ' ' + (item.content || '')).split(/\s+/).length;
@@ -314,6 +328,46 @@
         const sumEl = document.getElementById('newsSummary');
         sumEl.style.display = 'block';
         sumEl.innerText = 'حدث خطأ أثناء جلب تفاصيل الخبر من قاعدة البيانات، يرجى المحاولة لاحقاً.';
+      }
+    }
+
+    async function loadDynamicRelatedNews(currentId, currentSlug) {
+      try {
+        const res = await fetch('/.netlify/functions/news');
+        if (!res.ok) return;
+        const data = await res.json();
+        if (!data.news || data.news.length === 0) return;
+
+        // Filter out the current article
+        const otherNews = data.news.filter(n => n._id !== currentId && n.slug !== currentSlug).slice(0, 3);
+        if (otherNews.length === 0) return;
+
+        const gridEl = document.getElementById('relatedNewsGrid');
+        if (!gridEl) return;
+
+        gridEl.innerHTML = otherNews.map(item => {
+          const itemUrl = item.slug ? item.slug : `view.html?id=${item._id}`;
+          const itemImg = item.imageUrl || '../img/ip_conference_2026.png';
+          const itemCategory = item.category || 'أخبار الاتحاد';
+          const itemDate = item.date || '';
+
+          return `
+            <a href="${itemUrl}" class="related-card">
+              <div class="related-card-thumb">
+                <img src="${itemImg}" alt="${escapeHtml(item.title)}" loading="lazy">
+                <span class="related-card-badge">${escapeHtml(itemCategory)}</span>
+              </div>
+              <div class="related-card-body">
+                ${itemDate ? `<span class="related-card-date"><i class="fa-regular fa-calendar"></i> ${itemDate}</span>` : ''}
+                <h3 class="related-card-title">${escapeHtml(item.title)}</h3>
+                <p class="related-card-summary">${escapeHtml(item.summary || '')}</p>
+                <span class="related-card-readmore">اقرأ التفاصيل <i class="fa-solid fa-arrow-left"></i></span>
+              </div>
+            </a>
+          `;
+        }).join('');
+      } catch (e) {
+        console.log('Using default related news cards');
       }
     }
 
