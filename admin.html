@@ -504,10 +504,7 @@
 
     function getAdminNewsUrl(item) {
       if (item.slug) {
-        if (item.slug.endsWith('.html')) {
-          return `news/${item.slug}`;
-        }
-        return `news/view.html?slug=${encodeURIComponent(item.slug)}`;
+        return `news/${item.slug}`;
       }
       return `news/view.html?id=${item._id}`;
     }

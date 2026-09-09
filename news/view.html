@@ -83,6 +83,10 @@
         return;
       }
 
+      if (slug && window.location.search.includes('slug=')) {
+        window.history.replaceState(null, '', `/news/${slug}`);
+      }
+
       const query = slug ? `slug=${encodeURIComponent(slug)}` : `id=${encodeURIComponent(id)}`;
 
       try {

@@ -361,10 +361,7 @@ async function loadDynamicNews() {
 
             const getNewsUrl = (item, isSubfolder = false) => {
                 if (item.slug) {
-                    if (item.slug.endsWith('.html')) {
-                        return isSubfolder ? item.slug : `news/${item.slug}`;
-                    }
-                    return isSubfolder ? `view.html?slug=${encodeURIComponent(item.slug)}` : `news/view.html?slug=${encodeURIComponent(item.slug)}`;
+                    return isSubfolder ? item.slug : `news/${item.slug}`;
                 }
                 return isSubfolder ? `view.html?id=${item._id}` : `news/view.html?id=${item._id}`;
             };
