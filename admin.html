@@ -276,7 +276,7 @@
           <div class="breadcrumbs">
             <a href="index.html" title="العودة إلى الصفحة الرئيسية">الرئيسية</a><span>></span><span class="current">لوحة الإدارة</span>
           </div>
-          <h1 class="page-title">لوحة إدارة ونشر الأخبار</h1>
+          <h1 class="page-title">لوحة إدارة الأخبار</h1>
         </div>
       </div>
     </section>
@@ -288,46 +288,42 @@
         <!-- Add News Form Card -->
         <div class="admin-surface-card">
           <div class="card-top-bar">
-            <h2><i class="fa-solid fa-pen-to-square"></i> تحرير ونشر خبر جديد</h2>
-            <div style="display: flex; align-items: center; gap: 12px;">
-              <span id="dbStatus" class="status-badge status-warn"><i class="fa-solid fa-circle-notch fa-spin"></i> جاري الاتصال...</span>
-              <button onclick="logout()" class="btn-outline-danger"><i class="fa-solid fa-right-from-bracket"></i> تسجيل الخروج</button>
-            </div>
+            <h2><i class="fa-solid fa-pen-to-square"></i> إضافة خبر جديد</h2>
           </div>
 
           <form id="newsForm" onsubmit="handleFormSubmit(event)">
             <div class="form-group">
-              <label for="title">عنوان الخبر الرئيسي *</label>
-              <input type="text" id="title" class="form-control" placeholder="مثال: انعقاد مؤتمر الملكية الفكرية والذكاء الاصطناعي..." required>
+              <label for="title">عنوان الخبر *</label>
+              <input type="text" id="title" class="form-control" placeholder="أدخل عنوان الخبر..." required>
             </div>
 
             <div class="form-group">
-              <label for="slug"><i class="fa-solid fa-link"></i> رابط الخبر المخصص (Slug / URL)</label>
+              <label for="slug">الرابط المخصص للخبر (Slug)</label>
               <div style="position: relative; display: flex; align-items: center;">
                 <span style="position: absolute; right: 12px; color: #94a3b8; font-size: 0.88rem; pointer-events: none; direction: ltr;">/news/</span>
-                <input type="text" id="slug" class="form-control" placeholder="example-article-link أو اسم-الخبر-بالعربي" style="padding-right: 65px; direction: ltr; text-align: right;">
+                <input type="text" id="slug" class="form-control" placeholder="article-slug" style="padding-right: 65px; direction: ltr; text-align: right;">
               </div>
               <small style="color: #64748b; font-size: 0.8rem; margin-top: 6px; display: block;">
-                <i class="fa-solid fa-wand-magic-sparkles" style="color: #00c4a7;"></i> المسافات تتحول تلقائياً إلى شرطة (-). يمكنك تركه ليتولد تلقائياً من العنوان.
+                يتم تحويل المسافات تلقائياً إلى شرطة (-)، أو يُترك الحقل فارغاً للتوليد التلقائي من العنوان.
               </small>
             </div>
 
             <div class="form-group">
-              <label for="summary">ملخص الخبر (يظهر في الكارت الرئيسي) *</label>
-              <textarea id="summary" class="form-control" rows="2" placeholder="أدخل نبذة مختصرة تظهر في بطاقة الخبر..." required></textarea>
+              <label for="summary">موجز الخبر *</label>
+              <textarea id="summary" class="form-control" rows="2" placeholder="نبذة موجزة عن محتوى الخبر..." required></textarea>
             </div>
 
             <div class="form-group">
-              <label for="content">التفاصيل الكاملة للخبر *</label>
-              <textarea id="content" class="form-control" rows="5" placeholder="اكتب تفاصيل الخبر والمحتوى الصحفي الكامل..." required></textarea>
+              <label for="content">تفاصيل الخبر *</label>
+              <textarea id="content" class="form-control" rows="5" placeholder="المحتوى الصحفي والتفاصيل الكاملة للخبر..." required></textarea>
             </div>
 
             <div class="form-group">
-              <label><i class="fa-solid fa-image"></i> صورة الخبر (اختيار محلي مباشر من جهازك) *</label>
+              <label>صورة الخبر *</label>
               <div class="file-upload-box" onclick="document.getElementById('imageFile').click()">
                 <i class="fa-solid fa-cloud-arrow-up"></i>
-                <span style="font-weight: 600; color: #1a2b4b; display: block; margin-bottom: 4px;">اضغط هنا لاختيار صورة من جهازك</span>
-                <span style="font-size: 0.82rem; color: #64748b;">(JPG, PNG, WebP - يتم ضغطها ومعالجتها تلقائياً داخل جهازك بأعلى جودة)</span>
+                <span style="font-weight: 600; color: #1a2b4b; display: block; margin-bottom: 4px;">اختيار صورة من الجهاز</span>
+                <span style="font-size: 0.82rem; color: #64748b;">(الصيغ المدعومة: JPG, PNG, WebP)</span>
               </div>
               <input type="file" id="imageFile" accept="image/*" style="display: none;" onchange="handleLocalImageSelect(event)">
               <input type="hidden" id="imageUrl">
@@ -354,7 +350,7 @@
 
             <div style="text-align: left;">
               <button type="submit" class="btn-brand-primary" id="btnSubmit">
-                <span>نشر الخبر في الموقع</span> <span class="btn-icon-circle-dark">←</span>
+                <span>نشر الخبر</span> <span class="btn-icon-circle-dark">←</span>
               </button>
             </div>
           </form>
@@ -363,14 +359,14 @@
         <!-- News Archive Section -->
         <div class="admin-surface-card">
           <div class="card-top-bar">
-            <h2><i class="fa-solid fa-newspaper"></i> الأخبار المنشورة في قاعدة البيانات</h2>
-            <span id="newsCountBadge" class="status-badge" style="background: #f1f5f9; color: #475569;">0 أخبار</span>
+            <h2><i class="fa-solid fa-newspaper"></i> الأخبار المنشورة</h2>
+            <span id="newsCountBadge" class="status-badge" style="background: #f1f5f9; color: #475569;">0 خبر</span>
           </div>
 
           <div id="newsGrid" class="admin-news-grid">
             <div style="grid-column: 1 / -1; text-align: center; color: #64748b; padding: 40px;">
               <i class="fa-solid fa-circle-notch fa-spin" style="font-size: 1.8rem; color: #00c4a7; margin-bottom: 12px; display: block;"></i>
-              جاري جلب الأخبار من قاعدة البيانات...
+              جاري تحميل الأخبار...
             </div>
           </div>
         </div>
@@ -383,11 +379,11 @@
   <div id="authModal" class="auth-overlay">
     <div class="auth-card">
       <img src="https://static.wixstatic.com/media/215eb2_98e65620ebb04f4d96de0b8ae685fcee~mv2.png" alt="شعار الاتحاد" class="auth-logo">
-      <h3 style="color: #1a2b4b; font-size: 1.3rem; margin-bottom: 8px;">لوحة تحكم الموقع الرسمية</h3>
+      <h3 style="color: #1a2b4b; font-size: 1.3rem; margin-bottom: 8px;">لوحة إدارة الأخبار</h3>
       <p style="color: #64748b; font-size: 0.9rem; margin-bottom: 25px;">الاتحاد العربي لحماية حقوق الملكية الفكرية</p>
-      <input type="password" id="passcodeInput" class="form-control" placeholder="أدخل رمز الأمان المعتمد..." style="margin-bottom: 20px; text-align: center; font-size: 1.05rem; letter-spacing: 2px;">
+      <input type="password" id="passcodeInput" class="form-control" placeholder="رمز الدخول المعتمد" style="margin-bottom: 20px; text-align: center; font-size: 1.05rem; letter-spacing: 2px;">
       <button onclick="saveToken()" class="btn-brand-primary" style="width: 100%; justify-content: center;">
-        <span>تأكيد الدخول</span> <span class="btn-icon-circle-dark">←</span>
+        <span>تسجيل الدخول</span> <span class="btn-icon-circle-dark">←</span>
       </button>
     </div>
   </div>
@@ -427,7 +423,7 @@
 
     function saveToken() {
       const input = document.getElementById('passcodeInput').value.trim();
-      if (!input) return alert('يرجى إدخال رمز الأمان!');
+      if (!input) return alert('يرجى إدخال رمز الدخول');
       adminToken = input;
       localStorage.setItem('auipr_admin_token', input);
       document.getElementById('authModal').style.display = 'none';
@@ -456,7 +452,7 @@
       if (!file) return;
 
       if (!file.type.startsWith('image/')) {
-        alert('الملف المختار ليس صورة صالحة!');
+        alert('الملف المحدد ليس ملف صورة صالح');
         return;
       }
 
@@ -502,7 +498,7 @@
         renderNewsGrid(data.news || []);
       } catch (err) {
         console.error('Error fetching news:', err);
-        document.getElementById('newsGrid').innerHTML = '<div style="grid-column:1/-1; text-align:center; color:#e11d48; padding:30px;">تعذر جلب الأخبار من الخادم. تأكد من إعدادات الاتصال.</div>';
+        document.getElementById('newsGrid').innerHTML = '<div style="grid-column:1/-1; text-align:center; color:#e11d48; padding:30px;">تعذر تحميل الأخبار. يرجى المحاولة لاحقاً.</div>';
       }
     }
 
@@ -519,10 +515,10 @@
     function renderNewsGrid(newsItems) {
       const grid = document.getElementById('newsGrid');
       const countBadge = document.getElementById('newsCountBadge');
-      countBadge.innerText = `${newsItems.length} أخبار`;
+      countBadge.innerText = `${newsItems.length} خبر`;
 
       if (!newsItems || newsItems.length === 0) {
-        grid.innerHTML = '<div style="grid-column: 1 / -1; text-align: center; color: #64748b; padding: 40px; background: #fafcfb; border-radius: 18px; border: 1px dashed #cbd5e1;">لا توجد أخبار منشورة حالياً في قاعدة البيانات. استخدم النموذج بالأعلى لإضافة أول خبر!</div>';
+        grid.innerHTML = '<div style="grid-column: 1 / -1; text-align: center; color: #64748b; padding: 40px; background: #fafcfb; border-radius: 18px; border: 1px dashed #cbd5e1;">لا توجد أخبار منشورة حالياً.</div>';
         return;
       }
 
@@ -535,10 +531,7 @@
             <span class="admin-news-category">${item.category || 'أخبار الاتحاد'}</span>
             <h3 class="admin-news-title">${item.title}</h3>
             <span class="admin-news-date"><i class="fa-regular fa-calendar"></i> ${item.date || ''}</span>
-            <p style="font-size: 0.9rem; color: #475569; line-height: 1.5; margin-bottom: 8px;">${item.summary ? item.summary.substring(0, 75) + '...' : ''}</p>
-            <div style="font-size: 0.78rem; color: #0284c7; margin-bottom: 12px; direction: ltr; text-align: right; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
-              <i class="fa-solid fa-link" style="font-size: 0.72rem;"></i> /${targetUrl}
-            </div>
+            <p style="font-size: 0.9rem; color: #475569; line-height: 1.5; margin-bottom: 15px;">${item.summary ? item.summary.substring(0, 80) + '...' : ''}</p>
             <div class="admin-news-footer">
               <a href="${targetUrl}" target="_blank" style="color: #0f766e; text-decoration: none; font-weight: 600; font-size: 0.88rem; display: inline-flex; align-items: center; gap: 5px;">
                 معاينة الخبر <i class="fa-solid fa-arrow-up-right-from-square"></i>
@@ -568,7 +561,7 @@
       const category = document.getElementById('category').value;
 
       if (!imageUrl) {
-        alert('يرجى اختيار صورة للخبر من جهازك محلياً!');
+        alert('يرجى اختيار صورة للخبر');
         return;
       }
 
@@ -576,7 +569,7 @@
 
       const btn = document.getElementById('btnSubmit');
       btn.disabled = true;
-      btn.innerHTML = '<span>جاري النشر والحفظ...</span> <i class="fa-solid fa-spinner fa-spin"></i>';
+      btn.innerHTML = '<span>جاري النشر...</span> <i class="fa-solid fa-spinner fa-spin"></i>';
 
       try {
         const res = await fetch(API_URL, {
@@ -590,7 +583,7 @@
 
         const result = await res.json();
         if (res.ok) {
-          alert('تم نشر الخبر بنجاح في الموقع وقاعدة البيانات!');
+          alert('تم نشر الخبر بنجاح');
           document.getElementById('newsForm').reset();
           document.getElementById('imageUrl').value = '';
           document.getElementById('slug').value = '';
@@ -603,16 +596,16 @@
         }
       } catch (err) {
         console.error(err);
-        alert('حدث خطأ في الاتصال بالخادم.');
+        alert('حدث خطأ في الاتصال بالخادم');
       } finally {
         btn.disabled = false;
-        btn.innerHTML = '<span>نشر الخبر في الموقع</span> <span class="btn-icon-circle-dark">←</span>';
+        btn.innerHTML = '<span>نشر الخبر</span> <span class="btn-icon-circle-dark">←</span>';
       }
     }
 
     // Delete News
     async function deleteNews(id) {
-      if (!confirm('هل أنت متأكد من رغبتك في حذف هذا الخبر نهائياً؟')) return;
+      if (!confirm('هل أنت متأكد من حذف هذا الخبر؟')) return;
 
       try {
         const res = await fetch(`${API_URL}?id=${id}`, {
@@ -624,14 +617,14 @@
 
         const result = await res.json();
         if (res.ok) {
-          alert('تم حذف الخبر بنجاح!');
+          alert('تم حذف الخبر بنجاح');
           fetchNewsList();
         } else {
           alert('خطأ: ' + (result.error || 'تعذر حذف الخبر'));
         }
       } catch (err) {
         console.error(err);
-        alert('حدث خطأ أثناء الاتصال بالخادم.');
+        alert('حدث خطأ أثناء الاتصال بالخادم');
       }
     }
   </script>
