@@ -3,21 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title id="pageTitle">تفاصيل الخبر - الاتحاد العربي للملكية الفكرية</title>
-  <meta name="description" id="metaDescription" content="تفاصيل الخبر من الاتحاد العربي لحماية حقوق الملكية الفكرية.">
+  <title id="pageTitle">تفاصيل الخبر | الاتحاد العربي لحماية حقوق الملكية الفكرية</title>
+  <meta name="description" id="metaDescription" content="تفاصيل وتغطية الخبر من الاتحاد العربي لحماية حقوق الملكية الفكرية.">
   <link rel="canonical" id="canonicalLink" href="https://auipr.org/news/view.html">
-  
+  <link rel="icon" type="image/png" href="https://static.wixstatic.com/media/215eb2_98e65620ebb04f4d96de0b8ae685fcee~mv2.png" sizes="32x32">
+  <link rel="apple-touch-icon" href="https://static.wixstatic.com/media/215eb2_98e65620ebb04f4d96de0b8ae685fcee~mv2.png">
+
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="article">
-  <meta property="og:title" id="ogTitle" content="تفاصيل الخبر - الاتحاد العربي للملكية الفكرية">
+  <meta property="og:title" id="ogTitle" content="تفاصيل الخبر | الاتحاد العربي لحماية حقوق الملكية الفكرية">
   <meta property="og:description" id="ogDescription" content="تفاصيل وتغطية الخبر من الاتحاد العربي لحماية حقوق الملكية الفكرية.">
   <meta property="og:image" id="ogImage" content="https://static.wixstatic.com/media/215eb2_98e65620ebb04f4d96de0b8ae685fcee~mv2.png">
   <meta property="og:url" id="ogUrl" content="https://auipr.org/news/view.html">
-  <meta property="og:site_name" content="الاتحاد العربي للملكية الفكرية">
+  <meta property="og:site_name" content="الاتحاد العربي لحماية حقوق الملكية الفكرية">
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" id="twTitle" content="تفاصيل الخبر - الاتحاد العربي للملكية الفكرية">
+  <meta name="twitter:title" id="twTitle" content="تفاصيل الخبر | الاتحاد العربي لحماية حقوق الملكية الفكرية">
   <meta name="twitter:description" id="twDescription" content="تفاصيل وتغطية الخبر من الاتحاد العربي لحماية حقوق الملكية الفكرية.">
   <meta name="twitter:image" id="twImage" content="https://static.wixstatic.com/media/215eb2_98e65620ebb04f4d96de0b8ae685fcee~mv2.png">
 
@@ -25,45 +27,165 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="news-details-page">
   <div id="header-placeholder"></div>
 
-  <main>
-    <section class="news-hero" id="newsHero" style="background-image:url('../img/ip_conference_2026.png');">
-      <div class="hero-overlay"></div>
-      <div class="container hero-content">
-        <span class="news-category" id="newsCategory">أخبار الاتحاد</span>
-        <h1 class="news-main-title" id="newsTitle">جاري تحميل الخبر...</h1>
-        <div class="news-meta" id="newsMeta"></div>
+  <main id="main-content">
+    <!-- Editorial Header Banner -->
+    <section class="news-banner-section container reveal">
+      <div class="news-banner-card">
+        <div class="banner-wave-bg"></div>
+        <div class="news-banner-inner">
+          <nav class="news-breadcrumbs" aria-label="مسار التصفح">
+            <a href="../index.html"><i class="fa-solid fa-house"></i> الرئيسية</a>
+            <span class="sep"><i class="fa-solid fa-angle-left"></i></span>
+            <a href="index.html">الأخبار</a>
+            <span class="sep"><i class="fa-solid fa-angle-left"></i></span>
+            <span class="current" id="breadcrumbCurrent">تفاصيل الخبر</span>
+          </nav>
+
+          <div class="news-meta-pills">
+            <span class="news-pill category" id="newsCategoryPill">
+              <i class="fa-solid fa-tag"></i> <span id="newsCategory">أخبار الاتحاد</span>
+            </span>
+            <span class="news-pill date" id="newsDatePill" style="display:none;">
+              <i class="fa-regular fa-calendar-days"></i> <span id="newsDate"></span>
+            </span>
+            <span class="news-pill read-time">
+              <i class="fa-regular fa-clock"></i> <span id="newsReadTime">دقيقتان قراءة</span>
+            </span>
+          </div>
+
+          <h1 class="news-main-title" id="newsTitle">جاري تحميل تفاصيل الخبر...</h1>
+
+          <div class="news-publisher-strip">
+            <div class="publisher-brand">
+              <img src="https://static.wixstatic.com/media/215eb2_98e65620ebb04f4d96de0b8ae685fcee~mv2.png" alt="الاتحاد العربي" class="publisher-avatar">
+              <div class="publisher-meta">
+                <span class="publisher-name">الاتحاد العربي لحماية حقوق الملكية الفكرية</span>
+                <span class="publisher-role">المكتب الإعلامي الرسمي • جامعة الدول العربية</span>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
-    <section class="news-body-content container">
-      <div class="article-container">
-        <div class="article-text">
-          <div id="articleImageWrapper" style="display:none; text-align: center; margin-top: 15px; margin-bottom: 30px; border-radius: 16px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.1); max-width: 650px; margin-left: auto; margin-right: auto;">
-            <img id="articleFeaturedImg" src="" alt="" style="width: 100%; height: auto; display: block; object-fit: cover; max-height: 450px;">
+    <!-- Reading Container -->
+    <section class="article-reading-section container reveal">
+      <div class="article-reading-wrapper">
+        
+        <!-- Featured Hero Image (Single, crisp, elegant) -->
+        <div class="article-featured-media" id="articleFeaturedMedia" style="display:none;">
+          <img id="articleFeaturedImg" src="" alt="">
+          <div class="media-caption" id="mediaCaption">
+            <i class="fa-solid fa-camera"></i>
+            <span id="mediaCaptionText"></span>
           </div>
-          <p class="lead-text" id="newsSummary"></p>
-          <div id="newsFullContent" style="font-size: 1.05rem; line-height: 1.8; color: #334155; white-space: pre-line;"></div>
         </div>
 
-        <div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center;">
-          <a href="index.html" class="news-action-btn" style="display: inline-flex; align-items: center; gap: 8px; text-decoration: none; font-weight: 600; color: #1a2b4b;">
-            <span>→</span> العودة لجميع الأخبار
-          </a>
-        </div>
+        <!-- Article Paper Card -->
+        <article class="article-paper-card">
+          <!-- Top Utility & Social Share Bar -->
+          <div class="article-top-tools">
+            <span class="tools-label"><i class="fa-solid fa-share-nodes"></i> مشاركة الخبر:</span>
+            <div class="share-buttons-group">
+              <button class="btn-share whatsapp" title="مشاركة عبر واتساب" onclick="shareOnWhatsApp()"><i class="fa-brands fa-whatsapp"></i></button>
+              <button class="btn-share twitter" title="مشاركة عبر إكس" onclick="shareOnTwitter()"><i class="fa-brands fa-x-twitter"></i></button>
+              <button class="btn-share facebook" title="مشاركة عبر فيسبوك" onclick="shareOnFacebook()"><i class="fa-brands fa-facebook-f"></i></button>
+              <button class="btn-share linkedin" title="مشاركة عبر لينكد إن" onclick="shareOnLinkedIn()"><i class="fa-brands fa-linkedin-in"></i></button>
+              <button class="btn-share copy-link" title="نسخ رابط المقال" onclick="copyArticleLink()"><i class="fa-solid fa-link"></i></button>
+            </div>
+          </div>
+
+          <!-- Body Content -->
+          <div class="article-body-text">
+            <div class="lead-text" id="newsSummary" style="display:none;"></div>
+            <div id="newsFullContent"></div>
+          </div>
+
+          <!-- Bottom Actions -->
+          <div class="article-bottom-actions">
+            <a href="index.html" class="btn-back-news">
+              <i class="fa-solid fa-arrow-right"></i>
+              <span>العودة لجميع الأخبار</span>
+            </a>
+
+            <div class="bottom-share-wrapper">
+              <span class="bottom-share-label">شارك الخبر:</span>
+              <div class="share-buttons-group">
+                <button class="btn-share whatsapp" title="واتساب" onclick="shareOnWhatsApp()"><i class="fa-brands fa-whatsapp"></i></button>
+                <button class="btn-share twitter" title="إكس" onclick="shareOnTwitter()"><i class="fa-brands fa-x-twitter"></i></button>
+                <button class="btn-share facebook" title="فيسبوك" onclick="shareOnFacebook()"><i class="fa-brands fa-facebook-f"></i></button>
+                <button class="btn-share copy-link" title="نسخ الرابط" onclick="copyArticleLink()"><i class="fa-solid fa-link"></i></button>
+              </div>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- Related Articles Section -->
+    <section class="related-news-section container reveal">
+      <div class="related-header">
+        <h2 class="related-title">أخبار أخرى ذات صلة</h2>
+        <a href="index.html" class="related-all-link">عرض كل الأخبار <i class="fa-solid fa-arrow-left"></i></a>
+      </div>
+
+      <div class="related-news-grid" id="relatedNewsGrid">
+        <a href="reem-rimouni-award-2026.html" class="related-card">
+          <div class="related-card-thumb">
+            <img src="../img/reem.jpeg" alt="تكريم سعادة المستشارة ريم عيسى الريموني" loading="lazy">
+            <span class="related-card-badge">تكريم</span>
+          </div>
+          <div class="related-card-body">
+            <span class="related-card-date"><i class="fa-regular fa-calendar"></i> ١ مارس ٢٠٢٦</span>
+            <h3 class="related-card-title">تكريم سعادة المستشارة ريم عيسى الريموني بجائزة المرأة العربية</h3>
+            <p class="related-card-summary">جامعة الدول العربية والمجلس العربي للمسؤولية المجتمعية يكرّمان سعادة المستشارة ريم الريموني...</p>
+            <span class="related-card-readmore">اقرأ التفاصيل <i class="fa-solid fa-arrow-left"></i></span>
+          </div>
+        </a>
+
+        <a href="ip-development-conference-2026.html" class="related-card">
+          <div class="related-card-thumb">
+            <img src="../img/ip_conference_2026.png" alt="مؤتمر تطوير منظومة الملكية الفكرية" loading="lazy">
+            <span class="related-card-badge">مؤتمرات</span>
+          </div>
+          <div class="related-card-body">
+            <span class="related-card-date"><i class="fa-regular fa-calendar"></i> ٢٢ يونيو ٢٠٢٦</span>
+            <h3 class="related-card-title">مؤتمر تطوير منظومة الملكية الفكرية 2026 بالقاهرة</h3>
+            <p class="related-card-summary">يعقد الاتحاد العربي مؤتمراً نوعياً بالقاهرة لتطوير منظومة الملكية الفكرية لمواكبة الابتكار...</p>
+            <span class="related-card-readmore">اقرأ التفاصيل <i class="fa-solid fa-arrow-left"></i></span>
+          </div>
+        </a>
+
+        <a href="ramadan2026.html" class="related-card">
+          <div class="related-card-thumb">
+            <img src="https://janoubia.com/wp-content/uploads/2019/05/Ramadan-Kareem.jpg" alt="تهنئة بمناسبة شهر رمضان المبارك" loading="lazy">
+            <span class="related-card-badge">مناسبات</span>
+          </div>
+          <div class="related-card-body">
+            <span class="related-card-date"><i class="fa-regular fa-calendar"></i> ١٨ فبراير ٢٠٢٦</span>
+            <h3 class="related-card-title">تهنئة بمناسبة شهر رمضان المبارك</h3>
+            <p class="related-card-summary">يتقدم الاتحاد العربي لحماية حقوق الملكية الفكرية بأسمى آيات التهاني والتبريكات بمناسبة حلول الشهر الفضيل...</p>
+            <span class="related-card-readmore">اقرأ التفاصيل <i class="fa-solid fa-arrow-left"></i></span>
+          </div>
+        </a>
       </div>
     </section>
   </main>
 
   <div id="footer-placeholder"></div>
   <script src="../js/main.js"></script>
+  <script src="article.js"></script>
 
   <script>
+    let currentArticleTitle = '';
+
     async function loadSingleNews() {
       const urlParams = new URLSearchParams(window.location.search);
       let slug = urlParams.get('slug');
@@ -79,12 +201,9 @@
 
       if (!slug && !id) {
         document.getElementById('newsTitle').innerText = 'لم يتم العثور على الخبر';
+        document.getElementById('newsSummary').style.display = 'block';
         document.getElementById('newsSummary').innerText = 'يرجى العودة إلى صفحة الأخبار واختيار خبر صحيح.';
         return;
-      }
-
-      if (slug && window.location.search.includes('slug=')) {
-        window.history.replaceState(null, '', `/news/${slug}`);
       }
 
       const query = slug ? `slug=${encodeURIComponent(slug)}` : `id=${encodeURIComponent(id)}`;
@@ -94,26 +213,56 @@
         if (!res.ok) throw new Error('News not found');
         const item = await res.json();
 
+        currentArticleTitle = item.title;
+
         // Populate elements
-        document.getElementById('pageTitle').innerText = `${item.title} - الاتحاد العربي للملكية الفكرية`;
+        document.getElementById('pageTitle').innerText = `${item.title} | الاتحاد العربي لحماية حقوق الملكية الفكرية`;
+        document.getElementById('breadcrumbCurrent').innerText = item.title;
         document.getElementById('newsTitle').innerText = item.title;
         document.getElementById('newsCategory').innerText = item.category || 'أخبار الاتحاد';
-        if (item.date) {
-          document.getElementById('newsMeta').innerHTML = `<time><i class="fa-regular fa-calendar"></i> ${item.date}</time>`;
-        }
-        document.getElementById('newsSummary').innerText = item.summary || '';
-        document.getElementById('newsFullContent').innerText = item.content || '';
 
-        if (item.imageUrl) {
-          document.getElementById('newsHero').style.backgroundImage = `url('${item.imageUrl}')`;
-          const featuredImg = document.getElementById('articleFeaturedImg');
-          const imgWrapper = document.getElementById('articleImageWrapper');
-          if (featuredImg && imgWrapper) {
-            featuredImg.src = item.imageUrl;
-            featuredImg.alt = item.title;
-            imgWrapper.style.display = 'block';
+        if (item.date) {
+          const dateEl = document.getElementById('newsDate');
+          const datePill = document.getElementById('newsDatePill');
+          dateEl.innerText = item.date;
+          datePill.style.display = 'inline-flex';
+        }
+
+        // Summary / Lead text
+        if (item.summary && item.summary.trim()) {
+          const sumEl = document.getElementById('newsSummary');
+          sumEl.innerText = item.summary.trim();
+          sumEl.style.display = 'block';
+        }
+
+        // Full Content: Convert newlines to formatted paragraphs
+        const contentEl = document.getElementById('newsFullContent');
+        if (item.content) {
+          const paras = item.content.split(/\n\s*\n/).filter(p => p.trim());
+          if (paras.length > 0) {
+            contentEl.innerHTML = paras.map(p => `<p>${escapeHtml(p).replace(/\n/g, '<br>')}</p>`).join('');
+          } else {
+            contentEl.innerHTML = `<p>${escapeHtml(item.content).replace(/\n/g, '<br>')}</p>`;
           }
         }
+
+        // Featured Image
+        if (item.imageUrl) {
+          const featuredMedia = document.getElementById('articleFeaturedMedia');
+          const featuredImg = document.getElementById('articleFeaturedImg');
+          const captionText = document.getElementById('mediaCaptionText');
+          
+          featuredImg.src = item.imageUrl;
+          featuredImg.alt = item.title;
+          captionText.innerText = item.title;
+          featuredMedia.style.display = 'block';
+        }
+
+        // Calculate Reading Time
+        const fullWordCount = ((item.summary || '') + ' ' + (item.content || '')).split(/\s+/).length;
+        const readMins = Math.max(1, Math.ceil(fullWordCount / 180));
+        const readTimeStr = readMins === 1 ? 'دقيقة واحدة قراءة' : readMins === 2 ? 'دقيقتان قراءة' : `${readMins} دقائق قراءة`;
+        document.getElementById('newsReadTime').innerText = readTimeStr;
 
         // Dynamic SEO & Open Graph Updates
         if (item.summary) {
@@ -132,7 +281,7 @@
           document.getElementById('twImage').setAttribute('content', item.imageUrl);
         }
 
-        // Inject Schema.org JSON-LD NewsArticle
+        // Inject Schema.org JSON-LD
         const schemaData = {
           "@context": "https://schema.org",
           "@type": "NewsArticle",
@@ -162,8 +311,16 @@
       } catch (err) {
         console.error('Error loading news item:', err);
         document.getElementById('newsTitle').innerText = 'تعذر تحميل الخبر';
-        document.getElementById('newsSummary').innerText = 'حدث خطأ أثناء جلب تفاصيل الخبر من قاعدة البيانات.';
+        const sumEl = document.getElementById('newsSummary');
+        sumEl.style.display = 'block';
+        sumEl.innerText = 'حدث خطأ أثناء جلب تفاصيل الخبر من قاعدة البيانات، يرجى المحاولة لاحقاً.';
       }
+    }
+
+    function escapeHtml(str) {
+      const div = document.createElement('div');
+      div.textContent = str;
+      return div.innerHTML;
     }
 
     document.addEventListener('DOMContentLoaded', loadSingleNews);
