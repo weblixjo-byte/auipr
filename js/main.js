@@ -488,6 +488,30 @@ function initBranchSystem() {
                 });
             }
         }
+
+        // 3. تحديث روابط Canonical والـ SEO والـ Meta Tags للفرع الحالي
+        const canonicalEl = document.querySelector('link[rel="canonical"]');
+        if (canonicalEl) {
+            if (isLebanon) {
+                canonicalEl.href = 'https://lebanon.auipr.org' + currentPath;
+            } else if (isProd) {
+                canonicalEl.href = 'https://auipr.org' + currentPath;
+            }
+        }
+        const ogUrlEl = document.querySelector('meta[property="og:url"]');
+        if (ogUrlEl) {
+            ogUrlEl.content = isLebanon ? ('https://lebanon.auipr.org' + currentPath) : ('https://auipr.org' + currentPath);
+        }
+        if (isLebanon) {
+            const ogTitle = document.querySelector('meta[property="og:title"]');
+            if (ogTitle && !ogTitle.content.includes('ممثل الجمهورية اللبنانية')) {
+                ogTitle.content = ogTitle.content + ' | ممثل الجمهورية اللبنانية';
+            }
+            const twTitle = document.querySelector('meta[name="twitter:title"]');
+            if (twTitle && !twTitle.content.includes('ممثل الجمهورية اللبنانية')) {
+                twTitle.content = twTitle.content + ' | ممثل الجمهورية اللبنانية';
+            }
+        }
     };
 
     updateBranchUI();

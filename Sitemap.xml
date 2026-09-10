@@ -1,54 +1,196 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://auipr.org/</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://auipr.org/"/>
+    <xhtml:link rel="alternate" hreflang="ar-LB" href="https://lebanon.auipr.org/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://auipr.org/"/>
+    <changefreq>daily</changefreq>
     <priority>1.00</priority>
   </url>
   <url>
+    <loc>https://lebanon.auipr.org/</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://auipr.org/"/>
+    <xhtml:link rel="alternate" hreflang="ar-LB" href="https://lebanon.auipr.org/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://auipr.org/"/>
+    <changefreq>daily</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
     <loc>https://auipr.org/events.html</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://auipr.org/events.html"/>
+    <xhtml:link rel="alternate" hreflang="ar-LB" href="https://lebanon.auipr.org/events.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://auipr.org/events.html"/>
+    <changefreq>weekly</changefreq>
     <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://lebanon.auipr.org/events.html</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://auipr.org/events.html"/>
+    <xhtml:link rel="alternate" hreflang="ar-LB" href="https://lebanon.auipr.org/events.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://auipr.org/events.html"/>
+    <changefreq>weekly</changefreq>
+    <priority>0.76</priority>
   </url>
   <url>
     <loc>https://auipr.org/objectives.html</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://auipr.org/objectives.html"/>
+    <xhtml:link rel="alternate" hreflang="ar-LB" href="https://lebanon.auipr.org/objectives.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://auipr.org/objectives.html"/>
+    <changefreq>monthly</changefreq>
     <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://lebanon.auipr.org/objectives.html</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://auipr.org/objectives.html"/>
+    <xhtml:link rel="alternate" hreflang="ar-LB" href="https://lebanon.auipr.org/objectives.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://auipr.org/objectives.html"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.76</priority>
   </url>
   <url>
     <loc>https://auipr.org/structure.html</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://auipr.org/structure.html"/>
+    <xhtml:link rel="alternate" hreflang="ar-LB" href="https://lebanon.auipr.org/structure.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://auipr.org/structure.html"/>
+    <changefreq>monthly</changefreq>
     <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://lebanon.auipr.org/structure.html</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://auipr.org/structure.html"/>
+    <xhtml:link rel="alternate" hreflang="ar-LB" href="https://lebanon.auipr.org/structure.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://auipr.org/structure.html"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.76</priority>
   </url>
   <url>
     <loc>https://auipr.org/contact.html</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://auipr.org/contact.html"/>
+    <xhtml:link rel="alternate" hreflang="ar-LB" href="https://lebanon.auipr.org/contact.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://auipr.org/contact.html"/>
+    <changefreq>weekly</changefreq>
     <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://lebanon.auipr.org/contact.html</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://auipr.org/contact.html"/>
+    <xhtml:link rel="alternate" hreflang="ar-LB" href="https://lebanon.auipr.org/contact.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://auipr.org/contact.html"/>
+    <changefreq>weekly</changefreq>
+    <priority>0.76</priority>
   </url>
   <url>
     <loc>https://auipr.org/terms.html</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://auipr.org/terms.html"/>
+    <xhtml:link rel="alternate" hreflang="ar-LB" href="https://lebanon.auipr.org/terms.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://auipr.org/terms.html"/>
+    <changefreq>yearly</changefreq>
     <priority>0.50</priority>
+  </url>
+  <url>
+    <loc>https://lebanon.auipr.org/terms.html</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://auipr.org/terms.html"/>
+    <xhtml:link rel="alternate" hreflang="ar-LB" href="https://lebanon.auipr.org/terms.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://auipr.org/terms.html"/>
+    <changefreq>yearly</changefreq>
+    <priority>0.47</priority>
   </url>
   <url>
     <loc>https://auipr.org/refund.html</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://auipr.org/refund.html"/>
+    <xhtml:link rel="alternate" hreflang="ar-LB" href="https://lebanon.auipr.org/refund.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://auipr.org/refund.html"/>
+    <changefreq>yearly</changefreq>
     <priority>0.50</priority>
   </url>
-
+  <url>
+    <loc>https://lebanon.auipr.org/refund.html</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://auipr.org/refund.html"/>
+    <xhtml:link rel="alternate" hreflang="ar-LB" href="https://lebanon.auipr.org/refund.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://auipr.org/refund.html"/>
+    <changefreq>yearly</changefreq>
+    <priority>0.47</priority>
+  </url>
   <url>
     <loc>https://auipr.org/news/index.html</loc>
-    <priority>0.80</priority>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://auipr.org/news/index.html"/>
+    <xhtml:link rel="alternate" hreflang="ar-LB" href="https://lebanon.auipr.org/news/index.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://auipr.org/news/index.html"/>
+    <changefreq>daily</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://lebanon.auipr.org/news/index.html</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://auipr.org/news/index.html"/>
+    <xhtml:link rel="alternate" hreflang="ar-LB" href="https://lebanon.auipr.org/news/index.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://auipr.org/news/index.html"/>
+    <changefreq>daily</changefreq>
+    <priority>0.81</priority>
   </url>
   <url>
     <loc>https://auipr.org/news/reem-rimouni-award-2026.html</loc>
-    <priority>0.70</priority>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://auipr.org/news/reem-rimouni-award-2026.html"/>
+    <xhtml:link rel="alternate" hreflang="ar-LB" href="https://lebanon.auipr.org/news/reem-rimouni-award-2026.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://auipr.org/news/reem-rimouni-award-2026.html"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://lebanon.auipr.org/news/reem-rimouni-award-2026.html</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://auipr.org/news/reem-rimouni-award-2026.html"/>
+    <xhtml:link rel="alternate" hreflang="ar-LB" href="https://lebanon.auipr.org/news/reem-rimouni-award-2026.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://auipr.org/news/reem-rimouni-award-2026.html"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.71</priority>
   </url>
   <url>
     <loc>https://auipr.org/news/ip-development-conference-2026.html</loc>
-    <priority>0.70</priority>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://auipr.org/news/ip-development-conference-2026.html"/>
+    <xhtml:link rel="alternate" hreflang="ar-LB" href="https://lebanon.auipr.org/news/ip-development-conference-2026.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://auipr.org/news/ip-development-conference-2026.html"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://lebanon.auipr.org/news/ip-development-conference-2026.html</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://auipr.org/news/ip-development-conference-2026.html"/>
+    <xhtml:link rel="alternate" hreflang="ar-LB" href="https://lebanon.auipr.org/news/ip-development-conference-2026.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://auipr.org/news/ip-development-conference-2026.html"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.71</priority>
   </url>
   <url>
     <loc>https://auipr.org/news/ai.html</loc>
-    <priority>0.70</priority>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://auipr.org/news/ai.html"/>
+    <xhtml:link rel="alternate" hreflang="ar-LB" href="https://lebanon.auipr.org/news/ai.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://auipr.org/news/ai.html"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://lebanon.auipr.org/news/ai.html</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://auipr.org/news/ai.html"/>
+    <xhtml:link rel="alternate" hreflang="ar-LB" href="https://lebanon.auipr.org/news/ai.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://auipr.org/news/ai.html"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.71</priority>
   </url>
   <url>
     <loc>https://auipr.org/news/ramadan2026.html</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://auipr.org/news/ramadan2026.html"/>
+    <xhtml:link rel="alternate" hreflang="ar-LB" href="https://lebanon.auipr.org/news/ramadan2026.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://auipr.org/news/ramadan2026.html"/>
+    <changefreq>monthly</changefreq>
     <priority>0.60</priority>
   </url>
-
-</urlset>
+  <url>
+    <loc>https://lebanon.auipr.org/news/ramadan2026.html</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://auipr.org/news/ramadan2026.html"/>
+    <xhtml:link rel="alternate" hreflang="ar-LB" href="https://lebanon.auipr.org/news/ramadan2026.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://auipr.org/news/ramadan2026.html"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.57</priority>
+  </url>
+</urlset>

@@ -1,4 +1,4 @@
-# robots.txt for auipr.org
+# robots.txt for auipr.org & lebanon.auipr.org
 User-agent: *
 
 # منع أرشفة صفحة النشاطات وصفحة لوحة التحكم
@@ -15,5 +15,6 @@ Disallow: /news/footer.html
 # السماح لجميع محركات البحث بالوصول لباقي الموقع
 Allow: /
 
-# رابط خريطة الموقع لزيادة سرعة الأرشفة
+# خرائط الموقع للفرعين لزيادة سرعة الأرشفة
 Sitemap: https://auipr.org/sitemap.xml
+Sitemap: https://lebanon.auipr.org/sitemap.xml
