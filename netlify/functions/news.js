@@ -46,6 +46,35 @@ exports.handler = async (event, context) => {
 
   const method = event.httpMethod;
 
+  // Verify Admin Token Check
+  const query = event.queryStringParameters || {};
+  if (query.action === 'verify_auth') {
+    const getHeader = (headers, name) => {
+      const lower = name.toLowerCase();
+      for (const k of Object.keys(headers || {})) {
+        if (k.toLowerCase() === lower) return headers[k];
+      }
+      return null;
+    };
+    const rawToken = getHeader(event.headers, 'x-admin-token') || getHeader(event.headers, 'authorization');
+    const token = rawToken ? rawToken.trim() : '';
+    const expectedToken = (ADMIN_TOKEN || 'reem.auipr2026').trim();
+
+    if (token && token === expectedToken) {
+      return {
+        statusCode: 200,
+        headers,
+        body: JSON.stringify({ ok: true, message: 'Authenticated' })
+      };
+    } else {
+      return {
+        statusCode: 401,
+        headers,
+        body: JSON.stringify({ ok: false, error: 'Invalid Admin Token' })
+      };
+    }
+  }
+
   try {
     // Check MongoDB Connection
     if (!MONGODB_URI) {
