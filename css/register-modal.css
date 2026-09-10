@@ -1,0 +1,272 @@
+/* ========================================================
+   MODERN REGISTRATION & BOOKING MODAL (WEB3FORMS)
+   ======================================================== */
+.reg-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 11000;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+  direction: rtl;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.reg-modal-overlay.active {
+  display: flex;
+  opacity: 1;
+}
+.reg-modal-content {
+  background: #ffffff;
+  width: 100%;
+  max-width: 620px;
+  max-height: 90vh;
+  border-radius: 24px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: regModalPop 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+}
+@keyframes regModalPop {
+  0% { transform: scale(0.92) translateY(15px); opacity: 0; }
+  100% { transform: scale(1) translateY(0); opacity: 1; }
+}
+.reg-modal-header {
+  background: linear-gradient(135deg, #1a162e 0%, #2b2346 100%);
+  color: #ffffff;
+  padding: 24px 28px 20px;
+  position: relative;
+  text-align: right;
+  border-bottom: 3px solid #3cebc3;
+}
+.reg-modal-close {
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.12);
+  border: 0;
+  color: #ffffff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  transition: all 0.2s ease;
+}
+.reg-modal-close:hover {
+  background: #ef4444;
+  color: #fff;
+  transform: rotate(90deg);
+}
+.reg-modal-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(60, 235, 195, 0.15);
+  color: #3cebc3;
+  padding: 4px 12px;
+  border-radius: 50px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.reg-modal-title {
+  font-size: 1.45rem;
+  font-weight: 800;
+  margin: 0 0 4px;
+  color: #ffffff;
+  font-family: 'IBM Plex Sans Arabic', sans-serif;
+}
+.reg-modal-subtitle {
+  font-size: 0.85rem;
+  color: #cbd5e1;
+  margin: 0;
+}
+.reg-modal-body {
+  padding: 24px 28px;
+  overflow-y: auto;
+  max-height: calc(90vh - 120px);
+}
+.reg-modal-body::-webkit-scrollbar {
+  width: 6px;
+}
+.reg-modal-body::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+.reg-modal-body::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 10px;
+}
+.reg-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+.reg-form-full {
+  grid-column: 1 / -1;
+}
+.reg-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  text-align: right;
+}
+.reg-label {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #1e293b;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.reg-label .required {
+  color: #ef4444;
+}
+.reg-input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.reg-input-icon {
+  position: absolute;
+  right: 14px;
+  color: #94a3b8;
+  font-size: 0.95rem;
+  pointer-events: none;
+}
+.reg-input, .reg-select, .reg-textarea {
+  width: 100%;
+  padding: 11px 40px 11px 14px;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 12px;
+  font-size: 0.92rem;
+  font-family: inherit;
+  color: #1e293b;
+  background: #f8fafc;
+  transition: all 0.2s ease;
+  outline: none;
+  box-sizing: border-box;
+}
+.reg-textarea {
+  padding: 12px 14px;
+  resize: vertical;
+  min-height: 75px;
+}
+.reg-input:focus, .reg-select:focus, .reg-textarea:focus {
+  background: #ffffff;
+  border-color: #7251cd;
+  box-shadow: 0 0 0 3px rgba(114, 81, 205, 0.15);
+}
+.reg-submit-btn {
+  width: 100%;
+  background: linear-gradient(135deg, #7251cd 0%, #5849b3 100%);
+  color: #ffffff;
+  border: 0;
+  border-radius: 14px;
+  padding: 14px 20px;
+  font-size: 1.05rem;
+  font-weight: 800;
+  font-family: inherit;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: all 0.25s ease;
+  box-shadow: 0 8px 20px rgba(114, 81, 205, 0.3);
+  margin-top: 8px;
+}
+.reg-submit-btn:hover {
+  background: linear-gradient(135deg, #5849b3 0%, #463996 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 25px rgba(114, 81, 205, 0.4);
+}
+.reg-submit-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+.reg-footer-note {
+  text-align: center;
+  font-size: 0.78rem;
+  color: #64748b;
+  margin-top: 14px;
+  line-height: 1.5;
+}
+.reg-success-box {
+  text-align: center;
+  padding: 30px 15px;
+  animation: fadeIn 0.4s ease;
+}
+.reg-success-icon {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background: #dcfce7;
+  color: #16a34a;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.2rem;
+  margin-bottom: 18px;
+}
+.reg-success-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #1e293b;
+  margin-bottom: 8px;
+}
+.reg-success-desc {
+  font-size: 0.95rem;
+  color: #64748b;
+  line-height: 1.7;
+  max-width: 440px;
+  margin: 0 auto 24px;
+}
+.reg-success-btn {
+  background: #2b2346;
+  color: #ffffff;
+  border: 0;
+  padding: 10px 28px;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.reg-success-btn:hover {
+  background: #1a162e;
+}
+@media (max-width: 640px) {
+  .reg-modal-content {
+    max-height: 94vh;
+    border-radius: 20px;
+  }
+  .reg-modal-header {
+    padding: 20px 18px 16px;
+  }
+  .reg-modal-title {
+    font-size: 1.25rem;
+  }
+  .reg-modal-body {
+    padding: 18px;
+  }
+  .reg-form-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+}

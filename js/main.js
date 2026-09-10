@@ -212,6 +212,9 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+
+    // تشغيل نظام استمارة التسجيل والحجز التفاعلية
+    initRegistrationModal();
 });
 
 let lastScrollTop = 0;
@@ -489,4 +492,246 @@ function initBranchSystem() {
 
     updateBranchUI();
     setTimeout(updateBranchUI, 300);
+}
+
+/* ========================================================
+   REGISTRATION & BOOKING POPUP (WEB3FORMS INTEGRATION)
+   ======================================================== */
+const WEB3FORMS_ACCESS_KEY = "YOUR_ACCESS_KEY_HERE"; // مفتاح Web3Forms
+
+function initRegistrationModal() {
+    // 1. إنشاء وحقن هيكل النافذة في الصفحة إن لم تكن موجودة
+    if (!document.getElementById('regModalOverlay')) {
+        const modalHTML = `
+        <div class="reg-modal-overlay" id="regModalOverlay" role="dialog" aria-modal="true" aria-labelledby="regModalTitle">
+          <div class="reg-modal-content">
+            <div class="reg-modal-header">
+              <button type="button" class="reg-modal-close" id="regModalClose" aria-label="إغلاق">&times;</button>
+              <div class="reg-modal-badge"><i class="fa-solid fa-calendar-check"></i> التسجيل والحجز المباشر</div>
+              <h3 class="reg-modal-title" id="regModalTitle">استمارة التسجيل والمشاركة</h3>
+              <p class="reg-modal-subtitle">الاتحاد العربي لحماية حقوق الملكية الفكرية - هيئة عربية دولية</p>
+            </div>
+            <div class="reg-modal-body" id="regModalBody">
+              <form id="regModalForm">
+                <input type="hidden" name="access_key" id="regWeb3FormsKey" value="${WEB3FORMS_ACCESS_KEY}">
+                <input type="hidden" name="subject" value="طلب تسجيل جديد عبر موقع الاتحاد العربي للملكية الفكرية">
+                <input type="hidden" name="from_name" value="بوابة التسجيل الإلكتروني AUIPR">
+                <input type="checkbox" name="botcheck" style="display: none;">
+
+                <div class="reg-form-grid">
+                  <div class="reg-input-group">
+                    <label class="reg-label" for="regFullName">الاسم الكامل <span class="required">*</span></label>
+                    <div class="reg-input-wrap">
+                      <i class="fa-regular fa-user reg-input-icon"></i>
+                      <input type="text" id="regFullName" name="name" class="reg-input" placeholder="الاسم الثلاثي أو الرباعي" required>
+                    </div>
+                  </div>
+
+                  <div class="reg-input-group">
+                    <label class="reg-label" for="regPhone">رقم الهاتف / واتساب <span class="required">*</span></label>
+                    <div class="reg-input-wrap">
+                      <i class="fa-brands fa-whatsapp reg-input-icon"></i>
+                      <input type="tel" id="regPhone" name="phone" class="reg-input" dir="ltr" placeholder="+962 ... / +966 ..." required>
+                    </div>
+                  </div>
+
+                  <div class="reg-input-group">
+                    <label class="reg-label" for="regEmail">البريد الإلكتروني <span class="required">*</span></label>
+                    <div class="reg-input-wrap">
+                      <i class="fa-regular fa-envelope reg-input-icon"></i>
+                      <input type="email" id="regEmail" name="email" class="reg-input" dir="ltr" placeholder="example@domain.com" required>
+                    </div>
+                  </div>
+
+                  <div class="reg-input-group">
+                    <label class="reg-label" for="regOrg">جهة العمل / المؤسسة</label>
+                    <div class="reg-input-wrap">
+                      <i class="fa-regular fa-building reg-input-icon"></i>
+                      <input type="text" id="regOrg" name="organization" class="reg-input" placeholder="الشركة / المؤسسة / الصفة">
+                    </div>
+                  </div>
+
+                  <div class="reg-input-group reg-form-full">
+                    <label class="reg-label" for="regEventType">نوع التسجيل / الفعالية <span class="required">*</span></label>
+                    <div class="reg-input-wrap">
+                      <i class="fa-solid fa-list-check reg-input-icon"></i>
+                      <select id="regEventType" name="event_type" class="reg-select" required>
+                        <option value="اليوم العربي للملكية الفكرية وعاصمتها (عمان)">اليوم العربي للملكية الفكرية وعاصمتها (عمان - 1 ديسمبر 2026)</option>
+                        <option value="مؤتمر تطوير منظومة الملكية الفكرية (القاهرة)">مؤتمر تطوير منظومة الملكية الفكرية (القاهرة)</option>
+                        <option value="مؤتمر الملكية الفكرية والذكاء الاصطناعي">مؤتمر الملكية الفكرية والذكاء الاصطناعي</option>
+                        <option value="طلب الانضمام وعضوية الاتحاد">طلب الانضمام وعضوية الاتحاد العربي</option>
+                        <option value="برامج ودورات الأكاديمية العربية الدولية">برامج ودورات الأكاديمية العربية الدولية للملكية الفكرية</option>
+                        <option value="استفسار أو حجز عام">استفسار أو حجز عام</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="reg-input-group reg-form-full">
+                    <label class="reg-label" for="regMessage">ملاحظات إضافية أو رسالة مخصصة <span style="color:#64748b; font-weight:400;">(اختياري)</span></label>
+                    <textarea id="regMessage" name="message" class="reg-textarea" rows="3" placeholder="أي استفسارات أو تفاصيل إضافية تود إضافتها مع التسجيل..."></textarea>
+                  </div>
+                </div>
+
+                <button type="submit" class="reg-submit-btn" id="regSubmitBtn">
+                  <span id="regBtnContent"><i class="fa-regular fa-paper-plane"></i> إرسال طلب التسجيل</span>
+                </button>
+
+                <p class="reg-footer-note">
+                  <i class="fa-solid fa-lock" style="color: #3cebc3;"></i> بياناتكم محمية ومحفوظة بسرية تامة، وسيتم التواصل معكم لتأكيد التسجيل.
+                </p>
+              </form>
+            </div>
+          </div>
+        </div>
+        `;
+        document.body.insertAdjacentHTML('beforeend', modalHTML);
+    }
+
+    const overlay = document.getElementById('regModalOverlay');
+    const closeBtn = document.getElementById('regModalClose');
+    const form = document.getElementById('regModalForm');
+    const select = document.getElementById('regEventType');
+
+    window.openRegistrationModal = function(defaultEvent = '') {
+        if (!overlay) return;
+        
+        if (defaultEvent && select) {
+            let found = false;
+            for (let i = 0; i < select.options.length; i++) {
+                const opt = select.options[i];
+                if (opt.value.includes(defaultEvent) || defaultEvent.includes(opt.value)) {
+                    opt.selected = true;
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
+                const customOpt = new Option(defaultEvent, defaultEvent, true, true);
+                select.add(customOpt, 0);
+            }
+        }
+
+        overlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    };
+
+    window.closeRegistrationModal = function() {
+        if (!overlay) return;
+        overlay.classList.remove('active');
+        document.body.style.overflow = 'auto';
+    };
+
+    if (closeBtn) {
+        closeBtn.addEventListener('click', window.closeRegistrationModal);
+    }
+
+    if (overlay) {
+        overlay.addEventListener('click', (e) => {
+            if (e.target === overlay) {
+                window.closeRegistrationModal();
+            }
+        });
+    }
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && overlay && overlay.classList.contains('active')) {
+            window.closeRegistrationModal();
+        }
+    });
+
+    // 2. إرسال النموذج مع Web3Forms
+    if (form) {
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('regSubmitBtn');
+            const btnContent = document.getElementById('regBtnContent');
+            const keyInput = document.getElementById('regWeb3FormsKey');
+            const key = keyInput ? keyInput.value : '';
+
+            if (!key || key === 'YOUR_ACCESS_KEY_HERE') {
+                alert('يرجى تزويد مفتاح Web3Forms (Access Key) لتفعيل استلام رسائل واستمارات التسجيل على بريدكم الإلكتروني.');
+                return;
+            }
+
+            btn.disabled = true;
+            btnContent.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> جاري إرسال الطلب...';
+
+            try {
+                const formData = new FormData(form);
+                const response = await fetch('https://api.web3forms.com/submit', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    const body = document.getElementById('regModalBody');
+                    body.innerHTML = `
+                        <div class="reg-success-box">
+                            <div class="reg-success-icon"><i class="fa-solid fa-circle-check"></i></div>
+                            <h3 class="reg-success-title">تم استلام طلب التسجيل بنجاح!</h3>
+                            <p class="reg-success-desc">شكراً لاهتمامكم بالتسجيل والمشاركة. تم إرسال بياناتكم بنجاح وسيقوم فريق الأمانة العامة للاتحاد بالتواصل معكم قريباً عبر الهاتف أو البريد الإلكتروني لتأكيد التسجيل.</p>
+                            <button type="button" class="reg-success-btn" onclick="window.closeRegistrationModal()">إغلاق النافذة</button>
+                        </div>
+                    `;
+                } else {
+                    alert(data.message || 'حدث خطأ أثناء إرسال الطلب، يرجى المحاولة لاحقاً.');
+                    btn.disabled = false;
+                    btnContent.innerHTML = '<i class="fa-regular fa-paper-plane"></i> إرسال طلب التسجيل';
+                }
+            } catch (err) {
+                console.error('Web3Forms Error:', err);
+                alert('تعذر الاتصال بالخادم، يرجى التحقق من اتصال الإنترنت.');
+                btn.disabled = false;
+                btnContent.innerHTML = '<i class="fa-regular fa-paper-plane"></i> إرسال طلب التسجيل';
+            }
+        });
+    }
+
+    // 3. التقاط أي زر أو رابط في الموقع يحتوي على كلمات التسجيل أو الحجز أو الاشتراك
+    document.addEventListener('click', (e) => {
+        const target = e.target.closest('a, button');
+        if (!target) return;
+
+        // استثناء أزرار لوحة التحكم، تبديل الفرع، أزرار النموذج نفسه، أو روابط القائمة العلوية
+        if (target.closest('.dropdown-list') || 
+            target.closest('.branch-switcher-box') || 
+            target.closest('.reg-modal-content') || 
+            target.classList.contains('reg-modal-close') ||
+            target.classList.contains('branch-tab-btn')) {
+            return;
+        }
+
+        const text = (target.innerText || target.textContent || '').trim();
+        const title = (target.getAttribute('title') || '').trim();
+
+        const isRegisterTrigger = 
+            target.classList.contains('btn-event-filled') ||
+            target.classList.contains('btn-royal-cta') ||
+            target.hasAttribute('data-open-register') ||
+            /(التسجيل|تسجيل|حجز|اشترك|اشتراك|انضم|انضمام)/i.test(text) ||
+            /(التسجيل|تسجيل|حجز|اشترك|اشتراك|انضم)/i.test(title);
+
+        if (isRegisterTrigger) {
+            e.preventDefault();
+            
+            let eventName = '';
+            if (/اشترك|انضم/i.test(text) || /اشترك|انضم/i.test(title)) {
+                eventName = 'طلب الانضمام وعضوية الاتحاد';
+            } else {
+                // استخراج عنوان الفعالية من الكرت المحيط بالزر إن وجد
+                const card = target.closest('.events-main-card, .news-item, .seminars-banner-card, .cta-pixel-card, .news-card');
+                if (card) {
+                    const heading = card.querySelector('h2, h3, h4');
+                    if (heading) eventName = heading.textContent.trim();
+                }
+                if (!eventName && title) {
+                    eventName = title.replace(/^(التسجيل في|طلب الانضمام إلى|حجز في)\s*/, '');
+                }
+            }
+
+            window.openRegistrationModal(eventName);
+        }
+    });
 }
