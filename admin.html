@@ -406,7 +406,7 @@
       <img src="https://static.wixstatic.com/media/215eb2_98e65620ebb04f4d96de0b8ae685fcee~mv2.png" alt="شعار الاتحاد" class="auth-logo">
       <h3 style="color: #1a2b4b; font-size: 1.3rem; margin-bottom: 8px;">لوحة إدارة الأخبار</h3>
       <p style="color: #64748b; font-size: 0.9rem; margin-bottom: 25px;">الاتحاد العربي لحماية حقوق الملكية الفكرية</p>
-      <input type="password" id="passcodeInput" class="form-control" placeholder="رمز الدخول المعتمد" style="margin-bottom: 20px; text-align: center; font-size: 1.05rem; letter-spacing: 2px;" onkeydown="if(event.key==='Enter') saveToken()">
+      <input type="password" id="passcodeInput" dir="ltr" class="form-control" placeholder="رمز الدخول المعتمد" style="margin-bottom: 20px; text-align: center; font-size: 1.05rem; letter-spacing: 2px;" onkeydown="if(event.key==='Enter') saveToken()">
       <button id="loginSubmitBtn" onclick="saveToken()" class="btn-brand-primary" style="width: 100%; justify-content: center;">
         <span>تسجيل الدخول</span> <span class="btn-icon-circle-dark">←</span>
       </button>
@@ -441,7 +441,7 @@
       if (adminToken) {
         // التحقق الفعلي من صحة الرمز المخزن مع السيرفر
         fetch(`${API_URL}?action=verify_auth`, {
-          headers: { 'x-admin-token': adminToken }
+          headers: { 'x-admin-token': encodeURIComponent(adminToken) }
         }).then(res => {
           if (res.ok) {
             document.getElementById('authModal').style.display = 'none';
@@ -465,6 +465,13 @@
       const input = document.getElementById('passcodeInput').value.trim();
       if (!input) return alert('يرجى إدخال رمز الدخول');
 
+      // فحص إذا كان المستخدم يكتب باللغة العربية
+      if (/[\u0600-\u06FF]/.test(input)) {
+        alert('تنبيه: أنت تكتب باللغة العربية! رمز الدخول مكتوب بأحرف إنجليزية وأرقام فقط.\nيرجى تحويل لغة لوحة المفاتيح إلى الإنجليزية وكتابة: reem.auipr2026');
+        document.getElementById('passcodeInput').focus();
+        return;
+      }
+
       const btn = document.getElementById('loginSubmitBtn');
       const originalHTML = btn.innerHTML;
       btn.disabled = true;
@@ -472,7 +479,7 @@
 
       try {
         const res = await fetch(`${API_URL}?action=verify_auth`, {
-          headers: { 'x-admin-token': input }
+          headers: { 'x-admin-token': encodeURIComponent(input) }
         });
 
         if (res.ok) {
@@ -656,7 +663,7 @@
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'x-admin-token': adminToken
+            'x-admin-token': encodeURIComponent(adminToken)
           },
           body: JSON.stringify(payload)
         });
@@ -700,7 +707,7 @@
         const res = await fetch(`${API_URL}?id=${id}`, {
           method: 'DELETE',
           headers: {
-            'x-admin-token': adminToken
+            'x-admin-token': encodeURIComponent(adminToken)
           }
         });
 

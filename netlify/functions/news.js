@@ -57,7 +57,8 @@ exports.handler = async (event, context) => {
       return null;
     };
     const rawToken = getHeader(event.headers, 'x-admin-token') || getHeader(event.headers, 'authorization');
-    const token = rawToken ? rawToken.trim() : '';
+    let token = rawToken ? rawToken.trim() : '';
+    try { token = decodeURIComponent(token); } catch(e) {}
     const expectedToken = (ADMIN_TOKEN || 'reem.auipr2026').trim();
 
     if (token && token === expectedToken) {
@@ -144,7 +145,8 @@ exports.handler = async (event, context) => {
       return null;
     };
     const rawToken = getHeader(event.headers, 'x-admin-token') || getHeader(event.headers, 'authorization');
-    const token = rawToken ? rawToken.trim() : '';
+    let token = rawToken ? rawToken.trim() : '';
+    try { token = decodeURIComponent(token); } catch(e) {}
     const expectedToken = (ADMIN_TOKEN || 'reem.auipr2026').trim();
 
     if (token !== expectedToken) {
