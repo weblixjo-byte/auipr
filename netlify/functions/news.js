@@ -8,7 +8,7 @@ const { MongoClient, ObjectId } = require('mongodb');
 let cachedClient = null;
 let cachedDb = null;
 
-const ADMIN_TOKEN = process.env.ADMIN_TOKEN || 'auipr2026admin';
+const ADMIN_TOKEN = process.env.ADMIN_TOKEN || 'reem.auipr2026';
 const MONGODB_URI = process.env.MONGODB_URI;
 const DB_NAME = process.env.MONGODB_DB_NAME || 'auipr_db';
 
@@ -116,7 +116,7 @@ exports.handler = async (event, context) => {
     };
     const rawToken = getHeader(event.headers, 'x-admin-token') || getHeader(event.headers, 'authorization');
     const token = rawToken ? rawToken.trim() : '';
-    const expectedToken = (ADMIN_TOKEN || 'auipr2026admin').trim();
+    const expectedToken = (ADMIN_TOKEN || 'reem.auipr2026').trim();
 
     if (token !== expectedToken) {
       return {
