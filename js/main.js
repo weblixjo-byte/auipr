@@ -559,8 +559,6 @@ function initRegistrationModal() {
                   <button type="submit" class="reg-clean-submit" id="regSubmitBtn">
                     <span id="regBtnContent">تأكيد وإرسال الطلب</span>
                   </button>
-
-                  <p class="reg-clean-privacy">🔒 معلوماتكم سرية ومحمية تماماً.</p>
                 </div>
               </form>
             </div>
