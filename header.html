@@ -4,25 +4,56 @@
   overflow-y: auto;
   scrollbar-width: thin;
 }
-.branch-switch-item > a {
-  color: #7251cd !important;
-  font-weight: 700 !important;
-}
-.branch-switch-item .sub-menu a {
-  display: flex !important;
-  align-items: center;
-  justify-content: space-between;
-}
-.branch-switch-item .sub-menu a:hover {
-  background-color: rgba(114, 81, 205, 0.08) !important;
-  color: #7251cd !important;
-}
 .branch-mode-lebanon .org-name {
   display: flex !important;
   flex-direction: column !important;
   align-items: flex-start !important;
   justify-content: center !important;
   line-height: 1.35 !important;
+}
+.branch-switcher-box {
+  padding: 10px 14px;
+  margin: 10px 12px 4px;
+  background: #f8fafc;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+}
+.branch-switcher-title {
+  font-size: 0.78rem;
+  color: #64748b;
+  font-weight: 700;
+  margin-bottom: 7px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.branch-pill-tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5px;
+  background: #e2e8f0;
+  padding: 3px;
+  border-radius: 9px;
+}
+.branch-tab-btn {
+  text-align: center;
+  padding: 7px 4px;
+  font-size: 0.82rem;
+  border-radius: 7px;
+  text-decoration: none;
+  font-weight: 700;
+  color: #475569;
+  background: transparent;
+  transition: all 0.2s ease;
+  display: block;
+}
+.branch-tab-btn:hover {
+  color: #1e293b;
+}
+.branch-tab-btn.active {
+  background: #7251cd;
+  color: #ffffff !important;
+  box-shadow: 0 2px 6px rgba(114, 81, 205, 0.25);
 }
 </style>
 <header class="main-header">
@@ -51,27 +82,18 @@
           <li><a href="events.html">دورات و مؤتمرات</a></li>
           <li><a href="news/index.html">آخر الأخبار</a></li>
           <li><a href="contact.html">تواصل معنا</a></li>
-          <li class="has-submenu branch-switch-item">
-            <a href="#" class="branch-toggle-link">
-              <span><i class="fa-solid fa-globe" style="margin-left: 6px;"></i><span id="branchMenuLabel">الممثليات الإقليمية</span></span>
-              <i class="fa-solid fa-chevron-down submenu-icon"></i>
-            </a>
-            <ul class="sub-menu">
-              <li>
-                <a href="https://auipr.org" class="branch-nav-main">
-                  <span><i class="fa-solid fa-building-columns" style="margin-left: 6px;"></i>المقر الرئيسي</span>
-                  <span class="badge-main-curr" style="display:none; font-size: 0.8rem; color: #7251cd; font-weight: bold;">(الحالي)</span>
-                </a>
-              </li>
-              <li>
-                <a href="https://lebanon.auipr.org" class="branch-nav-lebanon">
-                  <span>ممثلية الجمهورية اللبنانية</span>
-                  <span class="badge-lb-curr" style="display:none; font-size: 0.8rem; color: #00c4a7; font-weight: bold;">(الحالي)</span>
-                </a>
-              </li>
-            </ul>
-          </li>
         </ul>
+
+        <!-- زر التبديل العصري الأنيق بدون عجقة أو قوائم فرعية -->
+        <div class="branch-switcher-box">
+          <div class="branch-switcher-title">
+            <i class="fa-solid fa-globe" style="color: #7251cd;"></i> <span>نطاق الموقع:</span>
+          </div>
+          <div class="branch-pill-tabs">
+            <a href="https://auipr.org" class="branch-tab-btn branch-tab-main">المقر الرئيسي</a>
+            <a href="https://lebanon.auipr.org" class="branch-tab-btn branch-tab-lebanon">ممثلية لبنان</a>
+          </div>
+        </div>
       </div>
     </div>
     <div class="menu-overlay" id="menuOverlay"></div>

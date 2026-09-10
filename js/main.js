@@ -401,20 +401,12 @@ function initBranchSystem() {
     const isProd = hostname.endsWith('auipr.org');
 
     const updateBranchUI = () => {
-        // 1. تحديث نصوص وروابط تبديل الممثلية في القائمة
-        const label = document.getElementById('branchMenuLabel');
-        if (label) {
-            label.textContent = isLebanon ? 'ممثلية لبنان' : 'الممثليات الإقليمية';
-        }
-
-        const mainLinks = document.querySelectorAll('.branch-nav-main');
-        const lbLinks = document.querySelectorAll('.branch-nav-lebanon');
-        const mainBadges = document.querySelectorAll('.badge-main-curr');
-        const lbBadges = document.querySelectorAll('.badge-lb-curr');
-
         const currentPath = window.location.pathname;
 
-        mainLinks.forEach(a => {
+        const mainTabs = document.querySelectorAll('.branch-tab-main, .branch-nav-main');
+        const lbTabs = document.querySelectorAll('.branch-tab-lebanon, .branch-nav-lebanon');
+
+        mainTabs.forEach(a => {
             if (isProd) {
                 a.href = 'https://auipr.org' + currentPath;
             } else {
@@ -424,15 +416,13 @@ function initBranchSystem() {
             }
             a.onclick = () => sessionStorage.setItem('auipr_active_branch', 'main');
             if (!isLebanon) {
-                a.style.fontWeight = 'bold';
-                a.style.color = '#7251cd';
+                a.classList.add('active');
             } else {
-                a.style.fontWeight = 'normal';
-                a.style.color = '';
+                a.classList.remove('active');
             }
         });
 
-        lbLinks.forEach(a => {
+        lbTabs.forEach(a => {
             if (isProd) {
                 a.href = 'https://lebanon.auipr.org' + currentPath;
             } else {
@@ -442,16 +432,11 @@ function initBranchSystem() {
             }
             a.onclick = () => sessionStorage.setItem('auipr_active_branch', 'lebanon');
             if (isLebanon) {
-                a.style.fontWeight = 'bold';
-                a.style.color = '#00c4a7';
+                a.classList.add('active');
             } else {
-                a.style.fontWeight = 'normal';
-                a.style.color = '';
+                a.classList.remove('active');
             }
         });
-
-        mainBadges.forEach(b => b.style.display = !isLebanon ? 'inline' : 'none');
-        lbBadges.forEach(b => b.style.display = isLebanon ? 'inline' : 'none');
 
         // 2. تطبيق هوية ممثلية لبنان عند التواجد في نطاق ممثلية لبنان
         if (isLebanon) {
