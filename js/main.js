@@ -497,7 +497,7 @@ function initBranchSystem() {
 /* ========================================================
    REGISTRATION & BOOKING POPUP (WEB3FORMS INTEGRATION)
    ======================================================== */
-const WEB3FORMS_ACCESS_KEY = "YOUR_ACCESS_KEY_HERE"; // مفتاح Web3Forms
+const WEB3FORMS_ACCESS_KEY = "95bcb994-7d55-4e1e-a7d8-e0457880a2fe"; // مفتاح Web3Forms
 
 function initRegistrationModal() {
     // 1. إنشاء وحقن هيكل النافذة في الصفحة إن لم تكن موجودة
