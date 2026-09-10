@@ -1,1 +1,72 @@
-<header class="main-header"><div class="container header-inner"><div class="header-right"><a href="index.html" class="logo-link"><img src="https://static.wixstatic.com/media/215eb2_98e65620ebb04f4d96de0b8ae685fcee~mv2.png" alt="الاتحاد العربي" class="main-logo"></a><h1 class="org-name">الاتحاد العربي لحماية حقوق الملكية الفكرية (منظمة عربية)</h1></div><div class="menu-wrapper"><button class="btn-menu" id="menuToggleBtn"><span class="btn-text">استكشف القائمة</span><span class="hamburger-icon"><i class="fa-solid fa-bars"></i></span></button><div class="dropdown-menu-container" id="mainDropdownMenu"><ul class="dropdown-list"><li><a href="index.html">الرئيسية</a></li><li class="has-submenu"><a href="#">عن الاتحاد <i class="fa-solid fa-chevron-down submenu-icon"></i></a><ul class="sub-menu"><li><a href="structure.html">الهيكل التنظيمي</a></li><li><a href="objectives.html">أهداف الاتحاد</a></li></ul></li><li><a href="events.html">دورات و مؤتمرات</a></li><li><a href="news/index.html">آخر الأخبار</a></li><li><a href="contact.html">تواصل معنا</a></li></ul></div></div><div class="menu-overlay" id="menuOverlay"></div></div></div></header>
+<style>
+.dropdown-menu-container {
+  max-height: calc(100vh - 90px);
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+.branch-switch-item > a {
+  color: #7251cd !important;
+  font-weight: 700 !important;
+}
+.branch-switch-item .sub-menu a {
+  display: flex !important;
+  align-items: center;
+  justify-content: space-between;
+}
+.branch-switch-item .sub-menu a:hover {
+  background-color: rgba(114, 81, 205, 0.08) !important;
+  color: #7251cd !important;
+}
+</style>
+<header class="main-header">
+  <div class="container header-inner">
+    <div class="header-right">
+      <a href="index.html" class="logo-link">
+        <img src="https://static.wixstatic.com/media/215eb2_98e65620ebb04f4d96de0b8ae685fcee~mv2.png" alt="الاتحاد العربي" class="main-logo">
+      </a>
+      <h1 class="org-name">الاتحاد العربي لحماية حقوق الملكية الفكرية (منظمة عربية)</h1>
+    </div>
+    <div class="menu-wrapper">
+      <button class="btn-menu" id="menuToggleBtn">
+        <span class="btn-text">استكشف القائمة</span>
+        <span class="hamburger-icon"><i class="fa-solid fa-bars"></i></span>
+      </button>
+      <div class="dropdown-menu-container" id="mainDropdownMenu">
+        <ul class="dropdown-list">
+          <li><a href="index.html">الرئيسية</a></li>
+          <li class="has-submenu">
+            <a href="#">عن الاتحاد <i class="fa-solid fa-chevron-down submenu-icon"></i></a>
+            <ul class="sub-menu">
+              <li><a href="structure.html">الهيكل التنظيمي</a></li>
+              <li><a href="objectives.html">أهداف الاتحاد</a></li>
+            </ul>
+          </li>
+          <li><a href="events.html">دورات و مؤتمرات</a></li>
+          <li><a href="news/index.html">آخر الأخبار</a></li>
+          <li><a href="contact.html">تواصل معنا</a></li>
+          <li class="has-submenu branch-switch-item">
+            <a href="#" class="branch-toggle-link">
+              <span><i class="fa-solid fa-globe" style="margin-left: 6px;"></i><span id="branchMenuLabel">الممثليات الإقليمية</span></span>
+              <i class="fa-solid fa-chevron-down submenu-icon"></i>
+            </a>
+            <ul class="sub-menu">
+              <li>
+                <a href="https://auipr.org" class="branch-nav-main">
+                  <span><i class="fa-solid fa-building-columns" style="margin-left: 6px;"></i>المقر الرئيسي</span>
+                  <span class="badge-main-curr" style="display:none; font-size: 0.8rem; color: #7251cd; font-weight: bold;">(الحالي)</span>
+                </a>
+              </li>
+              <li>
+                <a href="https://lebanon.auipr.org" class="branch-nav-lebanon">
+                  <span>🇱🇧 ممثلية الجمهورية اللبنانية</span>
+                  <span class="badge-lb-curr" style="display:none; font-size: 0.8rem; color: #00c4a7; font-weight: bold;">(الحالي)</span>
+                </a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="menu-overlay" id="menuOverlay"></div>
+  </div>
+</header>

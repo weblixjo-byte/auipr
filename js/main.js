@@ -13,18 +13,20 @@ document.addEventListener('DOMContentLoaded', () => {
 // 1. دالة تحميل الهيدر والفوتر
 // =========================================
 async function initApp() {
-    // تحميل الهيدر
     try {
         const headerRes = await fetch('header.html');
         if (headerRes.ok) {
             document.getElementById('header-placeholder').innerHTML = await headerRes.text();
-            initHeaderScroll(); // تفعيل تأثير السكرول للهيدر بعد تحميله
+            
+            // تشغيل الوظائف المعتمدة على الهيدر بعد تحميله
+            initHeaderScroll(); 
+            initDropdownMenu(); 
+            initBranchSystem(); 
         }
     } catch (err) {
         console.error('خطأ في تحميل الهيدر:', err);
     }
 
-    // تحميل الفوتر
     try {
         const footerRes = await fetch('footer.html');
         if (footerRes.ok) {
@@ -43,12 +45,10 @@ function initScrollReveal() {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('active');
-                // خيار: إلغاء المراقبة بعد الظهور الأول لتقليل الضغط على المتصفح
-                // observer.unobserve(entry.target); 
             }
         });
     }, {
-        threshold: 0.1 // يبدأ الظهور عند رؤية 10% من العنصر
+        threshold: 0.1
     });
 
     // مراقبة العناصر الموجودة حالياً
@@ -69,45 +69,38 @@ function initScrollReveal() {
 }
 
 // =========================================
-// 3. دالة بطاقات المبدعين (Creators Modal) - هام جداً
+// 3. دالة بطاقات المبدعين (Creators Modal)
 // =========================================
 function initCreatorsModal() {
     const cards = document.querySelectorAll('.creator-card');
     const modal = document.getElementById('creatorModal');
     const closeBtn = document.querySelector('.close-modal-btn');
     
-    // عناصر المودال الداخلية
     const modalImg = document.getElementById('modalImg');
     const modalName = document.getElementById('modalName');
     const modalRole = document.getElementById('modalRole');
     const modalDesc = document.getElementById('modalDesc');
 
     if (cards.length > 0 && modal) {
-        
-        // فتح المودال عند الضغط على الكرت
         cards.forEach(card => {
             card.addEventListener('click', function(e) {
                 e.preventDefault();
                 
-                // تعبئة البيانات من الـ Data Attributes
                 modalImg.src = this.getAttribute('data-img');
                 modalName.textContent = this.getAttribute('data-name');
                 modalRole.textContent = this.getAttribute('data-role');
                 modalDesc.textContent = this.getAttribute('data-desc');
                 
-                // إظهار النافذة
                 modal.classList.add('active');
             });
         });
 
-        // إغلاق المودال من زر X
         if(closeBtn) {
             closeBtn.addEventListener('click', () => {
                 modal.classList.remove('active');
             });
         }
 
-        // إغلاق المودال عند الضغط في الخلفية
         window.addEventListener('click', (e) => {
             if (e.target === modal) {
                 modal.classList.remove('active');
@@ -121,9 +114,7 @@ function initCreatorsModal() {
 // =========================================
 function initHeaderScroll() {
     window.addEventListener('scroll', function() {
-        // نبحث عن الهيدر داخل الـ placeholder لأنه تم تحميله ديناميكياً
         const header = document.querySelector('header') || document.querySelector('.main-header');
-        
         if (header) {
             if (window.scrollY > 20) {
                 header.classList.add('scrolled');
@@ -134,148 +125,51 @@ function initHeaderScroll() {
     });
 }
 
-
-document.addEventListener('DOMContentLoaded', function() {
-    
-    // 1. تعريف العناصر من الـ HTML الذي أرسلته
-    const modal = document.getElementById('creatorModal'); // المودال الرئيسي
-    const closeBtn = document.querySelector('.close-modal-btn'); // زر الإغلاق
-    
-    // عناصر المحتوى داخل المودال
-    const modalImg = document.getElementById('modalImg');
-    const modalName = document.getElementById('modalName');
-    const modalRole = document.getElementById('modalRole');
-    const modalDesc = document.getElementById('modalDesc');
-
-    // جميع بطاقات المبدعين (التي يضغط عليها المستخدم)
-    const cards = document.querySelectorAll('.creator-card');
-
-    // 2. التحقق من وجود العناصر لتجنب الأخطاء
-    if (modal && cards.length > 0) {
-
-        // إضافة حدث النقر لكل بطاقة
-        cards.forEach(card => {
-            card.addEventListener('click', function(e) {
-                e.preventDefault(); // منع الرابط من تحديث الصفحة
-
-                // 3. سحب البيانات من البطاقة ووضعها داخل المودال
-                // ملاحظة: يجب أن تكون بطاقاتك تحتوي على data-name, data-role... إلخ
-                const name = this.getAttribute('data-name');
-                const role = this.getAttribute('data-role');
-                const desc = this.getAttribute('data-desc');
-                const img = this.getAttribute('data-img');
-
-                // تحديث نصوص وصورة المودال
-                if(modalName) modalName.textContent = name;
-                if(modalRole) modalRole.textContent = role;
-                if(modalDesc) modalDesc.textContent = desc;
-                if(modalImg) modalImg.src = img;
-
-                // 4. إظهار المودال
-                modal.classList.add('active');
-            });
-        });
-
-        // 5. إغلاق المودال عند الضغط على (X)
-        if (closeBtn) {
-            closeBtn.addEventListener('click', () => {
-                modal.classList.remove('active');
-            });
-        }
-
-        // 6. إغلاق المودال عند الضغط في المساحة السوداء (Overlay)
-        window.addEventListener('click', (e) => {
-            if (e.target === modal) {
-                modal.classList.remove('active');
-            }
-        });
-    }
-});
-
-
 // =========================================
-// 1. دالة تحميل الهيدر والفوتر
-// =========================================
-async function initApp() {
-    try {
-        const headerRes = await fetch('header.html');
-        if (headerRes.ok) {
-            document.getElementById('header-placeholder').innerHTML = await headerRes.text();
-            
-            // تشغيل الوظائف المعتمدة على الهيدر *بعد* تحميله
-            initHeaderScroll(); 
-            initDropdownMenu(); // <-- تم إضافة هذه السطر لتشغيل المنيو
-            initBranchSystem(); // <-- تفعيل نظام الفروع (فرع لبنان / المقر الرئيسي)
-        }
-    } catch (err) {
-        console.error('خطأ في تحميل الهيدر:', err);
-    }
-
-    try {
-        const footerRes = await fetch('footer.html');
-        if (footerRes.ok) {
-            document.getElementById('footer-placeholder').innerHTML = await footerRes.text();
-        }
-    } catch (err) {
-        console.error('خطأ في تحميل الفوتر:', err);
-    }
-}
-
-// =========================================
-// دالة تشغيل القائمة المنسدلة (الجديدة)
+// 5. دالة تشغيل القائمة المنسدلة
 // =========================================
 function initDropdownMenu() {
     const toggleBtn = document.getElementById('menuToggleBtn');
     const menu = document.getElementById('mainDropdownMenu');
     const overlay = document.getElementById('menuOverlay');
-    
-    // الأيقونة داخل الزر (عشان نغيرها لـ X)
     const icon = toggleBtn ? toggleBtn.querySelector('.hamburger-icon i') : null;
 
     if (!toggleBtn || !menu || !overlay) return;
 
-    // دالة الفتح والإغلاق
     function toggleMenu() {
         const isOpen = menu.classList.contains('active');
-        
         if (isOpen) {
-            // إغلاق القائمة
             menu.classList.remove('active');
             overlay.classList.remove('active');
-            // إرجاع أيقونة الهامبرغر
             if(icon) icon.className = 'fa-solid fa-bars';
         } else {
-            // فتح القائمة
             menu.classList.add('active');
             overlay.classList.add('active');
-            // تحويل الأيقونة إلى X
             if(icon) icon.className = 'fa-solid fa-xmark';
         }
     }
 
-    // عند الضغط على الزر
-    toggleBtn.addEventListener('click', toggleMenu);
+    toggleBtn.onclick = toggleMenu;
+    overlay.onclick = toggleMenu;
 
-    // عند الضغط على الخلفية السوداء (إغلاق القائمة)
-    overlay.addEventListener('click', toggleMenu);
-
-    // تفعيل القوائم الفرعية (مثل: عن الاتحاد)
-    const subMenuToggles = document.querySelectorAll('.has-submenu > a');
+    // تفعيل القوائم الفرعية المنسدلة (عن الاتحاد والممثليات الإقليمية)
+    const subMenuToggles = menu.querySelectorAll('.has-submenu > a');
     subMenuToggles.forEach(item => {
-        item.addEventListener('click', function(e) {
-            e.preventDefault(); // منع الرابط من تحديث الصفحة
-            this.parentElement.classList.toggle('open');
+        item.onclick = function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            const parent = this.parentElement;
+            parent.classList.toggle('open');
             
-            // قلب السهم للأسفل/الأعلى
             const arrow = this.querySelector('.submenu-icon');
-            if(arrow) {
-                if(this.parentElement.classList.contains('open')) {
+            if (arrow) {
+                if (parent.classList.contains('open')) {
                     arrow.classList.replace('fa-chevron-down', 'fa-chevron-up');
                 } else {
                     arrow.classList.replace('fa-chevron-up', 'fa-chevron-down');
                 }
             }
-        });
+        };
     });
 }
 
@@ -285,21 +179,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const closeBtn = document.getElementById('closePopup');
 
     if (popup) {
-        // إظهار البوب اب عند كل زيارة ودخول للموقع
         setTimeout(() => {
             popup.style.display = 'flex';
             document.body.style.overflow = 'hidden';
         }, 1200);
-    }
 
-    if (popup) {
-        // إغلاق عند الضغط على زر X
         closeBtn.addEventListener('click', () => {
             popup.style.display = 'none';
             document.body.style.overflow = 'auto';
         });
 
-        // إغلاق عند الضغط خارج محتوى البوب اب
         popup.addEventListener('click', (e) => {
             if (e.target === popup) {
                 popup.style.display = 'none';
@@ -309,33 +198,26 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-
-
-let lastScrollTop = 0; // متغير لتخزين آخر قيمة تمرير
+let lastScrollTop = 0;
 
 window.addEventListener('scroll', function() {
     const header = document.querySelector('.main-header');
-    if (!header) return; // تأكد من وجود الهيدر
+    if (!header) return;
 
     let currentScroll = window.pageYOffset || document.documentElement.scrollTop;
 
-    // 1. إضافة ظل وتغيير خلفية الهيدر بمجرد التحرك عن الصفر
     if (currentScroll > 50) {
         header.classList.add('scrolled');
     } else {
         header.classList.remove('scrolled');
     }
 
-    // 2. منطق الإخفاء والإظهار (Smart Sticky)
     if (currentScroll > lastScrollTop && currentScroll > 150) {
-        // إذا كنت تنزل لأسفل وتجاوزت 150 بيكسل -> اختفي
         header.classList.add('header-hide');
     } else {
-        // إذا كنت تصعد لأعلى -> اظهر
         header.classList.remove('header-hide');
     }
 
-    // تحديث قيمة آخر تمرير (منع القيم السالبة في موبايلات آيفون)
     lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
 }, { passive: true });
 
@@ -369,7 +251,6 @@ async function loadDynamicNews() {
                 return isSubfolder ? `view.html?id=${item._id}` : `news/view.html?id=${item._id}`;
             };
 
-            // 1. تحديث سكشن الأخبار في الصفحة الرئيسية (index.html) - أحدث 3 أخبار
             if (homeGrid) {
                 const latestNews = data.news.slice(0, 3);
                 homeGrid.innerHTML = latestNews.map(item => `
@@ -386,7 +267,6 @@ async function loadDynamicNews() {
                 `).join('');
             }
 
-            // 2. تحديث صفحة جميع الأخبار (news/index.html) - جميع الأخبار
             if (newsPageGrid) {
                 newsPageGrid.innerHTML = data.news.map(item => `
                     <div class="news-card">
@@ -459,7 +339,7 @@ window.filterNewsByBranch = async function(branchCode, btnEl) {
 };
 
 // =========================================
-// نظام إدارة الفروع الإقليمية (فرع لبنان / المقر العام)
+// نظام إدارة الممثليات الإقليمية
 // =========================================
 const AUIPR_BRANCHES = {
     main: {
@@ -500,43 +380,93 @@ function getActiveBranchId() {
         return 'lebanon';
     }
 
-    // 3. الفحص من خلال الجلسة المخزنة سابقاً
+    // 3. الدومين الرئيسي الإنتاجي يبقى المقر الرئيسي دون تغيير
+    if (hostname === 'auipr.org' || hostname === 'www.auipr.org') {
+        return 'main';
+    }
+
+    // 4. الفحص من خلال الجلسة في بيئات المعاينة و localhost
     const stored = sessionStorage.getItem('auipr_active_branch');
     if (stored && AUIPR_BRANCHES[stored]) {
         return stored;
     }
 
-    // الافتراضي: المقر العام (الموقع الأصلي دون أي تعديل)
     return 'main';
 }
 
 function initBranchSystem() {
     const branchId = getActiveBranchId();
     const isLebanon = branchId === 'lebanon';
+    const hostname = window.location.hostname.toLowerCase();
+    const isProd = hostname.endsWith('auipr.org');
 
-    // تطبيق تخصيصات ممثلية لبنان فقط في حال كانت الممثلية النشطة هي لبنان
-    if (isLebanon) {
-        document.body.classList.add('branch-mode-lebanon');
-
-        // تحديث عنوان الصفحة
-        if (!document.title.includes('ممثلية الجمهورية اللبنانية')) {
-            document.title = document.title + ' | ممثلية الجمهورية اللبنانية 🇱🇧';
+    const updateBranchUI = () => {
+        // 1. تحديث نصوص وروابط تبديل الممثلية في القائمة
+        const label = document.getElementById('branchMenuLabel');
+        if (label) {
+            label.textContent = isLebanon ? '🇱🇧 ممثلية لبنان' : 'الممثليات الإقليمية';
         }
 
-        // تحديث اسم الهيدر لممثلية لبنان
-        const applyHeaderLebanon = () => {
+        const mainLinks = document.querySelectorAll('.branch-nav-main');
+        const lbLinks = document.querySelectorAll('.branch-nav-lebanon');
+        const mainBadges = document.querySelectorAll('.badge-main-curr');
+        const lbBadges = document.querySelectorAll('.badge-lb-curr');
+
+        const currentPath = window.location.pathname;
+
+        mainLinks.forEach(a => {
+            if (isProd) {
+                a.href = 'https://auipr.org' + currentPath;
+            } else {
+                const u = new URL(window.location.href);
+                u.searchParams.set('branch', 'main');
+                a.href = u.pathname + u.search;
+            }
+            a.onclick = () => sessionStorage.setItem('auipr_active_branch', 'main');
+            if (!isLebanon) {
+                a.style.fontWeight = 'bold';
+                a.style.color = '#7251cd';
+            } else {
+                a.style.fontWeight = 'normal';
+                a.style.color = '';
+            }
+        });
+
+        lbLinks.forEach(a => {
+            if (isProd) {
+                a.href = 'https://lebanon.auipr.org' + currentPath;
+            } else {
+                const u = new URL(window.location.href);
+                u.searchParams.set('branch', 'lebanon');
+                a.href = u.pathname + u.search;
+            }
+            a.onclick = () => sessionStorage.setItem('auipr_active_branch', 'lebanon');
+            if (isLebanon) {
+                a.style.fontWeight = 'bold';
+                a.style.color = '#00c4a7';
+            } else {
+                a.style.fontWeight = 'normal';
+                a.style.color = '';
+            }
+        });
+
+        mainBadges.forEach(b => b.style.display = !isLebanon ? 'inline' : 'none');
+        lbBadges.forEach(b => b.style.display = isLebanon ? 'inline' : 'none');
+
+        // 2. تطبيق هوية ممثلية لبنان عند التواجد في نطاق ممثلية لبنان
+        if (isLebanon) {
+            document.body.classList.add('branch-mode-lebanon');
+
+            if (!document.title.includes('ممثلية الجمهورية اللبنانية')) {
+                document.title = document.title + ' | ممثلية الجمهورية اللبنانية 🇱🇧';
+            }
+
             const orgNames = document.querySelectorAll('.org-name');
             orgNames.forEach(el => {
                 el.innerHTML = `الاتحاد العربي لحماية حقوق الملكية الفكرية <span class="branch-pill-header" style="background: rgba(60,235,195,0.18); color: #00876c; border: 1px solid rgba(60,235,195,0.5); padding: 3px 12px; border-radius: 20px; font-size: 0.82rem; font-weight: 700; margin-right: 8px; display: inline-block;">🇱🇧 ممثلية الجمهورية اللبنانية</span>`;
             });
-        };
 
-        applyHeaderLebanon();
-        setTimeout(applyHeaderLebanon, 300);
-
-        // تخصيص صفحة تواصل معنا لممثلية لبنان
-        if (window.location.pathname.includes('contact.html')) {
-            setTimeout(() => {
+            if (window.location.pathname.includes('contact.html')) {
                 const pageTitle = document.querySelector('.page-title');
                 if (pageTitle) pageTitle.innerText = 'تواصل مع ممثلية الجمهورية اللبنانية';
 
@@ -552,57 +482,10 @@ function initBranchSystem() {
                         box.innerHTML = '<p>بيروت - الجمهورية اللبنانية</p>';
                     }
                 });
-            }, 350);
-        }
-    }
-
-    // إضافة خيار التنقل بين الممثليات في القائمة المنسدلة
-    const injectBranchNav = () => {
-        const dropdownList = document.querySelector('.dropdown-list');
-        if (dropdownList && !dropdownList.querySelector('.branch-switch-item')) {
-            const switchLi = document.createElement('li');
-            switchLi.className = 'branch-switch-item has-submenu';
-            
-            const isLb = branchId === 'lebanon';
-            switchLi.innerHTML = `
-                <a href="#" style="color: #7251cd; font-weight: 700;">
-                    <i class="fa-solid fa-globe"></i> ${isLb ? '🇱🇧 ممثلية لبنان' : 'الممثليات الإقليمية'} 
-                    <i class="fa-solid fa-chevron-down submenu-icon"></i>
-                </a>
-                <ul class="sub-menu">
-                    <li>
-                        <a href="?branch=main" onclick="sessionStorage.setItem('auipr_active_branch','main');" style="${!isLb ? 'font-weight: bold; color: #7251cd;' : ''}">
-                            <i class="fa-solid fa-building-columns"></i> المقر الرئيسي ${!isLb ? '(الحالي)' : ''}
-                        </a>
-                    </li>
-                    <li>
-                        <a href="?branch=lebanon" onclick="sessionStorage.setItem('auipr_active_branch','lebanon');" style="${isLb ? 'font-weight: bold; color: #00c4a7;' : ''}">
-                            🇱🇧 ممثلية الجمهورية اللبنانية ${isLb ? '(الحالي)' : ''}
-                        </a>
-                    </li>
-                </ul>
-            `;
-            dropdownList.appendChild(switchLi);
-
-            // تفعيل السهم وفتح القائمة الفرعية
-            const toggleLink = switchLi.querySelector('> a');
-            if (toggleLink) {
-                toggleLink.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    switchLi.classList.toggle('open');
-                    const arrow = switchLi.querySelector('.submenu-icon');
-                    if (arrow) {
-                        if (switchLi.classList.contains('open')) {
-                            arrow.classList.replace('fa-chevron-down', 'fa-chevron-up');
-                        } else {
-                            arrow.classList.replace('fa-chevron-up', 'fa-chevron-down');
-                        }
-                    }
-                });
             }
         }
     };
 
-    injectBranchNav();
-    setTimeout(injectBranchNav, 300);
-}
+    updateBranchUI();
+    setTimeout(updateBranchUI, 300);
+}
