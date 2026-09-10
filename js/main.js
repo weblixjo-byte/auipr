@@ -179,20 +179,36 @@ document.addEventListener('DOMContentLoaded', () => {
     const closeBtn = document.getElementById('closePopup');
 
     if (popup) {
-        setTimeout(() => {
-            popup.style.display = 'flex';
-            document.body.style.overflow = 'hidden';
-        }, 1200);
-
-        closeBtn.addEventListener('click', () => {
+        const hidePopup = () => {
             popup.style.display = 'none';
             document.body.style.overflow = 'auto';
-        });
+        };
+
+        // التحقق مما إذا كانت النافذة قد ظهرت في جلسة التصفح الحالية
+        const popupSeen = sessionStorage.getItem('auipr_welcome_popup_seen');
+
+        if (!popupSeen) {
+            setTimeout(() => {
+                popup.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+                // تسجيل ظهورها حتى لا تعود للظهور إطلاقاً أثناء التنقل أو الرجوع للصفحة الرئيسية
+                sessionStorage.setItem('auipr_welcome_popup_seen', 'true');
+            }, 1200);
+        }
+
+        if (closeBtn) {
+            closeBtn.addEventListener('click', hidePopup);
+        }
 
         popup.addEventListener('click', (e) => {
             if (e.target === popup) {
-                popup.style.display = 'none';
-                document.body.style.overflow = 'auto';
+                hidePopup();
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && popup.style.display === 'flex') {
+                hidePopup();
             }
         });
     }
