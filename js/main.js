@@ -505,80 +505,63 @@ function initRegistrationModal() {
         const modalHTML = `
         <div class="reg-modal-overlay" id="regModalOverlay" role="dialog" aria-modal="true" aria-labelledby="regModalTitle">
           <div class="reg-modal-content">
-            <div class="reg-modal-header">
-              <button type="button" class="reg-modal-close" id="regModalClose" aria-label="إغلاق">&times;</button>
-              <div class="reg-modal-badge"><i class="fa-solid fa-calendar-check"></i> التسجيل والحجز المباشر</div>
-              <h3 class="reg-modal-title" id="regModalTitle">استمارة التسجيل والمشاركة</h3>
-              <p class="reg-modal-subtitle">الاتحاد العربي لحماية حقوق الملكية الفكرية - هيئة عربية دولية</p>
+            <div class="reg-clean-header">
+              <button type="button" class="reg-clean-close" id="regModalClose" aria-label="إغلاق"><i class="fa-solid fa-xmark"></i></button>
+              <h3 class="reg-clean-title" id="regModalTitle">استمارة التسجيل والمشاركة</h3>
+              <p class="reg-clean-subtitle">يرجى تعبئة البيانات لتأكيد التسجيل وسيتم التواصل معكم مباشرة</p>
             </div>
-            <div class="reg-modal-body" id="regModalBody">
+            <div class="reg-clean-body" id="regModalBody">
               <form id="regModalForm">
                 <input type="hidden" name="access_key" id="regWeb3FormsKey" value="${WEB3FORMS_ACCESS_KEY}">
                 <input type="hidden" name="subject" value="طلب تسجيل جديد عبر موقع الاتحاد العربي للملكية الفكرية">
-                <input type="hidden" name="from_name" value="بوابة التسجيل الإلكتروني AUIPR">
+                <input type="hidden" name="from_name" value="بوابة التسجيل AUIPR">
                 <input type="checkbox" name="botcheck" style="display: none;">
 
-                <div class="reg-form-grid">
-                  <div class="reg-input-group">
-                    <label class="reg-label" for="regFullName">الاسم الكامل <span class="required">*</span></label>
-                    <div class="reg-input-wrap">
-                      <i class="fa-regular fa-user reg-input-icon"></i>
-                      <input type="text" id="regFullName" name="name" class="reg-input" placeholder="الاسم الثلاثي أو الرباعي" required>
+                <div class="reg-form-stack">
+                  <div class="reg-field">
+                    <label class="reg-field-label" for="regFullName">الاسم الكامل <span class="req">*</span></label>
+                    <input type="text" id="regFullName" name="name" class="reg-control" placeholder="أدخل اسمك كاملاً" required>
+                  </div>
+
+                  <div class="reg-field-row">
+                    <div class="reg-field">
+                      <label class="reg-field-label" for="regPhone">رقم الهاتف / واتساب <span class="req">*</span></label>
+                      <input type="tel" id="regPhone" name="phone" class="reg-control" dir="ltr" placeholder="+962 ... / +966 ..." required>
+                    </div>
+                    <div class="reg-field">
+                      <label class="reg-field-label" for="regEmail">البريد الإلكتروني <span class="req">*</span></label>
+                      <input type="email" id="regEmail" name="email" class="reg-control" dir="ltr" placeholder="name@example.com" required>
                     </div>
                   </div>
 
-                  <div class="reg-input-group">
-                    <label class="reg-label" for="regPhone">رقم الهاتف / واتساب <span class="required">*</span></label>
-                    <div class="reg-input-wrap">
-                      <i class="fa-brands fa-whatsapp reg-input-icon"></i>
-                      <input type="tel" id="regPhone" name="phone" class="reg-input" dir="ltr" placeholder="+962 ... / +966 ..." required>
-                    </div>
+                  <div class="reg-field">
+                    <label class="reg-field-label" for="regOrg">جهة العمل أو المؤسسة <span class="opt">(اختياري)</span></label>
+                    <input type="text" id="regOrg" name="organization" class="reg-control" placeholder="اسم الجهة أو الصفة الوظيفية">
                   </div>
 
-                  <div class="reg-input-group">
-                    <label class="reg-label" for="regEmail">البريد الإلكتروني <span class="required">*</span></label>
-                    <div class="reg-input-wrap">
-                      <i class="fa-regular fa-envelope reg-input-icon"></i>
-                      <input type="email" id="regEmail" name="email" class="reg-input" dir="ltr" placeholder="example@domain.com" required>
-                    </div>
+                  <div class="reg-field">
+                    <label class="reg-field-label" for="regEventType">نوع التسجيل / الفعالية <span class="req">*</span></label>
+                    <select id="regEventType" name="event_type" class="reg-control" required>
+                      <option value="اليوم العربي للملكية الفكرية وعاصمتها (عمان)">اليوم العربي للملكية الفكرية وعاصمتها (عمان - 1 ديسمبر 2026)</option>
+                      <option value="مؤتمر تطوير منظومة الملكية الفكرية (القاهرة)">مؤتمر تطوير منظومة الملكية الفكرية (القاهرة)</option>
+                      <option value="مؤتمر الملكية الفكرية والذكاء الاصطناعي">مؤتمر الملكية الفكرية والذكاء الاصطناعي</option>
+                      <option value="طلب الانضمام وعضوية الاتحاد">طلب الانضمام وعضوية الاتحاد العربي</option>
+                      <option value="برامج ودورات الأكاديمية العربية">برامج ودورات الأكاديمية العربية للملكية الفكرية</option>
+                      <option value="استفسار أو حجز عام">استفسار أو حجز عام</option>
+                    </select>
                   </div>
 
-                  <div class="reg-input-group">
-                    <label class="reg-label" for="regOrg">جهة العمل / المؤسسة</label>
-                    <div class="reg-input-wrap">
-                      <i class="fa-regular fa-building reg-input-icon"></i>
-                      <input type="text" id="regOrg" name="organization" class="reg-input" placeholder="الشركة / المؤسسة / الصفة">
-                    </div>
+                  <div class="reg-field">
+                    <label class="reg-field-label" for="regMessage">ملاحظات أو رسالة إضافية <span class="opt">(اختياري)</span></label>
+                    <textarea id="regMessage" name="message" class="reg-control reg-control-textarea" rows="2" placeholder="أي تفاصيل إضافية ترغب بإضافتها..."></textarea>
                   </div>
 
-                  <div class="reg-input-group reg-form-full">
-                    <label class="reg-label" for="regEventType">نوع التسجيل / الفعالية <span class="required">*</span></label>
-                    <div class="reg-input-wrap">
-                      <i class="fa-solid fa-list-check reg-input-icon"></i>
-                      <select id="regEventType" name="event_type" class="reg-select" required>
-                        <option value="اليوم العربي للملكية الفكرية وعاصمتها (عمان)">اليوم العربي للملكية الفكرية وعاصمتها (عمان - 1 ديسمبر 2026)</option>
-                        <option value="مؤتمر تطوير منظومة الملكية الفكرية (القاهرة)">مؤتمر تطوير منظومة الملكية الفكرية (القاهرة)</option>
-                        <option value="مؤتمر الملكية الفكرية والذكاء الاصطناعي">مؤتمر الملكية الفكرية والذكاء الاصطناعي</option>
-                        <option value="طلب الانضمام وعضوية الاتحاد">طلب الانضمام وعضوية الاتحاد العربي</option>
-                        <option value="برامج ودورات الأكاديمية العربية الدولية">برامج ودورات الأكاديمية العربية الدولية للملكية الفكرية</option>
-                        <option value="استفسار أو حجز عام">استفسار أو حجز عام</option>
-                      </select>
-                    </div>
-                  </div>
+                  <button type="submit" class="reg-clean-submit" id="regSubmitBtn">
+                    <span id="regBtnContent">تأكيد وإرسال الطلب</span>
+                  </button>
 
-                  <div class="reg-input-group reg-form-full">
-                    <label class="reg-label" for="regMessage">ملاحظات إضافية أو رسالة مخصصة <span style="color:#64748b; font-weight:400;">(اختياري)</span></label>
-                    <textarea id="regMessage" name="message" class="reg-textarea" rows="3" placeholder="أي استفسارات أو تفاصيل إضافية تود إضافتها مع التسجيل..."></textarea>
-                  </div>
+                  <p class="reg-clean-privacy">🔒 معلوماتكم سرية ومحمية تماماً.</p>
                 </div>
-
-                <button type="submit" class="reg-submit-btn" id="regSubmitBtn">
-                  <span id="regBtnContent"><i class="fa-regular fa-paper-plane"></i> إرسال طلب التسجيل</span>
-                </button>
-
-                <p class="reg-footer-note">
-                  <i class="fa-solid fa-lock" style="color: #3cebc3;"></i> بياناتكم محمية ومحفوظة بسرية تامة، وسيتم التواصل معكم لتأكيد التسجيل.
-                </p>
               </form>
             </div>
           </div>
@@ -678,13 +661,13 @@ function initRegistrationModal() {
                 } else {
                     alert(data.message || 'حدث خطأ أثناء إرسال الطلب، يرجى المحاولة لاحقاً.');
                     btn.disabled = false;
-                    btnContent.innerHTML = '<i class="fa-regular fa-paper-plane"></i> إرسال طلب التسجيل';
+                    btnContent.innerHTML = 'تأكيد وإرسال الطلب';
                 }
             } catch (err) {
                 console.error('Web3Forms Error:', err);
                 alert('تعذر الاتصال بالخادم، يرجى التحقق من اتصال الإنترنت.');
                 btn.disabled = false;
-                btnContent.innerHTML = '<i class="fa-regular fa-paper-plane"></i> إرسال طلب التسجيل';
+                btnContent.innerHTML = 'تأكيد وإرسال الطلب';
             }
         });
     }
