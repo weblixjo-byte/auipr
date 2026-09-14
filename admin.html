@@ -273,13 +273,18 @@
       <div class="page-banner-card">
         <div class="banner-wave-bg"></div>
         <div class="banner-text-content">
-          <div class="breadcrumbs" style="display: flex; justify-content: space-between; align-items: center;">
+          <div class="breadcrumbs" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
             <div>
               <a href="index.html" title="العودة إلى الصفحة الرئيسية">الرئيسية</a><span>></span><span class="current">لوحة الإدارة</span>
             </div>
-            <button onclick="logout()" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.25); color: #ffffff; padding: 5px 14px; border-radius: 50px; font-size: 0.8rem; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; font-family: inherit;">
-              <i class="fa-solid fa-arrow-right-from-bracket"></i> خروج
-            </button>
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <span id="userBadge" style="display: none; background: rgba(0, 196, 167, 0.18); color: #00e0bf; border: 1px solid rgba(0, 196, 167, 0.4); padding: 5px 14px; border-radius: 50px; font-size: 0.85rem; font-weight: 700;">
+                <i class="fa-solid fa-circle-user" style="margin-left: 5px;"></i><span id="userNameText"></span>
+              </span>
+              <button onclick="logout()" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.25); color: #ffffff; padding: 5px 14px; border-radius: 50px; font-size: 0.8rem; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; font-family: inherit;">
+                <i class="fa-solid fa-arrow-right-from-bracket"></i> خروج
+              </button>
+            </div>
           </div>
           <h1 class="page-title">لوحة إدارة الأخبار</h1>
         </div>
@@ -354,22 +359,26 @@
             </div>
 
             <!-- Branch Targeting Selection -->
-            <div class="form-group" style="margin-bottom: 25px;">
+            <div class="form-group" style="margin-bottom: 25px;" id="branchTargetingSection">
               <label style="display: block; margin-bottom: 10px; font-weight: 700; color: #1a2b4b;">
                 <i class="fa-solid fa-code-branch" style="color: #00c4a7;"></i> نطاق نشر الخبر (الفرع المستهدف):
               </label>
-              <div style="display: flex; gap: 25px; flex-wrap: wrap; background: #f8fafc; padding: 14px 20px; border-radius: 14px; border: 1px solid #e2e8f0;">
+              <div style="display: flex; gap: 20px; flex-wrap: wrap; background: #f8fafc; padding: 14px 20px; border-radius: 14px; border: 1px solid #e2e8f0;">
                 <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; font-weight: 600; color: #1e293b;">
-                  <input type="checkbox" name="targetBranches" value="main" checked style="width: 18px; height: 18px; accent-color: #00c4a7;">
+                  <input type="checkbox" name="targetBranches" id="branchMainCb" value="main" checked style="width: 18px; height: 18px; accent-color: #00c4a7;">
                   <span>الموقع العام (المقر الرئيسي)</span>
                 </label>
                 <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; font-weight: 600; color: #1e293b;">
-                  <input type="checkbox" name="targetBranches" value="lebanon" checked style="width: 18px; height: 18px; accent-color: #00c4a7;">
+                  <input type="checkbox" name="targetBranches" id="branchLebanonCb" value="lebanon" checked style="width: 18px; height: 18px; accent-color: #00c4a7;">
                   <span>ممثل الجمهورية اللبنانية</span>
                 </label>
+                <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; font-weight: 600; color: #1e293b;">
+                  <input type="checkbox" name="targetBranches" id="branchJordanCb" value="jordan" style="width: 18px; height: 18px; accent-color: #00c4a7;">
+                  <span>فرع الأردن</span>
+                </label>
               </div>
-              <small style="color: #64748b; font-size: 0.8rem; margin-top: 6px; display: block;">
-                يمكنك تحديد ظهور الخبر في الموقع العام أو ممثل الجمهورية اللبنانية أو كلاهما معاً.
+              <small id="branchHelpText" style="color: #64748b; font-size: 0.85rem; margin-top: 8px; display: block; line-height: 1.5;">
+                يمكنك تحديد ظهور الخبر في الموقع العام أو ممثل الجمهورية اللبنانية أو فرع الأردن.
               </small>
             </div>
 
@@ -402,12 +411,35 @@
 
   <!-- Auth Modal -->
   <div id="authModal" class="auth-overlay">
-    <div class="auth-card">
-      <img src="https://static.wixstatic.com/media/215eb2_98e65620ebb04f4d96de0b8ae685fcee~mv2.png" alt="شعار الاتحاد" class="auth-logo">
-      <h3 style="color: #1a2b4b; font-size: 1.3rem; margin-bottom: 8px;">لوحة إدارة الأخبار</h3>
-      <p style="color: #64748b; font-size: 0.9rem; margin-bottom: 25px;">الاتحاد العربي لحماية حقوق الملكية الفكرية</p>
-      <input type="password" id="passcodeInput" dir="ltr" class="form-control" placeholder="رمز الدخول المعتمد" style="margin-bottom: 20px; text-align: center; font-size: 1.05rem; letter-spacing: 2px;" onkeydown="if(event.key==='Enter') saveToken()">
-      <button id="loginSubmitBtn" onclick="saveToken()" class="btn-brand-primary" style="width: 100%; justify-content: center;">
+    <div class="auth-card" style="max-width: 420px; padding: 40px 30px;">
+      <img src="https://static.wixstatic.com/media/215eb2_98e65620ebb04f4d96de0b8ae685fcee~mv2.png" alt="شعار الاتحاد" class="auth-logo" style="width: 75px; margin-bottom: 12px;">
+      <h3 style="color: #1a2b4b; font-size: 1.3rem; margin-bottom: 6px; font-weight: 800;">تسجيل دخول المشرفين</h3>
+      <p style="color: #64748b; font-size: 0.88rem; margin-bottom: 25px;">الاتحاد العربي لحماية حقوق الملكية الفكرية</p>
+      
+      <div id="loginErrorMsg" style="display: none; background: #fff1f2; color: #e11d48; border: 1px solid #fecdd3; padding: 10px 14px; border-radius: 12px; font-size: 0.88rem; margin-bottom: 18px; text-align: right;">
+        <i class="fa-solid fa-circle-exclamation" style="margin-left: 6px;"></i><span id="loginErrorText"></span>
+      </div>
+
+      <div style="text-align: right; margin-bottom: 16px;">
+        <label for="usernameInput" style="display: block; font-weight: 700; font-size: 0.88rem; margin-bottom: 7px; color: #1a2b4b;">
+          <i class="fa-solid fa-user-shield" style="color: #00c4a7; margin-left: 5px;"></i> اسم المستخدم
+        </label>
+        <input type="text" id="usernameInput" dir="ltr" class="form-control" placeholder="اسم المستخدم" style="text-align: left; font-weight: 600;" onkeydown="if(event.key==='Enter') document.getElementById('passwordInput').focus()">
+      </div>
+
+      <div style="text-align: right; margin-bottom: 25px;">
+        <label for="passwordInput" style="display: block; font-weight: 700; font-size: 0.88rem; margin-bottom: 7px; color: #1a2b4b;">
+          <i class="fa-solid fa-key" style="color: #00c4a7; margin-left: 5px;"></i> كلمة المرور
+        </label>
+        <div style="position: relative; display: flex; align-items: center;">
+          <input type="password" id="passwordInput" dir="ltr" class="form-control" placeholder="••••••••••••" style="padding-left: 42px; font-weight: 600;" onkeydown="if(event.key==='Enter') loginAdmin()">
+          <button type="button" onclick="togglePasswordVisibility()" id="toggleEyeBtn" style="position: absolute; left: 12px; background: none; border: none; color: #94a3b8; cursor: pointer; font-size: 1.05rem; padding: 4px;">
+            <i class="fa-regular fa-eye"></i>
+          </button>
+        </div>
+      </div>
+
+      <button id="loginSubmitBtn" onclick="loginAdmin()" class="btn-brand-primary" style="width: 100%; justify-content: center; padding: 14px; font-size: 1rem;">
         <span>تسجيل الدخول</span> <span class="btn-icon-circle-dark">←</span>
       </button>
     </div>
@@ -420,6 +452,66 @@
   <script>
     const API_URL = '/.netlify/functions/news';
     let adminToken = localStorage.getItem('auipr_admin_token');
+    let currentUser = null;
+    try {
+      currentUser = JSON.parse(localStorage.getItem('auipr_admin_user') || 'null');
+    } catch(e) {}
+
+    function togglePasswordVisibility() {
+      const p = document.getElementById('passwordInput');
+      const icon = document.querySelector('#toggleEyeBtn i');
+      if (p.type === 'password') {
+        p.type = 'text';
+        icon.classList.remove('fa-eye');
+        icon.classList.add('fa-eye-slash');
+      } else {
+        p.type = 'password';
+        icon.classList.remove('fa-eye-slash');
+        icon.classList.add('fa-eye');
+      }
+    }
+
+    function applyUserPermissions(user) {
+      if (!user) return;
+      currentUser = user;
+
+      // Header User Badge
+      const userBadge = document.getElementById('userBadge');
+      const userNameText = document.getElementById('userNameText');
+      if (userBadge && userNameText) {
+        userNameText.innerText = user.name || user.username;
+        userBadge.style.display = 'inline-flex';
+      }
+
+      const cbMain = document.getElementById('branchMainCb');
+      const cbLebanon = document.getElementById('branchLebanonCb');
+      const cbJordan = document.getElementById('branchJordanCb');
+      const helpText = document.getElementById('branchHelpText');
+
+      if (user.role === 'lebanon_admin') {
+        if (cbMain) { cbMain.checked = false; cbMain.disabled = true; }
+        if (cbLebanon) { cbLebanon.checked = true; cbLebanon.disabled = true; }
+        if (cbJordan) { cbJordan.checked = false; cbJordan.disabled = true; }
+        if (helpText) {
+          helpText.innerHTML = '<span style="color: #b45309; font-weight: 700;"><i class="fa-solid fa-lock"></i> نطاق النشر مقفل تلقائياً لـ (ممثل الجمهورية اللبنانية) وفق صلاحيات حسابك.</span>';
+        }
+      } else if (user.role === 'jordan_admin') {
+        if (cbMain) { cbMain.checked = true; cbMain.disabled = true; }
+        if (cbLebanon) { cbLebanon.checked = false; cbLebanon.disabled = true; }
+        if (cbJordan) { cbJordan.checked = true; cbJordan.disabled = true; }
+        if (helpText) {
+          helpText.innerHTML = '<span style="color: #0369a1; font-weight: 700;"><i class="fa-solid fa-lock"></i> نطاق النشر مقفل تلقائياً لـ (فرع الأردن / المقر العام) وفق صلاحيات حسابك.</span>';
+        }
+      } else {
+        // Super admin
+        if (cbMain) cbMain.disabled = false;
+        if (cbLebanon) cbLebanon.disabled = false;
+        if (cbJordan) cbJordan.disabled = false;
+        if (helpText) {
+          helpText.innerHTML = '<span style="color: #0d9488; font-weight: 700;"><i class="fa-solid fa-shield-halved"></i> صلاحيات المشرف العام: يمكنك نشر الخبر في كافة الفروع أو تحديد فروع معينة.</span>';
+        }
+      }
+    }
 
     window.addEventListener('DOMContentLoaded', () => {
       document.getElementById('newsDate').valueAsDate = new Date();
@@ -439,62 +531,79 @@
       }
 
       if (adminToken) {
-        // التحقق الفعلي من صحة الرمز المخزن مع السيرفر
         fetch(`${API_URL}?action=verify_auth`, {
           headers: { 'x-admin-token': encodeURIComponent(adminToken) }
-        }).then(res => {
-          if (res.ok) {
+        }).then(res => res.json()).then(data => {
+          if (data && data.ok) {
             document.getElementById('authModal').style.display = 'none';
+            applyUserPermissions(data.user);
             fetchNewsList();
           } else {
-            localStorage.removeItem('auipr_admin_token');
+            localStorage.removeItem('auipr_admin_token'); localStorage.removeItem('auipr_admin_user');
+            localStorage.removeItem('auipr_admin_user');
             adminToken = null;
             document.getElementById('authModal').style.display = 'flex';
-            setTimeout(() => document.getElementById('passcodeInput').focus(), 150);
+            setTimeout(() => document.getElementById('usernameInput').focus(), 150);
           }
         }).catch(() => {
           document.getElementById('authModal').style.display = 'flex';
         });
       } else {
         document.getElementById('authModal').style.display = 'flex';
-        setTimeout(() => document.getElementById('passcodeInput').focus(), 150);
+        setTimeout(() => document.getElementById('usernameInput').focus(), 150);
       }
     });
 
-    async function saveToken() {
-      const input = document.getElementById('passcodeInput').value.trim();
-      if (!input) return alert('يرجى إدخال رمز الدخول');
+    async function loginAdmin() {
+      const username = document.getElementById('usernameInput').value.trim();
+      const password = document.getElementById('passwordInput').value.trim();
+      const errBox = document.getElementById('loginErrorMsg');
+      const errText = document.getElementById('loginErrorText');
 
-      // فحص إذا كان المستخدم يكتب باللغة العربية
-      if (/[\u0600-\u06FF]/.test(input)) {
-        alert('تنبيه: أنت تكتب باللغة العربية! رمز الدخول مكتوب بأحرف إنجليزية وأرقام فقط.\nيرجى تحويل لغة لوحة المفاتيح إلى الإنجليزية وكتابة: reem.auipr2026');
-        document.getElementById('passcodeInput').focus();
+      if (!username) {
+        errText.innerText = 'يرجى إدخال اسم المستخدم';
+        errBox.style.display = 'block';
+        document.getElementById('usernameInput').focus();
+        return;
+      }
+      if (!password) {
+        errText.innerText = 'يرجى إدخال كلمة المرور';
+        errBox.style.display = 'block';
+        document.getElementById('passwordInput').focus();
         return;
       }
 
+      errBox.style.display = 'none';
       const btn = document.getElementById('loginSubmitBtn');
       const originalHTML = btn.innerHTML;
       btn.disabled = true;
       btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> جاري التحقق...';
 
       try {
-        const res = await fetch(`${API_URL}?action=verify_auth`, {
-          headers: { 'x-admin-token': encodeURIComponent(input) }
+        const res = await fetch(`${API_URL}?action=login`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username, password })
         });
 
-        if (res.ok) {
-          adminToken = input;
-          localStorage.setItem('auipr_admin_token', input);
+        const data = await res.json();
+        if (res.ok && data.ok) {
+          adminToken = data.token;
+          localStorage.setItem('auipr_admin_token', data.token);
+          localStorage.setItem('auipr_admin_user', JSON.stringify(data.user));
+          applyUserPermissions(data.user);
           document.getElementById('authModal').style.display = 'none';
           fetchNewsList();
         } else {
-          document.getElementById('passcodeInput').value = '';
-          document.getElementById('passcodeInput').focus();
-          alert('رمز الدخول غير صحيح! يرجى التأكد من الرمز وإعادة المحاولة.');
+          errText.innerText = data.error || 'اسم المستخدم أو كلمة المرور غير صحيحة';
+          errBox.style.display = 'block';
+          document.getElementById('passwordInput').value = '';
+          document.getElementById('passwordInput').focus();
         }
       } catch (err) {
         console.error(err);
-        alert('حدث خطأ أثناء الاتصال بالخادم.');
+        errText.innerText = 'تعذر الاتصال بالخادم. يرجى المحاولة لاحقاً.';
+        errBox.style.display = 'block';
       } finally {
         btn.disabled = false;
         btn.innerHTML = originalHTML;
@@ -502,7 +611,7 @@
     }
 
     function logout() {
-      localStorage.removeItem('auipr_admin_token');
+      localStorage.removeItem('auipr_admin_token'); localStorage.removeItem('auipr_admin_user');
       location.reload();
     }
 
@@ -671,10 +780,12 @@
         const result = await res.json();
         if (res.status === 401) {
           localStorage.removeItem('auipr_admin_token');
+          localStorage.removeItem('auipr_admin_user');
           adminToken = null;
-          document.getElementById('passcodeInput').value = '';
+          currentUser = null;
+          document.getElementById('passwordInput').value = '';
           document.getElementById('authModal').style.display = 'flex';
-          alert('رمز الدخول غير صحيح. يرجى التأكد من الرمز وإعادة المحاولة.');
+          alert('انتهت صلاحية الجلسة، يرجى تسجيل الدخول مجدداً.');
           return;
         }
 
@@ -686,6 +797,7 @@
           delete document.getElementById('slug').dataset.custom;
           document.getElementById('previewContainer').style.display = 'none';
           document.getElementById('newsDate').valueAsDate = new Date();
+          if (currentUser) applyUserPermissions(currentUser);
           fetchNewsList();
         } else {
           alert('خطأ: ' + (result.error || 'تعذر إضافة الخبر'));

@@ -4,13 +4,87 @@ try {
   dns.setServers(['8.8.8.8', '1.1.1.1']);
 } catch (e) {}
 const { MongoClient, ObjectId } = require('mongodb');
+const crypto = require('crypto');
 
 let cachedClient = null;
 let cachedDb = null;
 
-const ADMIN_TOKEN = process.env.ADMIN_TOKEN || 'reem.auipr2026';
+const AUTH_SECRET = process.env.AUTH_SECRET || 'auipr_secret_hmac_key_2026_rbac';
 const MONGODB_URI = process.env.MONGODB_URI;
 const DB_NAME = process.env.MONGODB_DB_NAME || 'auipr_db';
+
+// 3 Admin Accounts with Role-Based Access Control (RBAC)
+const USERS = {
+  admin_general: {
+    username: 'admin_general',
+    password: process.env.ADMIN_GENERAL_PASS || 'Auipr#Gen@2026!Sec',
+    role: 'super_admin',
+    name: 'المشرف العام (كافة الفروع)',
+    allowedBranches: ['all', 'main', 'lebanon', 'jordan']
+  },
+  admin_lebanon: {
+    username: 'admin_lebanon',
+    password: process.env.ADMIN_LEBANON_PASS || 'Auipr#Lb@2026!Beir',
+    role: 'lebanon_admin',
+    name: 'مشرف ممثل الجمهورية اللبنانية',
+    allowedBranches: ['lebanon']
+  },
+  admin_jordan: {
+    username: 'admin_jordan',
+    password: process.env.ADMIN_JORDAN_PASS || 'Auipr#Jor@2026!Amm',
+    role: 'jordan_admin',
+    name: 'مشرف فرع الأردن',
+    allowedBranches: ['main', 'jordan']
+  }
+};
+
+function createToken(user) {
+  const payload = {
+    username: user.username,
+    role: user.role,
+    name: user.name,
+    allowedBranches: user.allowedBranches,
+    exp: Date.now() + 14 * 24 * 3600 * 1000 // 14 days
+  };
+  const str = Buffer.from(JSON.stringify(payload)).toString('base64url');
+  const sig = crypto.createHmac('sha256', AUTH_SECRET).update(str).digest('base64url');
+  return `${str}.${sig}`;
+}
+
+function verifyToken(rawToken) {
+  if (!rawToken) return null;
+  let token = rawToken.trim();
+  try { token = decodeURIComponent(token); } catch(e) {}
+
+  // Legacy fallback if someone uses old ADMIN_TOKEN
+  const legacyToken = (process.env.ADMIN_TOKEN || 'reem.auipr2026').trim();
+  if (token === legacyToken) {
+    return USERS.admin_general;
+  }
+
+  const parts = token.split('.');
+  if (parts.length !== 2) return null;
+  const [str, sig] = parts;
+
+  try {
+    const expectedSig = crypto.createHmac('sha256', AUTH_SECRET).update(str).digest('base64url');
+    if (sig.length !== expectedSig.length) return null;
+    if (!crypto.timingSafeEqual(Buffer.from(sig), Buffer.from(expectedSig))) return null;
+
+    const payload = JSON.parse(Buffer.from(str, 'base64url').toString('utf8'));
+    if (payload.exp && payload.exp < Date.now()) return null;
+    const user = USERS[payload.username];
+    if (!user) return null;
+    return {
+      username: user.username,
+      role: user.role,
+      name: user.name,
+      allowedBranches: user.allowedBranches
+    };
+  } catch (e) {
+    return null;
+  }
+}
 
 async function connectToDatabase() {
   if (!MONGODB_URI) {
@@ -22,7 +96,6 @@ async function connectToDatabase() {
   }
 
   const client = await MongoClient.connect(MONGODB_URI);
-
   const db = client.db(DB_NAME);
 
   cachedClient = client;
@@ -45,33 +118,74 @@ exports.handler = async (event, context) => {
   }
 
   const method = event.httpMethod;
-
-  // Verify Admin Token Check
   const query = event.queryStringParameters || {};
-  if (query.action === 'verify_auth') {
-    const getHeader = (headers, name) => {
-      const lower = name.toLowerCase();
-      for (const k of Object.keys(headers || {})) {
-        if (k.toLowerCase() === lower) return headers[k];
-      }
-      return null;
-    };
-    const rawToken = getHeader(event.headers, 'x-admin-token') || getHeader(event.headers, 'authorization');
-    let token = rawToken ? rawToken.trim() : '';
-    try { token = decodeURIComponent(token); } catch(e) {}
-    const expectedToken = (ADMIN_TOKEN || 'reem.auipr2026').trim();
 
-    if (token && token === expectedToken) {
+  const getHeader = (hdrList, name) => {
+    const lower = name.toLowerCase();
+    for (const k of Object.keys(hdrList || {})) {
+      if (k.toLowerCase() === lower) return hdrList[k];
+    }
+    return null;
+  };
+
+  // 1. Action: Login with Username & Password
+  if (query.action === 'login' || (method === 'POST' && query.action === 'login')) {
+    let body = {};
+    try { body = JSON.parse(event.body || '{}'); } catch(e) {}
+    const username = (body.username || query.username || '').trim();
+    const password = (body.password || query.password || '').trim();
+
+    const user = USERS[username];
+    if (user && user.password === password) {
+      const token = createToken(user);
       return {
         statusCode: 200,
         headers,
-        body: JSON.stringify({ ok: true, message: 'Authenticated' })
+        body: JSON.stringify({
+          ok: true,
+          token,
+          user: {
+            username: user.username,
+            role: user.role,
+            name: user.name,
+            allowedBranches: user.allowedBranches
+          }
+        })
       };
     } else {
       return {
         statusCode: 401,
         headers,
-        body: JSON.stringify({ ok: false, error: 'Invalid Admin Token' })
+        body: JSON.stringify({ ok: false, error: 'اسم المستخدم أو كلمة المرور غير صحيحة' })
+      };
+    }
+  }
+
+  // 2. Action: Verify Session Token
+  if (query.action === 'verify_auth') {
+    const rawToken = getHeader(event.headers, 'x-admin-token') || getHeader(event.headers, 'authorization');
+    const user = verifyToken(rawToken);
+
+    if (user) {
+      return {
+        statusCode: 200,
+        headers,
+        body: JSON.stringify({
+          ok: true,
+          message: 'Authenticated',
+          user: {
+            username: user.username,
+            role: user.role,
+            name: user.name,
+            allowedBranches: user.allowedBranches
+          }
+        })
+      };
+    } else {
+      return {
+        statusCode: 401,
+        headers,
+        body: JSON.stringify({ ok: false, error: 'انتهت صلاحية الجلسة أو الرمز غير صالح' })
       };
     }
   }
@@ -84,7 +198,7 @@ exports.handler = async (event, context) => {
         headers,
         body: JSON.stringify({
           status: 'warning',
-          message: 'MONGODB_URI environment variable is missing in Netlify. Please set MONGODB_URI in Netlify dashboard.',
+          message: 'MONGODB_URI environment variable is missing in Netlify.',
           news: []
         })
       };
@@ -95,9 +209,8 @@ exports.handler = async (event, context) => {
 
     // GET: Fetch all news or single news by ID / Slug
     if (method === 'GET') {
-      const params = event.queryStringParameters || {};
-      const newsId = params.id;
-      const newsSlug = params.slug;
+      const newsId = query.id;
+      const newsSlug = query.slug;
 
       if (newsSlug) {
         const singleItem = await collection.findOne({ slug: newsSlug });
@@ -119,7 +232,7 @@ exports.handler = async (event, context) => {
         return { statusCode: 404, headers, body: JSON.stringify({ error: 'News item not found' }) };
       }
 
-      const branch = params.branch;
+      const branch = query.branch;
       let queryFilter = {};
 
       if (branch && branch !== 'all') {
@@ -136,24 +249,15 @@ exports.handler = async (event, context) => {
       return { statusCode: 200, headers, body: JSON.stringify({ news: allNews }) };
     }
 
-    // Auth check for POST and DELETE
-    const getHeader = (headers, name) => {
-      const lower = name.toLowerCase();
-      for (const k of Object.keys(headers || {})) {
-        if (k.toLowerCase() === lower) return headers[k];
-      }
-      return null;
-    };
+    // Require Auth for POST and DELETE
     const rawToken = getHeader(event.headers, 'x-admin-token') || getHeader(event.headers, 'authorization');
-    let token = rawToken ? rawToken.trim() : '';
-    try { token = decodeURIComponent(token); } catch(e) {}
-    const expectedToken = (ADMIN_TOKEN || 'reem.auipr2026').trim();
+    const user = verifyToken(rawToken);
 
-    if (token !== expectedToken) {
+    if (!user) {
       return {
         statusCode: 401,
         headers,
-        body: JSON.stringify({ error: 'رمز الدخول غير صحيح (Invalid Admin Token)' })
+        body: JSON.stringify({ error: 'غير مصرح: يرجى تسجيل الدخول أولاً' })
       };
     }
 
@@ -173,9 +277,20 @@ exports.handler = async (event, context) => {
       let rawSlug = (data.slug && data.slug.trim()) || data.title.trim();
       let cleanSlug = rawSlug.replace(/\s+/g, '-');
 
-      const targetBranches = Array.isArray(data.branches) && data.branches.length > 0
-        ? data.branches
-        : (data.branch ? [data.branch] : ['all']);
+      // Enforce branch permissions based on role
+      let targetBranches;
+      if (user.role === 'lebanon_admin') {
+        // Lebanon Admin can ONLY publish to lebanon
+        targetBranches = ['lebanon'];
+      } else if (user.role === 'jordan_admin') {
+        // Jordan Admin can ONLY publish to main / jordan
+        targetBranches = ['main', 'jordan'];
+      } else {
+        // Super Admin can publish to any branches
+        targetBranches = Array.isArray(data.branches) && data.branches.length > 0
+          ? data.branches
+          : (data.branch ? [data.branch] : ['all']);
+      }
 
       const newsItem = {
         title: data.title,
@@ -186,6 +301,8 @@ exports.handler = async (event, context) => {
         date: data.date || new Date().toISOString().split('T')[0],
         category: data.category || 'أخبار الاتحاد',
         branches: targetBranches,
+        createdBy: user.username,
+        authorName: user.name,
         createdAt: new Date()
       };
 
@@ -203,11 +320,32 @@ exports.handler = async (event, context) => {
 
     // DELETE: Remove news item
     if (method === 'DELETE') {
-      const newsId = (event.queryStringParameters && event.queryStringParameters.id) ||
+      const newsId = (query && query.id) ||
                      (event.body && JSON.parse(event.body).id);
 
       if (!newsId) {
         return { statusCode: 400, headers, body: JSON.stringify({ error: 'News ID is required for deletion' }) };
+      }
+
+      // Check if user has permission to delete this specific news item
+      if (user.role !== 'super_admin') {
+        try {
+          const existing = await collection.findOne({ _id: new ObjectId(newsId) });
+          if (!existing) {
+            return { statusCode: 404, headers, body: JSON.stringify({ error: 'News item not found' }) };
+          }
+          const itemBranches = existing.branches || (existing.branch ? [existing.branch] : ['all']);
+          const isAllowed = itemBranches.some(b => user.allowedBranches.includes(b));
+          if (!isAllowed) {
+            return {
+              statusCode: 403,
+              headers,
+              body: JSON.stringify({ error: 'غير مصرح لك بحذف أخبار تابعة لفروع أخرى' })
+            };
+          }
+        } catch(e) {
+          return { statusCode: 400, headers, body: JSON.stringify({ error: 'Invalid ID format' }) };
+        }
       }
 
       try {
@@ -221,7 +359,7 @@ exports.handler = async (event, context) => {
       }
     }
 
-    return { statusCode: 450, headers, body: JSON.stringify({ error: 'Method Not Allowed' }) };
+    return { statusCode: 405, headers, body: JSON.stringify({ error: 'Method Not Allowed' }) };
 
   } catch (error) {
     console.error('Serverless Function Error:', error);
