@@ -497,6 +497,7 @@ function initBranchSystem() {
         if (isLebanon) {
             document.body.classList.remove('branch-mode-jordan');
             document.body.classList.add('branch-mode-lebanon');
+            sessionStorage.setItem('auipr_active_branch', 'lebanon');
 
             if (!document.title.includes('ممثل الجمهورية اللبنانية')) {
                 document.title = document.title + ' | ممثل الجمهورية اللبنانية للاتحاد العربي';
@@ -505,6 +506,11 @@ function initBranchSystem() {
             const orgNames = document.querySelectorAll('.org-name');
             orgNames.forEach(el => {
                 el.innerHTML = `ممثل الجمهورية اللبنانية<span class="branch-subname" style="display: block; font-size: 0.82em; font-weight: 600; color: #475569; margin-top: 2px;">للاتحاد العربي لحماية حقوق الملكية الفكرية</span>`;
+            });
+
+            const footerOrgs = document.querySelectorAll('.footer-org-name');
+            footerOrgs.forEach(el => {
+                el.innerHTML = `ممثل الجمهورية اللبنانية<span style="display:block;font-size:0.85em;color:#94a3b8;margin-top:4px;">للاتحاد العربي لحماية حقوق الملكية الفكرية</span>`;
             });
 
             if (window.location.pathname.includes('contact.html')) {
@@ -516,7 +522,7 @@ function initBranchSystem() {
 
                 const infoTexts = document.querySelectorAll('.info-text');
                 infoTexts.forEach(box => {
-                    if (box.innerHTML.includes('info@auipr.org') || box.innerHTML.includes('jordan@auipr.org')) {
+                    if (box.innerHTML.includes('info@auipr.org') || box.innerHTML.includes('ceo@auipr.org') || box.innerHTML.includes('jordan@auipr.org')) {
                         box.innerHTML = '<a href="mailto:lebanon@auipr.org" dir="ltr">lebanon@auipr.org</a>';
                     }
                     if (box.innerText.includes('مصر') || box.innerText.includes('الأردن') || box.innerText.includes('عمان')) {
@@ -527,6 +533,7 @@ function initBranchSystem() {
         } else if (isJordan) {
             document.body.classList.remove('branch-mode-lebanon');
             document.body.classList.add('branch-mode-jordan');
+            sessionStorage.setItem('auipr_active_branch', 'jordan');
 
             if (!document.title.includes('فرع المملكة الأردنية الهاشمية')) {
                 document.title = document.title + ' | فرع المملكة الأردنية الهاشمية';
@@ -535,6 +542,11 @@ function initBranchSystem() {
             const orgNames = document.querySelectorAll('.org-name');
             orgNames.forEach(el => {
                 el.innerHTML = `فرع المملكة الأردنية الهاشمية<span class="branch-subname" style="display: block; font-size: 0.82em; font-weight: 600; color: #475569; margin-top: 2px;">للاتحاد العربي لحماية حقوق الملكية الفكرية (قرار 1371/96/9)</span>`;
+            });
+
+            const footerOrgs = document.querySelectorAll('.footer-org-name');
+            footerOrgs.forEach(el => {
+                el.innerHTML = `فرع المملكة الأردنية الهاشمية<span style="display:block;font-size:0.85em;color:#94a3b8;margin-top:4px;">للاتحاد العربي لحماية حقوق الملكية الفكرية (قرار 1371/96/9)</span>`;
             });
 
             if (window.location.pathname.includes('contact.html')) {
@@ -546,7 +558,7 @@ function initBranchSystem() {
 
                 const infoTexts = document.querySelectorAll('.info-text');
                 infoTexts.forEach(box => {
-                    if (box.innerHTML.includes('info@auipr.org') || box.innerHTML.includes('lebanon@auipr.org')) {
+                    if (box.innerHTML.includes('info@auipr.org') || box.innerHTML.includes('ceo@auipr.org') || box.innerHTML.includes('lebanon@auipr.org')) {
                         box.innerHTML = '<a href="mailto:jordan@auipr.org" dir="ltr">jordan@auipr.org</a>';
                     }
                     if (box.innerText.includes('بيروت') || box.innerText.includes('مصر')) {
@@ -559,6 +571,7 @@ function initBranchSystem() {
             }
         } else {
             document.body.classList.remove('branch-mode-lebanon', 'branch-mode-jordan');
+            sessionStorage.setItem('auipr_active_branch', 'main');
         }
 
         // 3. تحديث روابط Canonical والـ SEO والـ Meta Tags للفرع الحالي
