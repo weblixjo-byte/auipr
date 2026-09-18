@@ -18,3 +18,4 @@ Allow: /
 # خرائط الموقع للفرعين لزيادة سرعة الأرشفة
 Sitemap: https://auipr.org/sitemap.xml
 Sitemap: https://lebanon.auipr.org/sitemap.xml
+Sitemap: https://jordan.auipr.org/sitemap.xml
