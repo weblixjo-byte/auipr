@@ -520,15 +520,16 @@ function initBranchSystem() {
                 const breadcrumbCurrent = document.querySelector('.breadcrumbs .current');
                 if (breadcrumbCurrent) breadcrumbCurrent.innerText = 'ممثل الجمهورية اللبنانية';
 
-                const infoTexts = document.querySelectorAll('.info-text');
-                infoTexts.forEach(box => {
-                    if (box.innerHTML.includes('info@auipr.org') || box.innerHTML.includes('ceo@auipr.org') || box.innerHTML.includes('jordan@auipr.org')) {
-                        box.innerHTML = '<a href="mailto:lebanon@auipr.org" dir="ltr">lebanon@auipr.org</a>';
-                    }
-                    if (box.innerText.includes('مصر') || box.innerText.includes('الأردن') || box.innerText.includes('عمان')) {
-                        box.innerHTML = '<p>بيروت - الجمهورية اللبنانية</p>';
-                    }
-                });
+                const emailLink = document.querySelector('.contact-item a[href^="mailto:"]');
+                if (emailLink) {
+                    emailLink.href = 'mailto:lebanon@auipr.org';
+                    emailLink.innerText = 'lebanon@auipr.org';
+                }
+
+                const itemJo = document.querySelector('.address-item-jo');
+                const itemLb = document.querySelector('.address-item-lb');
+                if (itemLb) itemLb.style.display = 'flex';
+                if (itemJo) itemJo.style.display = 'none';
             }
         } else if (isJordan) {
             document.body.classList.remove('branch-mode-lebanon');
@@ -556,22 +557,41 @@ function initBranchSystem() {
                 const breadcrumbCurrent = document.querySelector('.breadcrumbs .current');
                 if (breadcrumbCurrent) breadcrumbCurrent.innerText = 'فرع المملكة الأردنية الهاشمية';
 
-                const infoTexts = document.querySelectorAll('.info-text');
-                infoTexts.forEach(box => {
-                    if (box.innerHTML.includes('info@auipr.org') || box.innerHTML.includes('ceo@auipr.org') || box.innerHTML.includes('lebanon@auipr.org')) {
-                        box.innerHTML = '<a href="mailto:jordan@auipr.org" dir="ltr">jordan@auipr.org</a>';
+                const emailLink = document.querySelector('.contact-item a[href^="mailto:"]');
+                if (emailLink) {
+                    emailLink.href = 'mailto:jordan@auipr.org';
+                    emailLink.innerText = 'jordan@auipr.org';
+                }
+
+                const itemEg = document.querySelector('.address-item-eg');
+                const itemJo = document.querySelector('.address-item-jo');
+                const itemLb = document.querySelector('.address-item-lb');
+                if (itemJo) {
+                    itemJo.style.display = 'flex';
+                    const addrP = itemJo.querySelector('address');
+                    if (addrP && !addrP.innerHTML.includes('1371/96/9')) {
+                        addrP.innerHTML = '<p><strong>مقر الفرع الإقليمي:</strong> 240-شارع الملك حسين -العبدلي -الطابق الخامس، عمان.</p><p style="font-size:0.85em;color:#64748b;margin-top:4px;">الصادر بالقرار رقم (1371/96/9) عن وزارة الخارجية</p>';
                     }
-                    if (box.innerText.includes('بيروت') || box.innerText.includes('مصر')) {
-                        box.innerHTML = '<p>عمان - المملكة الأردنية الهاشمية</p><p style="font-size:0.85em;color:#64748b;margin-top:4px;">الصادر بالقرار رقم (1371/96/9) عن وزارة الخارجية</p>';
-                    }
-                    if (box.innerHTML.includes('+20') || box.innerHTML.includes('+961')) {
-                        box.innerHTML = '<a href="tel:00962795555015" dir="ltr">00962795555015</a>';
-                    }
-                });
+                }
+                if (itemLb) itemLb.style.display = 'none';
+
+                if (typeof switchMap === 'function') {
+                    const btnJo = document.querySelector('.map-tabs .tab-btn');
+                    if (btnJo) switchMap('jo', btnJo);
+                }
             }
         } else {
             document.body.classList.remove('branch-mode-lebanon', 'branch-mode-jordan');
             sessionStorage.setItem('auipr_active_branch', 'main');
+
+            if (window.location.pathname.includes('contact.html')) {
+                const itemEg = document.querySelector('.address-item-eg');
+                const itemJo = document.querySelector('.address-item-jo');
+                const itemLb = document.querySelector('.address-item-lb');
+                if (itemEg) itemEg.style.display = 'flex';
+                if (itemJo) itemJo.style.display = 'flex';
+                if (itemLb) itemLb.style.display = 'flex';
+            }
         }
 
         // 3. تحديث روابط Canonical والـ SEO والـ Meta Tags للفرع الحالي
