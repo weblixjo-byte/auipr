@@ -1,5 +1,6 @@
 <style>
 .dropdown-menu-container {
+  width: 300px;
   max-height: calc(100vh - 90px);
   overflow-y: auto;
   scrollbar-width: thin;
@@ -12,48 +13,104 @@
   line-height: 1.35 !important;
 }
 .branch-switcher-box {
-  padding: 10px 14px;
-  margin: 10px 12px 4px;
+  padding: 12px;
+  margin: 12px 14px 6px;
   background: #f8fafc;
-  border-radius: 12px;
+  border-radius: 14px;
   border: 1px solid #e2e8f0;
 }
 .branch-switcher-title {
-  font-size: 0.78rem;
+  font-size: 0.8rem;
   color: #64748b;
   font-weight: 700;
-  margin-bottom: 7px;
+  margin-bottom: 9px;
   display: flex;
   align-items: center;
+  gap: 7px;
+  padding: 0 4px;
+}
+.branch-switcher-title i {
+  color: #7251cd;
+  font-size: 0.85rem;
+}
+.branch-nav-list {
+  display: flex;
+  flex-direction: column;
   gap: 6px;
 }
-.branch-pill-tabs {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 5px;
-  background: #e2e8f0;
-  padding: 3px;
-  border-radius: 9px;
-}
 .branch-tab-btn {
-  text-align: center;
-  padding: 7px 4px;
-  font-size: 0.82rem;
-  border-radius: 7px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 9px 12px;
+  border-radius: 10px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  color: #334155;
   text-decoration: none;
-  font-weight: 700;
-  color: #475569;
-  background: transparent;
+  font-size: 0.84rem;
+  font-weight: 600;
   transition: all 0.2s ease;
-  display: block;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
 }
 .branch-tab-btn:hover {
-  color: #1e293b;
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+  color: #0f172a;
+  transform: translateX(-3px);
+}
+.branch-tab-btn-content {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+.branch-tab-btn-icon {
+  width: 18px;
+  font-size: 0.88rem;
+  color: #7251cd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+.branch-tab-btn:hover .branch-tab-btn-icon {
+  transform: scale(1.1);
+}
+.branch-tab-btn-name {
+  white-space: nowrap;
+}
+.branch-tab-check {
+  display: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+  font-size: 0.65rem;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
 }
 .branch-tab-btn.active {
-  background: #7251cd;
+  background: linear-gradient(135deg, #7251cd 0%, #583ba8 100%) !important;
+  border-color: #583ba8 !important;
   color: #ffffff !important;
-  box-shadow: 0 2px 6px rgba(114, 81, 205, 0.25);
+  font-weight: 700;
+  box-shadow: 0 4px 10px rgba(114, 81, 205, 0.3);
+  transform: none !important;
+}
+.branch-tab-btn.active .branch-tab-btn-icon {
+  color: #ffffff !important;
+}
+.branch-tab-btn.active .branch-tab-check {
+  display: flex;
+}
+@media (max-width: 768px) {
+  .dropdown-menu-container {
+    width: calc(100vw - 32px) !important;
+    max-width: 320px !important;
+  }
 }
 </style>
 <header class="main-header">
@@ -84,14 +141,26 @@
           <li><a href="../contact.html">تواصل معنا</a></li>
         </ul>
 
-        <!-- زر التبديل العصري الأنيق بدون عجقة أو قوائم فرعية -->
+        <!-- اختيار النطاق / الفرع بتصميم عصري وأنيق -->
         <div class="branch-switcher-box">
           <div class="branch-switcher-title">
-            <i class="fa-solid fa-globe" style="color: #7251cd;"></i> <span>نطاق الموقع:</span>
+            <i class="fa-solid fa-globe"></i> <span>نطاق الموقع (الفرع):</span>
           </div>
-          <div class="branch-pill-tabs">
-            <a href="https://auipr.org" class="branch-tab-btn branch-tab-main">المقر الرئيسي</a>
-            <a href="https://lebanon.auipr.org" class="branch-tab-btn branch-tab-lebanon">ممثل الجمهورية اللبنانية</a>
+          <div class="branch-nav-list">
+            <a href="https://auipr.org" class="branch-tab-btn branch-tab-main">
+              <span class="branch-tab-btn-content">
+                <span class="branch-tab-btn-icon"><i class="fa-solid fa-landmark"></i></span>
+                <span class="branch-tab-btn-name">المقر الرئيسي (العام)</span>
+              </span>
+              <span class="branch-tab-check"><i class="fa-solid fa-check"></i></span>
+            </a>
+            <a href="https://lebanon.auipr.org" class="branch-tab-btn branch-tab-lebanon">
+              <span class="branch-tab-btn-content">
+                <span class="branch-tab-btn-icon"><i class="fa-solid fa-tree"></i></span>
+                <span class="branch-tab-btn-name">ممثل الجمهورية اللبنانية</span>
+              </span>
+              <span class="branch-tab-check"><i class="fa-solid fa-check"></i></span>
+            </a>
           </div>
         </div>
       </div>
