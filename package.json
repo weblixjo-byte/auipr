@@ -1,9 +1,11 @@
 {
-  "name": "auipr-live",
+  "name": "auipr-website",
   "version": "1.0.0",
-  "description": "AUIPR Website with Netlify Serverless Functions and MongoDB integration",
+  "description": "Arab Union for the Protection of Intellectual Property Rights (AUIPR) Official Portal",
   "main": "index.html",
   "scripts": {
+    "start": "npx netlify dev",
+    "dev": "npx netlify dev",
     "build": "echo \"Build successful\"",
     "test": "echo \"OK\" && exit 0"
   },
