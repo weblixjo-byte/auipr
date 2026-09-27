@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, nofollow">
-  <title>لوحة التحكم المركزية - المقر الرئيسي (مصر) | الاتحاد العربي للملكية الفكرية</title>
+  <title>لوحة التحكم والسيطرة المركزية - المقر الرئيسي (مصر) | الاتحاد العربي للملكية الفكرية</title>
   <link rel="icon" type="image/png" href="https://static.wixstatic.com/media/215eb2_98e65620ebb04f4d96de0b8ae685fcee~mv2.png" sizes="32x32">
   <link rel="apple-touch-icon" href="https://static.wixstatic.com/media/215eb2_98e65620ebb04f4d96de0b8ae685fcee~mv2.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,18 +19,18 @@
       font-family: 'IBM Plex Sans Arabic', sans-serif;
     }
     .admin-main-section {
-      padding: 40px 0 80px 0;
+      padding: 35px 0 80px 0;
     }
     .admin-grid-layout {
       display: grid;
       grid-template-columns: 1fr;
-      gap: 35px;
+      gap: 30px;
     }
     .admin-surface-card {
       background: #ffffff;
-      border-radius: 28px;
-      padding: 35px 40px;
-      box-shadow: 0 15px 35px rgba(26, 43, 75, 0.05);
+      border-radius: 24px;
+      padding: 32px 36px;
+      box-shadow: 0 12px 35px rgba(26, 43, 75, 0.05);
       border: 1px solid rgba(60, 235, 195, 0.2);
       position: relative;
       overflow: hidden;
@@ -39,14 +39,14 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 25px;
-      padding-bottom: 18px;
+      margin-bottom: 22px;
+      padding-bottom: 16px;
       border-bottom: 2px solid #f1f5f9;
       flex-wrap: wrap;
       gap: 15px;
     }
     .card-top-bar h2 {
-      font-size: 1.35rem;
+      font-size: 1.3rem;
       font-weight: 700;
       color: #1a2b4b;
       display: flex;
@@ -61,27 +61,25 @@
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      padding: 8px 16px;
+      padding: 7px 15px;
       border-radius: 50px;
-      font-size: 0.88rem;
-      font-weight: 600;
+      font-size: 0.85rem;
+      font-weight: 700;
     }
-    .status-ok { background: #e0f7f3; color: #0d9488; }
-    .status-warn { background: #fef3c7; color: #b45309; }
 
     .form-group {
-      margin-bottom: 22px;
+      margin-bottom: 20px;
     }
     .form-group label {
       display: block;
       font-weight: 600;
-      font-size: 0.95rem;
+      font-size: 0.92rem;
       margin-bottom: 8px;
       color: #1a2b4b;
     }
     .form-control {
       width: 100%;
-      padding: 14px 18px;
+      padding: 13px 18px;
       border: 1.5px solid #e2e8f0;
       border-radius: 14px;
       font-family: inherit;
@@ -98,13 +96,13 @@
       box-shadow: 0 0 0 4px rgba(60, 235, 195, 0.18);
     }
     textarea.form-control {
-      min-height: 110px;
+      min-height: 100px;
       resize: vertical;
     }
     .file-upload-box {
       border: 2px dashed #cbd5e1;
-      border-radius: 18px;
-      padding: 25px;
+      border-radius: 16px;
+      padding: 22px;
       text-align: center;
       background: #f8fafc;
       cursor: pointer;
@@ -115,23 +113,23 @@
       background: #f0fdf9;
     }
     .file-upload-box i {
-      font-size: 2.2rem;
+      font-size: 2rem;
       color: #00c4a7;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
       display: block;
     }
     .btn-brand-primary {
       background: #3cebc3;
       color: #0d112b;
       border: none;
-      padding: 14px 36px;
+      padding: 13px 34px;
       border-radius: 50px;
       font-weight: 700;
-      font-size: 1.05rem;
+      font-size: 1rem;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
       box-shadow: 0 8px 22px rgba(60, 235, 195, 0.35);
       transition: all 0.25s ease;
       font-family: inherit;
@@ -148,10 +146,10 @@
       background: #fee2e2;
       color: #dc2626;
       border: 1px solid #fca5a5;
-      padding: 8px 16px;
+      padding: 7px 15px;
       border-radius: 50px;
-      font-weight: 600;
-      font-size: 0.85rem;
+      font-weight: 700;
+      font-size: 0.82rem;
       cursor: pointer;
       transition: all 0.2s ease;
       font-family: inherit;
@@ -161,151 +159,131 @@
       color: white;
     }
     .preview-container {
-      margin-top: 15px;
+      margin-top: 14px;
       display: none;
       position: relative;
-      max-width: 280px;
-      border-radius: 16px;
+      max-width: 260px;
+      border-radius: 14px;
       overflow: hidden;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.08);
       border: 2px solid #e0f7f3;
     }
     .preview-container img {
       width: 100%;
-      height: 170px;
+      height: 160px;
       object-fit: cover;
       display: block;
     }
 
-    /* Super Admin Branch Controls */
-    .branch-controls-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 25px;
-      margin-top: 20px;
+    /* ========================================================
+       Executive Command & Control Center (C2) - Sleek Redesign
+       ======================================================== */
+    .c2-master-card {
+      border: 1px solid rgba(26, 43, 75, 0.12) !important;
+      border-top: 5px solid #0d112b !important;
+      background: #ffffff !important;
+      box-shadow: 0 16px 40px rgba(13, 17, 43, 0.08) !important;
+      border-radius: 24px !important;
+      padding: 30px 34px !important;
     }
-    .branch-control-card {
-      background: #ffffff;
-      border-radius: 22px;
-      border: 1.5px solid #e2e8f0;
-      padding: 26px 28px;
-      display: flex;
-      flex-direction: column;
-      box-shadow: 0 6px 20px rgba(26, 43, 75, 0.04);
-      position: relative;
-      transition: all 0.3s ease;
-    }
-    .branch-control-card.frozen {
-      border-color: #fda4af;
-      background: #fff8f8;
-      box-shadow: 0 8px 24px rgba(225, 29, 72, 0.08);
-    }
-    .branch-control-card.active {
-      border-color: #99f6e4;
-      background: #ffffff;
-    }
-    .branch-card-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 18px;
-      gap: 10px;
-    }
-    .branch-card-title {
-      font-size: 1.18rem;
-      font-weight: 700;
-      color: #1a2b4b;
-      margin: 0 0 6px 0;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .branch-status-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 6px 14px;
-      border-radius: 50px;
-      font-size: 0.82rem;
-      font-weight: 700;
-      white-space: nowrap;
-    }
-    .branch-status-pill.active {
-      background: #dcfce7;
-      color: #15803d;
-      border: 1px solid #bbf7d0;
-    }
-    .branch-status-pill.frozen {
-      background: #ffe4e6;
-      color: #be123c;
-      border: 1px solid #fecdd3;
-      animation: pulse-frozen 2s infinite;
-    }
-    @keyframes pulse-frozen {
-      0% { box-shadow: 0 0 0 0 rgba(225, 29, 72, 0.25); }
-      70% { box-shadow: 0 0 0 6px rgba(225, 29, 72, 0); }
-      100% { box-shadow: 0 0 0 0 rgba(225, 29, 72, 0); }
-    }
-    .branch-info-row {
+    .c2-top-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 9px 0;
-      border-bottom: 1px dashed #f1f5f9;
-      font-size: 0.88rem;
+      padding-bottom: 20px;
+      border-bottom: 2px solid #f1f5f9;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+      gap: 16px;
     }
-    .branch-info-label {
-      color: #64748b;
-      font-weight: 500;
+    .c2-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 16px;
     }
-    .branch-info-val {
-      color: #1e293b;
-      font-weight: 700;
-    }
-    .btn-toggle-branch {
-      margin-top: 20px;
-      width: 100%;
-      padding: 13px 20px;
-      border-radius: 50px;
-      font-family: inherit;
-      font-weight: 700;
-      font-size: 0.95rem;
-      border: none;
-      cursor: pointer;
-      display: inline-flex;
+    .c2-header-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 15px;
+      background: linear-gradient(135deg, #0d112b 0%, #1e293b 100%);
+      color: #3cebc3;
+      display: flex;
       align-items: center;
       justify-content: center;
+      font-size: 1.45rem;
+      box-shadow: 0 8px 18px rgba(13, 17, 43, 0.18);
+      flex-shrink: 0;
+    }
+    .c2-header-text h2 {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: #0d112b;
+      margin: 0 0 5px 0;
+      display: flex;
+      align-items: center;
       gap: 10px;
-      transition: all 0.25s ease;
     }
-    .btn-toggle-freeze {
-      background: #fee2e2;
-      color: #b91c1c;
-      border: 1.5px solid #fca5a5;
+    .c2-subtitle-tags {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
     }
-    .btn-toggle-freeze:hover {
-      background: #dc2626;
-      color: #ffffff;
-      box-shadow: 0 8px 20px rgba(220, 38, 38, 0.25);
+    .c2-hq-tag {
+      background: #e0f2fe;
+      color: #0369a1;
+      font-weight: 700;
+      font-size: 0.78rem;
+      padding: 3px 10px;
+      border-radius: 6px;
+      border: 1px solid #bae6fd;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
     }
-    .btn-toggle-unfreeze {
-      background: #ccfbf1;
-      color: #0f766e;
-      border: 1.5px solid #99f6e4;
+    .c2-subtitle-desc {
+      color: #64748b;
+      font-size: 0.85rem;
     }
-    .btn-toggle-unfreeze:hover {
-      background: #0d9488;
-      color: #ffffff;
-      box-shadow: 0 8px 20px rgba(13, 148, 136, 0.25);
+    .c2-header-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .c2-live-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      padding: 6px 14px;
+      border-radius: 50px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #15803d;
+    }
+    .c2-live-dot {
+      width: 9px;
+      height: 9px;
+      background: #22c55e;
+      border-radius: 50%;
+      box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.25);
+      animation: pulse-dot 1.8s infinite;
+    }
+    @keyframes pulse-dot {
+      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.5); }
+      70% { transform: scale(1.1); box-shadow: 0 0 0 6px rgba(34, 197, 94, 0); }
+      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
     }
     .btn-refresh-status {
       background: #ffffff;
-      color: #0f766e;
-      border: 1.5px solid #00c4a7;
+      color: #0d112b;
+      border: 1.5px solid #cbd5e1;
       padding: 8px 18px;
       border-radius: 50px;
       font-weight: 700;
-      font-size: 0.88rem;
+      font-size: 0.85rem;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
@@ -314,8 +292,162 @@
       font-family: inherit;
     }
     .btn-refresh-status:hover {
-      background: #00c4a7;
-      color: #0d112b;
+      border-color: #00c4a7;
+      color: #0d9488;
+      background: #f0fdf9;
+    }
+
+    .c2-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 24px;
+    }
+    .c2-branch-box {
+      background: #ffffff;
+      border-radius: 20px;
+      border: 1.5px solid #e2e8f0;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .c2-branch-box::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: #cbd5e1;
+    }
+    .c2-branch-box.active::before {
+      background: linear-gradient(90deg, #10b981, #059669);
+    }
+    .c2-branch-box.frozen {
+      background: #fffafa;
+      border-color: #fecdd3;
+      box-shadow: 0 8px 25px rgba(225, 29, 72, 0.08);
+    }
+    .c2-branch-box.frozen::before {
+      background: linear-gradient(90deg, #f43f5e, #be123c);
+    }
+    .c2-box-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 16px;
+      gap: 10px;
+    }
+    .c2-box-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #1a2b4b;
+      margin: 0 0 4px 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .c2-box-user {
+      font-size: 0.82rem;
+      color: #64748b;
+      display: block;
+    }
+    .c2-box-user strong {
+      color: #0f172a;
+    }
+    .c2-status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 6px 14px;
+      border-radius: 50px;
+      font-size: 0.82rem;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+    .c2-status-pill.active {
+      background: #ecfdf5;
+      color: #065f46;
+      border: 1.5px solid #a7f3d0;
+    }
+    .c2-status-pill.frozen {
+      background: #fff1f2;
+      color: #9f1239;
+      border: 1.5px solid #fecdd3;
+      animation: pulse-c2-frozen 2s infinite;
+    }
+    @keyframes pulse-c2-frozen {
+      0% { box-shadow: 0 0 0 0 rgba(244, 63, 94, 0.25); }
+      70% { box-shadow: 0 0 0 6px rgba(244, 63, 94, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(244, 63, 94, 0); }
+    }
+    .c2-metrics-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin: 16px 0;
+    }
+    .c2-metric-cell {
+      background: #f8fafc;
+      border: 1px solid #edf2f7;
+      border-radius: 12px;
+      padding: 10px 12px;
+    }
+    .c2-metric-label {
+      font-size: 0.75rem;
+      color: #64748b;
+      font-weight: 600;
+      display: block;
+      margin-bottom: 4px;
+    }
+    .c2-metric-val {
+      font-size: 0.85rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .c2-val-ok { color: #0d9488; }
+    .c2-val-blocked { color: #e11d48; }
+
+    .btn-c2-action {
+      width: 100%;
+      padding: 13px 20px;
+      border-radius: 50px;
+      font-family: inherit;
+      font-weight: 800;
+      font-size: 0.94rem;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: all 0.25s ease;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+    .btn-c2-freeze {
+      background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+      color: #ffffff;
+      box-shadow: 0 6px 18px rgba(220, 38, 38, 0.25);
+    }
+    .btn-c2-freeze:hover {
+      background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(220, 38, 38, 0.35);
+    }
+    .btn-c2-unfreeze {
+      background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%);
+      color: #ffffff;
+      box-shadow: 0 6px 18px rgba(13, 148, 136, 0.25);
+    }
+    .btn-c2-unfreeze:hover {
+      background: linear-gradient(135deg, #0f766e 0%, #115e59 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(13, 148, 136, 0.35);
     }
 
     /* Branch Account Chips */
@@ -532,24 +664,32 @@
         </div>
 
         <!-- Super Admin Branch Control Center (مقر مصر - حصري للمشرف العام) -->
-        <div id="superAdminBranchControlPanel" class="admin-surface-card" style="display: none; border: 2px solid #00c4a7; background: linear-gradient(145deg, #ffffff 0%, #f4fbf9 100%);">
-          <div class="card-top-bar" style="border-bottom: 2px solid rgba(0, 196, 167, 0.2);">
-            <div>
-              <h2 style="color: #0d112b; font-size: 1.35rem; display: flex; align-items: center; gap: 10px;">
-                <i class="fa-solid fa-tower-broadcast" style="color: #00c4a7;"></i>
-                مركز التحكم والسيطرة المركزية بالفروع (المقر الرئيسي - جمهورية مصر العربية)
-              </h2>
-              <p style="color: #64748b; font-size: 0.88rem; margin: 6px 0 0 0;">
-                صلاحية سيادية حصرية للمقر العام للاتحاد للتحكم بفعالية وتجميد حسابات المشرفين وحركات الفروع الإقليمية فورياً وبأعلى درجات الأمان
-              </p>
+        <div id="superAdminBranchControlPanel" class="admin-surface-card c2-master-card" style="display: none;">
+          <div class="c2-top-header">
+            <div class="c2-title-wrap">
+              <div class="c2-header-icon">
+                <i class="fa-solid fa-shield-halved"></i>
+              </div>
+              <div class="c2-header-text">
+                <h2>مركز القيادة والسيطرة المركزية بالفروع</h2>
+                <div class="c2-subtitle-tags">
+                  <span class="c2-hq-tag"><i class="fa-solid fa-building-columns"></i> الإدارة العامة للاتحاد (جمهورية مصر العربية)</span>
+                  <span class="c2-subtitle-desc">نظام سيادي للتحكم بصلاحيات المشرفين وتجميد/تفعيل العمليات الإقليمية فورياً وبأعلى درجات الأمان</span>
+                </div>
+              </div>
             </div>
-            <button onclick="loadBranchControls()" class="btn-refresh-status" title="تحديث حالة الفروع الآن">
-              <i class="fa-solid fa-arrows-rotate" id="refreshControlsIcon"></i> تحديث حالة الفروع
-            </button>
+            <div class="c2-header-actions">
+              <div class="c2-live-indicator">
+                <span class="c2-live-dot"></span> السيرفر وقاعدة البيانات متصلة
+              </div>
+              <button onclick="loadBranchControls()" class="btn-refresh-status" title="تحديث حالة الفروع الآن">
+                <i class="fa-solid fa-arrows-rotate" id="refreshControlsIcon"></i> تحديث الحالة المباشرة
+              </button>
+            </div>
           </div>
 
           <!-- Dynamic Branch Cards Grid -->
-          <div id="branchControlsContainer" class="branch-controls-grid">
+          <div id="branchControlsContainer" class="c2-cards-grid">
             <div style="grid-column: 1 / -1; text-align: center; color: #64748b; padding: 30px;">
               <i class="fa-solid fa-circle-notch fa-spin" style="font-size: 1.6rem; color: #00c4a7; margin-bottom: 10px; display: block;"></i>
               جاري فحص وتحديث حالات الفروع...
@@ -777,6 +917,19 @@
       currentUser = JSON.parse(localStorage.getItem('auipr_admin_user') || 'null');
     } catch(e) {}
 
+    // Safe image normalizer to guarantee proper rendering of all images
+    function getSafeImageUrl(url) {
+      if (!url) return 'img/ip_conference_2026.png';
+      let clean = String(url).trim();
+      if (clean.startsWith('/')) {
+        clean = clean.substring(1);
+      }
+      if (clean.startsWith('http://') || clean.startsWith('https://') || clean.startsWith('data:image') || clean.startsWith('img/')) {
+        return clean;
+      }
+      return 'img/' + clean;
+    }
+
     // Account selector helper
     function selectLoginAccount(uname) {
       const uInput = document.getElementById('usernameInput');
@@ -976,7 +1129,7 @@
       }
     }
 
-    // Render Branch Controls Cards
+    // Render Branch Controls Cards - Executive Redesign
     function renderBranchControls(controls) {
       const container = document.getElementById('branchControlsContainer');
       if (!container || !controls) return;
@@ -985,14 +1138,14 @@
         {
           id: 'lebanon',
           name: 'ممثل الجمهورية اللبنانية (بيروت)',
-          icon: 'fa-landmark-flag',
+          flagIcon: '🇱🇧',
           username: 'admin_lebanon',
           data: controls.lebanon || {}
         },
         {
           id: 'jordan',
           name: 'فرع المملكة الأردنية الهاشمية (عمّان)',
-          icon: 'fa-building-shield',
+          flagIcon: '🇯🇴',
           username: 'admin_jordan',
           data: controls.jordan || {}
         }
@@ -1001,61 +1154,73 @@
       container.innerHTML = branches.map(b => {
         const isFrozen = Boolean(b.data.isFrozen);
         const cardClass = isFrozen ? 'frozen' : 'active';
-        const statusBadge = isFrozen 
-          ? `<span class="branch-status-pill frozen"><i class="fa-solid fa-snowflake"></i> مجمّد كلياً بقرار مركزي</span>`
-          : `<span class="branch-status-pill active"><i class="fa-solid fa-circle-check"></i> الحساب نشط ومفعّل</span>`;
+        const statusPill = isFrozen 
+          ? `<span class="c2-status-pill frozen"><i class="fa-solid fa-ban"></i> مجمّد كلياً بقرار مركزي</span>`
+          : `<span class="c2-status-pill active"><i class="fa-solid fa-circle-check"></i> الحساب نشط ومفعّل</span>`;
         
-        const movementsStatus = isFrozen
-          ? `<span style="color: #e11d48; font-weight: 700;"><i class="fa-solid fa-ban"></i> معلّقة ومحظورة بالكامل</span>`
-          : `<span style="color: #0d9488; font-weight: 700;"><i class="fa-solid fa-check-double"></i> متاحة ومصرّح بها</span>`;
+        const publishVal = isFrozen
+          ? `<span class="c2-metric-val c2-val-blocked"><i class="fa-solid fa-ban"></i> معلّق ومحظور</span>`
+          : `<span class="c2-metric-val c2-val-ok"><i class="fa-solid fa-check"></i> مصرّح ومتاح</span>`;
+
+        const loginVal = isFrozen
+          ? `<span class="c2-metric-val c2-val-blocked"><i class="fa-solid fa-lock"></i> مغلق ومحجوب</span>`
+          : `<span class="c2-metric-val c2-val-ok"><i class="fa-solid fa-door-open"></i> مسموح ومفتوح</span>`;
+
+        const deleteVal = isFrozen
+          ? `<span class="c2-metric-val c2-val-blocked"><i class="fa-solid fa-ban"></i> مقفل تماماً</span>`
+          : `<span class="c2-metric-val c2-val-ok"><i class="fa-solid fa-trash-can"></i> متاح للفرع</span>`;
 
         const lastUpdated = b.data.updatedAt
           ? new Date(b.data.updatedAt).toLocaleString('ar-EG', { dateStyle: 'medium', timeStyle: 'short' })
           : 'الحالة الافتراضية النشطة';
 
         const actionButton = isFrozen
-          ? `<button onclick="openBranchActionModal('${b.id}', false, '${escapeHtml(b.name)}')" class="btn-toggle-branch btn-toggle-unfreeze">
-               <i class="fa-solid fa-play"></i> <span>فك التجميد وتفعيل حساب وحركات الفرع</span>
+          ? `<button type="button" onclick="openBranchActionModal('${b.id}', false, '${escapeHtml(b.name)}')" class="btn-c2-action btn-c2-unfreeze">
+               <i class="fa-solid fa-unlock-keyhole"></i> <span>فك التجميد وتفعيل حساب وحركات الفرع</span>
              </button>`
-          : `<button onclick="openBranchActionModal('${b.id}', true, '${escapeHtml(b.name)}')" class="btn-toggle-branch btn-toggle-freeze">
-               <i class="fa-solid fa-snowflake"></i> <span>تجميد حساب وحركات الفرع كلياً</span>
+          : `<button type="button" onclick="openBranchActionModal('${b.id}', true, '${escapeHtml(b.name)}')" class="btn-c2-action btn-c2-freeze">
+               <i class="fa-solid fa-lock"></i> <span>تجميد حساب الفرع كلياً وإيقاف صلاحياته</span>
              </button>`;
 
         const reasonRow = b.data.reason ? `
-          <div class="branch-info-row" style="background: rgba(0,0,0,0.02); padding: 8px 12px; border-radius: 8px; margin-top: 6px;">
-            <span class="branch-info-label">ملاحظة القرار:</span>
-            <span class="branch-info-val" style="font-weight: 500; font-size: 0.82rem; color: #475569;">${escapeHtml(b.data.reason)}</span>
+          <div style="background: rgba(225, 29, 72, 0.05); border: 1px solid rgba(225, 29, 72, 0.18); border-radius: 10px; padding: 9px 12px; margin-bottom: 16px; font-size: 0.82rem; color: #be123c;">
+            <strong>ملاحظة القرار:</strong> ${escapeHtml(b.data.reason)}
           </div>
         ` : '';
 
         return `
-          <div class="branch-control-card ${cardClass}">
-            <div class="branch-card-header">
+          <div class="c2-branch-box ${cardClass}">
+            <div class="c2-box-header">
               <div>
-                <h3 class="branch-card-title">
-                  <i class="fa-solid ${b.icon}" style="color: #00c4a7;"></i>
+                <h3 class="c2-box-title">
+                  <span style="font-size: 1.3rem;">${b.flagIcon}</span>
                   ${escapeHtml(b.name)}
                 </h3>
-                <span style="font-size: 0.82rem; color: #64748b;">حساب المشرف: <strong>${escapeHtml(b.username)}</strong></span>
+                <span class="c2-box-user">المشرف المسجّل: <strong dir="ltr">${escapeHtml(b.username)}</strong></span>
               </div>
-              ${statusBadge}
+              ${statusPill}
             </div>
 
-            <div style="flex-grow: 1;">
-              <div class="branch-info-row">
-                <span class="branch-info-label">حالة حركات النشر والتعديل:</span>
-                <span class="branch-info-val">${movementsStatus}</span>
+            <div class="c2-metrics-grid">
+              <div class="c2-metric-cell">
+                <span class="c2-metric-label">حركات النشر والتحرير</span>
+                ${publishVal}
               </div>
-              <div class="branch-info-row">
-                <span class="branch-info-label">تسجيل الدخول للوحة التحكم:</span>
-                <span class="branch-info-val">${isFrozen ? '<span style="color: #e11d48; font-weight: 700;">مغلق ومحجوب</span>' : '<span style="color: #0d9488; font-weight: 700;">متاح ومصرح</span>'}</span>
+              <div class="c2-metric-cell">
+                <span class="c2-metric-label">تسجيل الدخول للوحة</span>
+                ${loginVal}
               </div>
-              <div class="branch-info-row">
-                <span class="branch-info-label">آخر تحديث للحالة:</span>
-                <span class="branch-info-val" style="font-size: 0.82rem;">${lastUpdated} ${b.data.updatedBy ? `(${escapeHtml(b.data.updatedBy)})` : ''}</span>
+              <div class="c2-metric-cell">
+                <span class="c2-metric-label">صلاحية حذف الأخبار</span>
+                ${deleteVal}
               </div>
-              ${reasonRow}
+              <div class="c2-metric-cell">
+                <span class="c2-metric-label">تاريخ آخر إجراء</span>
+                <span class="c2-metric-val" style="font-size: 0.78rem; color: #475569;">${lastUpdated}</span>
+              </div>
             </div>
+
+            ${reasonRow}
 
             ${actionButton}
           </div>
@@ -1084,19 +1249,19 @@
         prompt.innerHTML = `هل أنت متأكد من رغبتك في <strong>تجميد كافة صلاحيات وحركات [${escapeHtml(branchName)}]</strong>؟<br><br><span style="color: #be123c;">⚠️ سيترتب على هذا القرار فوراً: منع مشرف الفرع من تسجيل الدخول، وحظر أي عمليات نشر أو تعديل أو حذف لأي أخبار بشكل فوري ومطلق.</span>`;
         confirmBtn.style.background = '#dc2626';
         confirmBtn.style.color = '#ffffff';
-        confirmBtn.innerHTML = '<i class="fa-solid fa-snowflake"></i> <span>تأكيد التجميد الفوري</span>';
+        confirmBtn.innerHTML = '<i class="fa-solid fa-lock"></i> <span>تأكيد التجميد الفوري</span>';
         iconContainer.style.background = '#fee2e2';
         iconContainer.style.color = '#dc2626';
-        actionIcon.className = 'fa-solid fa-snowflake';
+        actionIcon.className = 'fa-solid fa-lock';
       } else {
         title.innerText = 'تأكيد فك التجميد وتفعيل الفرع';
         prompt.innerHTML = `هل أنت متأكد من رغبتك في <strong>فك التجميد وإعادة تفعيل حساب [${escapeHtml(branchName)}]</strong>؟<br><br><span style="color: #0d9488;">✅ سيتمكن مشرف الفرع فوراً من تسجيل الدخول ومباشرة نشر الأخبار التابعة لفرعه بصورة طبيعية.</span>`;
         confirmBtn.style.background = '#0d9488';
         confirmBtn.style.color = '#ffffff';
-        confirmBtn.innerHTML = '<i class="fa-solid fa-play"></i> <span>تأكيد فك التجميد والتفعيل</span>';
+        confirmBtn.innerHTML = '<i class="fa-solid fa-unlock-keyhole"></i> <span>تأكيد فك التجميد والتفعيل</span>';
         iconContainer.style.background = '#ccfbf1';
         iconContainer.style.color = '#0d9488';
-        actionIcon.className = 'fa-solid fa-play';
+        actionIcon.className = 'fa-solid fa-unlock-keyhole';
       }
 
       overlay.style.display = 'flex';
@@ -1385,13 +1550,11 @@
           <span style="font-size: 0.78rem; color: #94a3b8;"><i class="fa-solid fa-lock"></i> محمي</span>
         `;
 
-        const safeImg = (item.imageUrl && (item.imageUrl.startsWith('http') || item.imageUrl.startsWith('data:') || item.imageUrl.startsWith('img/')))
-          ? item.imageUrl
-          : 'img/ip_conference_2026.png';
+        const safeImg = getSafeImageUrl(item.imageUrl);
 
         return `
         <div class="admin-news-card">
-          <img src="${safeImg}" class="admin-news-img" onerror="this.src='img/ip_conference_2026.png'" alt="${escapeHtml(item.title)}">
+          <img src="${safeImg}" class="admin-news-img" onerror="this.onerror=null; this.src='img/ip_conference_2026.png'" alt="${escapeHtml(item.title)}">
           <div class="admin-news-body">
             <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
               <span class="admin-news-category">${escapeHtml(item.category || 'أخبار الاتحاد')}</span>

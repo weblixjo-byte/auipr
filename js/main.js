@@ -809,15 +809,21 @@ function initRegistrationModal() {
         });
     }
 
+    // استثناء صفحات ولوحة الإدارة بالكامل من اعتراض التسجيل
+    if (window.location.pathname.includes('admin')) {
+        return;
+    }
+
     // 3. التقاط أي زر أو رابط في الموقع يحتوي على كلمات التسجيل أو الحجز أو الاشتراك
     document.addEventListener('click', (e) => {
         const target = e.target.closest('a, button');
         if (!target) return;
 
-        // استثناء أزرار لوحة التحكم، تبديل الفرع، أزرار النموذج نفسه، أو روابط القائمة العلوية
+        // استثناء أزرار لوحة التحكم، الدخول، تبديل الفرع، أزرار النموذج نفسه، أو النوافذ الإدارية
         if (target.closest('.dropdown-list') || 
             target.closest('.branch-switcher-box') || 
             target.closest('.reg-modal-content') || 
+            target.closest('#authModal, .auth-overlay, .admin-surface-card, #newsForm, #branchModalOverlay') ||
             target.classList.contains('reg-modal-close') ||
             target.classList.contains('branch-tab-btn')) {
             return;
@@ -826,12 +832,18 @@ function initRegistrationModal() {
         const text = (target.innerText || target.textContent || '').trim();
         const title = (target.getAttribute('title') || '').trim();
 
+        // استبعاد أزرار تسجيل الدخول والخروج تماماً
+        if (/(تسجيل الدخول|تسجيل خروج|دخول|خروج|المشرفين)/i.test(text) ||
+            /(تسجيل الدخول|تسجيل خروج|دخول|خروج)/i.test(title)) {
+            return;
+        }
+
         const isRegisterTrigger = 
             target.classList.contains('btn-event-filled') ||
             target.classList.contains('btn-royal-cta') ||
             target.hasAttribute('data-open-register') ||
-            /(التسجيل|تسجيل|حجز|اشترك|اشتراك|انضم|انضمام)/i.test(text) ||
-            /(التسجيل|تسجيل|حجز|اشترك|اشتراك|انضم)/i.test(title);
+            /(التسجيل في|حجز مقعد|حجز استشارة|طلب انضمام|اشترك الآن|انضم إلينا|سجل الآن)/i.test(text) ||
+            /(التسجيل في|حجز مقعد|طلب انضمام|اشترك الآن|انضم إلينا)/i.test(title);
 
         if (isRegisterTrigger) {
             e.preventDefault();
