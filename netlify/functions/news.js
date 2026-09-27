@@ -19,7 +19,7 @@ const USERS = {
     username: 'admin_general',
     password: process.env.ADMIN_GENERAL_PASS || 'Auipr#Gen@2026!Sec',
     role: 'super_admin',
-    name: 'المشرف العام (المقر الرئيسي - مصر)',
+    name: 'المشرف العام',
     branchId: 'main',
     allowedBranches: ['all', 'main', 'lebanon', 'jordan']
   },
@@ -27,7 +27,7 @@ const USERS = {
     username: 'admin_lebanon',
     password: process.env.ADMIN_LEBANON_PASS || 'Auipr#Lb@2026!Beir',
     role: 'lebanon_admin',
-    name: 'مشرف ممثل الجمهورية اللبنانية',
+    name: 'المشرف',
     branchId: 'lebanon',
     allowedBranches: ['lebanon']
   },
@@ -35,7 +35,7 @@ const USERS = {
     username: 'admin_jordan',
     password: process.env.ADMIN_JORDAN_PASS || 'Auipr#Jor@2026!Amm',
     role: 'jordan_admin',
-    name: 'مشرف فرع الأردن',
+    name: 'المشرف',
     branchId: 'jordan',
     allowedBranches: ['main', 'jordan']
   }
@@ -285,7 +285,7 @@ exports.handler = async (event, context) => {
               body: JSON.stringify({
                 ok: false,
                 isFrozen: true,
-                error: '⛔ تم تجميد حساب وصلاحيات هذا الفرع كلياً بقرار إداري مركزي صادر عن المقر الرئيسي (مصر). تم تعليق تسجيل الدخول وكافة العمليات.'
+                error: 'تم تعطيل هذا الحساب مؤقتاً. يرجى التواصل مع الإدارة.'
               })
             };
           }
@@ -346,7 +346,7 @@ exports.handler = async (event, context) => {
           body: JSON.stringify({
             ok: false,
             isFrozen: true,
-            error: '⛔ تم تجميد حساب وصلاحيات هذا الفرع كلياً بقرار مركزي من المقر الرئيسي (مصر).',
+            error: 'تم تعطيل هذا الحساب مؤقتاً.',
             user: { ...user, isFrozen: true }
           })
         };
@@ -403,7 +403,7 @@ exports.handler = async (event, context) => {
         return {
           statusCode: 403,
           headers,
-          body: JSON.stringify({ ok: false, error: 'غير مصرح: هذا الإجراء مخصص حصرياً للمقر الرئيسي (مصر).' })
+          body: JSON.stringify({ ok: false, error: 'غير مصرح لك بتنفيذ هذا الإجراء.' })
         };
       }
 
@@ -424,7 +424,7 @@ exports.handler = async (event, context) => {
         return {
           statusCode: 403,
           headers,
-          body: JSON.stringify({ ok: false, error: 'غير مصرح: تجميد وتفعيل الفروع مخصص حصرياً للمقر الرئيسي (مصر).' })
+          body: JSON.stringify({ ok: false, error: 'غير مصرح لك بتنفيذ هذا الإجراء.' })
         };
       }
 
@@ -439,7 +439,7 @@ exports.handler = async (event, context) => {
         return {
           statusCode: 400,
           headers,
-          body: JSON.stringify({ ok: false, error: 'الفرع المحدد غير صالح. لا يمكن تجميد المقر الرئيسي.' })
+          body: JSON.stringify({ ok: false, error: 'الفرع المحدد غير صالح.' })
         };
       }
 
@@ -549,7 +549,7 @@ exports.handler = async (event, context) => {
           statusCode: 403,
           headers,
           body: JSON.stringify({
-            error: '⛔ تم تجميد حساب وحركات هذا الفرع كلياً بقرار مركزي من المقر الرئيسي (مصر). لا يمكن إجراء هذه العملية.'
+            error: 'تم تعطيل هذا الحساب مؤقتاً.'
           })
         };
       }
@@ -643,7 +643,7 @@ exports.handler = async (event, context) => {
             return {
               statusCode: 403,
               headers,
-              body: JSON.stringify({ error: 'غير مصرح لك بحذف أخبار تابعة لفروع أخرى' })
+              body: JSON.stringify({ error: 'غير مصرح لك بحذف هذا الخبر.' })
             };
           }
         } catch(e) {

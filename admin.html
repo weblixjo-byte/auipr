@@ -451,35 +451,17 @@
     <section class="admin-main-section container reveal">
       <div class="admin-grid-layout">
 
-        <!-- Branch Admin Alert Notice: If logged in as Jordan/Lebanon branch admin on main domain -->
-        <div id="branchAdminNoticeBar" style="display: none; background: #f0f9ff; border: 2px solid #38bdf8; border-radius: 20px; padding: 18px 24px; box-shadow: 0 4px 15px rgba(56, 189, 248, 0.1);">
-          <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 15px;">
-            <div style="display: flex; align-items: center; gap: 12px;">
-              <div style="background: #0284c7; color: white; width: 42px; height: 42px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.25rem; flex-shrink: 0;">
-                <i class="fa-solid fa-circle-info"></i>
-              </div>
-              <div>
-                <strong style="color: #0369a1; font-size: 1rem; display: block;">تنبيه: أنت مسجل حالياً بحساب فرعي: (<span id="branchNoticeName"></span>)</strong>
-                <span style="color: #475569; font-size: 0.88rem;">رابط auipr.org/admin مخصص لإدارة المقر الرئيسي (مصر). للوصول لصلاحيات المشرف العام وتجميد الفروع، يرجى الدخول بحساب المقر الرئيسي.</span>
-              </div>
-            </div>
-            <button onclick="switchToMainAdminLogin()" style="background: #0284c7; color: white; border: none; padding: 9px 22px; border-radius: 50px; font-weight: 700; font-size: 0.88rem; cursor: pointer; font-family: inherit; display: inline-flex; align-items: center; gap: 8px;">
-              <i class="fa-solid fa-arrow-right-to-bracket"></i> الدخول بحساب المقر الرئيسي (مصر)
-            </button>
-          </div>
-        </div>
-
-        <!-- Branch Frozen Warning Banner (Displayed for Frozen Branch Admins) -->
+        <!-- Frozen Alert Banner -->
         <div id="branchFrozenBanner" class="branch-frozen-alert" style="display: none;">
           <div class="branch-frozen-icon">
             <i class="fa-solid fa-ban"></i>
           </div>
           <div>
-            <h3 style="color: #9f1239; margin: 0 0 6px 0; font-size: 1.2rem; font-weight: 800;">
-              تم تجميد حساب وصلاحيات هذا الفرع كلياً بقرار مركزي من المقر الرئيسي (مصر)
+            <h3 style="color: #9f1239; margin: 0 0 4px 0; font-size: 1.1rem; font-weight: 800;">
+              تم تعطيل صلاحيات هذا الحساب مؤقتاً
             </h3>
-            <p style="color: #be123c; margin: 0; font-size: 0.94rem; line-height: 1.6;">
-              تم تعليق كافة حركات النشر والتعديل والحذف لحساب هذا الفرع بناءً على توجيهات الإدارة العامة بمصر. يرجى التواصل مع رئاسة الاتحاد بالمقر العام لأي استفسار أو لطلب إعادة التفعيل.
+            <p style="color: #be123c; margin: 0; font-size: 0.9rem; line-height: 1.5;">
+              يرجى التواصل مع الإدارة لأي استفسار.
             </p>
           </div>
         </div>
@@ -622,7 +604,6 @@
         </div>
         <div>
           <h3 id="modalTitle" style="margin: 0; color: #1a2b4b; font-size: 1.25rem; font-weight: 800;">تأكيد الإجراء</h3>
-          <p id="modalSubtitle" style="margin: 3px 0 0 0; color: #64748b; font-size: 0.85rem;">المقر الرئيسي للاتحاد (مصر)</p>
         </div>
       </div>
       
@@ -651,25 +632,7 @@
     <div class="auth-card">
       <img src="https://static.wixstatic.com/media/215eb2_98e65620ebb04f4d96de0b8ae685fcee~mv2.png" alt="شعار الاتحاد" class="auth-logo">
       <h3 style="color: #1a2b4b; font-size: 1.3rem; margin-bottom: 4px; font-weight: 800;">تسجيل دخول المشرفين</h3>
-      <p style="color: #64748b; font-size: 0.85rem; margin-bottom: 16px;">الاتحاد العربي لحماية حقوق الملكية الفكرية</p>
-      
-      <!-- Account Selection Chips -->
-      <div style="background: #f0fdf9; border: 1.5px solid #a7f3d0; border-radius: 16px; padding: 12px; margin-bottom: 18px; text-align: right;">
-        <span style="font-size: 0.8rem; font-weight: 700; color: #065f46; display: block; margin-bottom: 8px;">
-          <i class="fa-solid fa-building-columns"></i> اختر الحساب المطلوب:
-        </span>
-        <div style="display: flex; gap: 6px; flex-wrap: wrap;">
-          <button type="button" onclick="selectLoginAccount('admin_general')" class="btn-account-chip active" id="chipGeneral">
-            <i class="fa-solid fa-star"></i> المشرف العام
-          </button>
-          <button type="button" onclick="selectLoginAccount('admin_lebanon')" class="btn-account-chip" id="chipLebanon">
-            ممثل لبنان
-          </button>
-          <button type="button" onclick="selectLoginAccount('admin_jordan')" class="btn-account-chip" id="chipJordan">
-            فرع الأردن
-          </button>
-        </div>
-      </div>
+      <p style="color: #64748b; font-size: 0.85rem; margin-bottom: 24px;">الاتحاد العربي لحماية حقوق الملكية الفكرية</p>
 
       <div id="loginErrorMsg" style="display: none; background: #fff1f2; color: #e11d48; border: 1px solid #fecdd3; padding: 12px 16px; border-radius: 12px; font-size: 0.88rem; margin-bottom: 18px; text-align: right; line-height: 1.5;">
         <i class="fa-solid fa-circle-exclamation" style="margin-left: 6px;"></i><span id="loginErrorText"></span>
@@ -679,7 +642,7 @@
         <label for="usernameInput" style="display: block; font-weight: 700; font-size: 0.88rem; margin-bottom: 7px; color: #1a2b4b;">
           <i class="fa-solid fa-user-shield" style="color: #00c4a7; margin-left: 5px;"></i> اسم المستخدم
         </label>
-        <input type="text" id="usernameInput" dir="ltr" class="form-control" value="admin_general" placeholder="اسم المستخدم" style="text-align: left; font-weight: 600;" onkeydown="if(event.key==='Enter') document.getElementById('passwordInput').focus()">
+        <input type="text" id="usernameInput" dir="ltr" class="form-control" placeholder="اسم المستخدم" style="text-align: left; font-weight: 600;" onkeydown="if(event.key==='Enter') document.getElementById('passwordInput').focus()">
       </div>
 
       <div style="text-align: right; margin-bottom: 25px;">
@@ -732,43 +695,6 @@
       return 'img/' + clean;
     }
 
-    // Account selector helper
-    function selectLoginAccount(uname) {
-      const uInput = document.getElementById('usernameInput');
-      const pInput = document.getElementById('passwordInput');
-      if (uInput) uInput.value = uname;
-      if (pInput) {
-        pInput.value = '';
-        pInput.focus();
-      }
-
-      const chips = {
-        'admin_general': document.getElementById('chipGeneral'),
-        'admin_lebanon': document.getElementById('chipLebanon'),
-        'admin_jordan': document.getElementById('chipJordan')
-      };
-
-      Object.keys(chips).forEach(k => {
-        if (chips[k]) {
-          if (k === uname) {
-            chips[k].classList.add('active');
-          } else {
-            chips[k].classList.remove('active');
-          }
-        }
-      });
-    }
-
-    function switchToMainAdminLogin() {
-      localStorage.removeItem('auipr_admin_token');
-      localStorage.removeItem('auipr_admin_user');
-      adminToken = null;
-      currentUser = null;
-      selectLoginAccount('admin_general');
-      document.getElementById('authModal').style.display = 'flex';
-      setTimeout(() => document.getElementById('passwordInput').focus(), 150);
-    }
-
     // Security Helper: Prevent Stored XSS
     function escapeHtml(str) {
       if (str === null || str === undefined) return '';
@@ -805,29 +731,24 @@
         if (user.role === 'super_admin') {
           userNameText.innerHTML = '<i class="fa-solid fa-shield-halved" style="color: #00e0bf; margin-left: 6px;"></i> المشرف العام';
         } else {
-          userNameText.innerHTML = `<i class="fa-solid fa-circle-user" style="color: #38bdf8; margin-left: 6px;"></i> ${escapeHtml(user.name || user.username)}`;
+          userNameText.innerHTML = `<i class="fa-solid fa-circle-user" style="color: #38bdf8; margin-left: 6px;"></i> المشرف`;
         }
         userBadge.style.display = 'inline-flex';
       }
 
       const superAdminPanel = document.getElementById('superAdminBranchControlPanel');
+      const branchTargetingSection = document.getElementById('branchTargetingSection');
       const frozenBanner = document.getElementById('branchFrozenBanner');
-      const branchNoticeBar = document.getElementById('branchAdminNoticeBar');
-      const branchNoticeName = document.getElementById('branchNoticeName');
 
       if (user.role === 'super_admin') {
         if (superAdminPanel) superAdminPanel.style.display = 'block';
+        if (branchTargetingSection) branchTargetingSection.style.display = 'block';
         if (frozenBanner) frozenBanner.style.display = 'none';
-        if (branchNoticeBar) branchNoticeBar.style.display = 'none';
         enableFormInputs();
         loadBranchControls();
       } else {
-        // Non-super admin (branch admin logged into the main admin portal)
         if (superAdminPanel) superAdminPanel.style.display = 'none';
-        if (branchNoticeBar) {
-          if (branchNoticeName) branchNoticeName.innerText = user.name || user.username;
-          branchNoticeBar.style.display = 'block';
-        }
+        if (branchTargetingSection) branchTargetingSection.style.display = 'none';
 
         if (user.isFrozen) {
           if (frozenBanner) frozenBanner.style.display = 'flex';
@@ -842,30 +763,20 @@
       const cbMain = document.getElementById('branchMainCb');
       const cbLebanon = document.getElementById('branchLebanonCb');
       const cbJordan = document.getElementById('branchJordanCb');
-      const helpText = document.getElementById('branchHelpText');
 
       if (user.role === 'lebanon_admin') {
-        if (cbMain) { cbMain.checked = false; cbMain.disabled = true; }
-        if (cbLebanon) { cbLebanon.checked = true; cbLebanon.disabled = true; }
-        if (cbJordan) { cbJordan.checked = false; cbJordan.disabled = true; }
-        if (helpText) {
-          helpText.innerHTML = '<span style="color: #b45309; font-weight: 700;"><i class="fa-solid fa-lock"></i> نطاق النشر مقفل تلقائياً لـ (ممثل الجمهورية اللبنانية) وفق صلاحيات حسابك.</span>';
-        }
+        if (cbMain) cbMain.checked = false;
+        if (cbLebanon) cbLebanon.checked = true;
+        if (cbJordan) cbJordan.checked = false;
       } else if (user.role === 'jordan_admin') {
-        if (cbMain) { cbMain.checked = true; cbMain.disabled = true; }
-        if (cbLebanon) { cbLebanon.checked = false; cbLebanon.disabled = true; }
-        if (cbJordan) { cbJordan.checked = true; cbJordan.disabled = true; }
-        if (helpText) {
-          helpText.innerHTML = '<span style="color: #0369a1; font-weight: 700;"><i class="fa-solid fa-lock"></i> نطاق النشر مقفل تلقائياً لـ (فرع الأردن / المقر العام) وفق صلاحيات حسابك.</span>';
-        }
+        if (cbMain) cbMain.checked = true;
+        if (cbLebanon) cbLebanon.checked = false;
+        if (cbJordan) cbJordan.checked = true;
       } else {
-        // Super admin (Egypt HQ)
+        // Super admin
         if (cbMain) cbMain.disabled = false;
         if (cbLebanon) cbLebanon.disabled = false;
         if (cbJordan) cbJordan.disabled = false;
-        if (helpText) {
-          helpText.innerHTML = '<span style="color: #0d9488; font-weight: 700;"><i class="fa-solid fa-shield-halved"></i> صلاحيات المشرف العام (مصر): يمكنك نشر الخبر في كافة الفروع أو تحديد فروع معينة، وتجميد/تفعيل أي فرع.</span>';
-        }
       }
     }
 
@@ -879,7 +790,7 @@
       if (btn) {
         btn.style.opacity = '0.5';
         btn.style.cursor = 'not-allowed';
-        btn.innerHTML = '<span>النشر معطّل (الفرع مجمّد كلياً)</span> <i class="fa-solid fa-lock"></i>';
+        btn.innerHTML = '<span>النشر معطّل حالياً</span> <i class="fa-solid fa-lock"></i>';
       }
       const uploadBox = document.getElementById('fileUploadBox');
       if (uploadBox) {
@@ -921,11 +832,11 @@
         if (res.ok && data.ok) {
           renderBranchControls(data.controls);
         } else {
-          container.innerHTML = `<div style="color: #e11d48; padding: 25px; text-align: center; grid-column: 1 / -1;">تعذر تحميل بيانات الفروع: ${escapeHtml(data.error || 'خطأ غير مصرح به')}</div>`;
+          container.innerHTML = `<div style="color: #e11d48; padding: 25px; text-align: center; grid-column: 1 / -1;">تعذر التحميل: ${escapeHtml(data.error || 'خطأ في الصلاحيات')}</div>`;
         }
       } catch (err) {
-        console.error('Error loading branch controls:', err);
-        container.innerHTML = '<div style="color: #e11d48; padding: 25px; text-align: center; grid-column: 1 / -1;">حدث خطأ في الاتصال بالخادم أثناء تحميل حالات الفروع.</div>';
+        console.error('Error loading controls:', err);
+        container.innerHTML = '<div style="color: #e11d48; padding: 25px; text-align: center; grid-column: 1 / -1;">حدث خطأ في الاتصال بالخادم.</div>';
       } finally {
         if (refreshIcon) refreshIcon.classList.remove('fa-spin');
       }
@@ -1111,34 +1022,26 @@
             applyUserPermissions(data.user);
             fetchNewsList();
           } else {
-            // Check if branch was frozen while token was stored
+            localStorage.removeItem('auipr_admin_token');
+            localStorage.removeItem('auipr_admin_user');
+            adminToken = null;
+            currentUser = null;
+            document.getElementById('authModal').style.display = 'flex';
             if (data && data.isFrozen) {
-              localStorage.removeItem('auipr_admin_token');
-              localStorage.removeItem('auipr_admin_user');
-              adminToken = null;
-              currentUser = null;
-              document.getElementById('authModal').style.display = 'flex';
               const errBox = document.getElementById('loginErrorMsg');
               const errText = document.getElementById('loginErrorText');
-              errText.innerHTML = escapeHtml(data.error || '⛔ تم تجميد حساب وصلاحيات هذا الفرع كلياً بقرار مركزي من المقر الرئيسي.');
+              errText.innerHTML = escapeHtml(data.error || 'تم تعطيل هذا الحساب مؤقتاً.');
               errBox.style.display = 'block';
-            } else {
-              localStorage.removeItem('auipr_admin_token');
-              localStorage.removeItem('auipr_admin_user');
-              adminToken = null;
-              currentUser = null;
-              selectLoginAccount('admin_general');
-              document.getElementById('authModal').style.display = 'flex';
-              setTimeout(() => document.getElementById('passwordInput').focus(), 150);
             }
+            setTimeout(() => document.getElementById('usernameInput').focus(), 150);
           }
         }).catch(() => {
           document.getElementById('authModal').style.display = 'flex';
+          setTimeout(() => document.getElementById('usernameInput').focus(), 150);
         });
       } else {
-        selectLoginAccount('admin_general');
         document.getElementById('authModal').style.display = 'flex';
-        setTimeout(() => document.getElementById('passwordInput').focus(), 150);
+        setTimeout(() => document.getElementById('usernameInput').focus(), 150);
       }
     });
 
@@ -1291,14 +1194,12 @@
       grid.innerHTML = newsItems.map(item => {
         const targetUrl = getAdminNewsUrl(item);
 
-        let branchBadge = '<span style="background: rgba(3,105,161,0.1); color: #0369a1; font-size: 0.75rem; font-weight: 700; padding: 2px 8px; border-radius: 12px; margin-right: 6px;">🌐 عام</span>';
-        if (item.branches && Array.isArray(item.branches)) {
+        let branchBadge = '';
+        if (currentUser && currentUser.role === 'super_admin' && item.branches && Array.isArray(item.branches)) {
           if (item.branches.includes('lebanon') && !item.branches.includes('main') && !item.branches.includes('all')) {
-            branchBadge = '<span style="background: rgba(217,119,6,0.12); color: #b45309; font-size: 0.75rem; font-weight: 700; padding: 2px 8px; border-radius: 12px; margin-right: 6px;">ممثل الجمهورية اللبنانية</span>';
+            branchBadge = '<span style="background: rgba(217,119,6,0.12); color: #b45309; font-size: 0.75rem; font-weight: 700; padding: 2px 8px; border-radius: 12px; margin-right: 6px;">لبنان</span>';
           } else if (item.branches.includes('jordan') && !item.branches.includes('lebanon') && !item.branches.includes('all')) {
-            branchBadge = '<span style="background: rgba(13,148,136,0.12); color: #0d9488; font-size: 0.75rem; font-weight: 700; padding: 2px 8px; border-radius: 12px; margin-right: 6px;">فرع الأردن</span>';
-          } else if (item.branches.includes('main') && !item.branches.includes('lebanon') && !item.branches.includes('all')) {
-            branchBadge = '<span style="background: rgba(100,116,139,0.12); color: #475569; font-size: 0.75rem; font-weight: 700; padding: 2px 8px; border-radius: 12px; margin-right: 6px;">المقر العام</span>';
+            branchBadge = '<span style="background: rgba(13,148,136,0.12); color: #0d9488; font-size: 0.75rem; font-weight: 700; padding: 2px 8px; border-radius: 12px; margin-right: 6px;">الأردن</span>';
           }
         }
 
@@ -1315,9 +1216,7 @@
           <button onclick="deleteNews('${escapeHtml(item._id)}')" class="btn-outline-danger">
             <i class="fa-solid fa-trash"></i> حذف
           </button>
-        ` : `
-          <span style="font-size: 0.78rem; color: #94a3b8;"><i class="fa-solid fa-lock"></i> محمي</span>
-        `;
+        ` : '';
 
         const safeImg = getSafeImageUrl(item.imageUrl);
 
@@ -1348,7 +1247,7 @@
       event.preventDefault();
 
       if (currentUser && currentUser.isFrozen) {
-        alert('⛔ حساب هذا الفرع مجمّد كلياً بقرار مركزي من المقر الرئيسي (مصر). لا يمكن نشر الأخبار.');
+        alert('الحساب معطّل، لا يمكن نشر الأخبار.');
         return;
       }
 
@@ -1403,7 +1302,7 @@
         }
 
         if (res.status === 403) {
-          alert(result.error || '⛔ تم تجميد حساب هذا الفرع أو أنك لا تملك صلاحية النشر.');
+          alert(result.error || 'لا تملك صلاحية لنشر هذا الخبر.');
           if (currentUser && currentUser.role !== 'super_admin') {
             disableFormInputs();
             const frozenBanner = document.getElementById('branchFrozenBanner');
@@ -1437,7 +1336,7 @@
     // Delete News
     async function deleteNews(id) {
       if (currentUser && currentUser.isFrozen) {
-        alert('⛔ حساب هذا الفرع مجمّد كلياً بقرار مركزي من المقر الرئيسي (مصر). لا يمكن حذف الأخبار.');
+        alert('الحساب معطّل، لا يمكن حذف الأخبار.');
         return;
       }
 
