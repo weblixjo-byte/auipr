@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, nofollow">
-  <title>لوحة إدارة الأخبار - الاتحاد العربي للملكية الفكرية</title>
+  <title>لوحة إدارة الأخبار والتحكم بالفروع - الاتحاد العربي للملكية الفكرية</title>
   <link rel="icon" type="image/png" href="https://static.wixstatic.com/media/215eb2_98e65620ebb04f4d96de0b8ae685fcee~mv2.png" sizes="32x32">
   <link rel="apple-touch-icon" href="https://static.wixstatic.com/media/215eb2_98e65620ebb04f4d96de0b8ae685fcee~mv2.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -42,6 +42,8 @@
       margin-bottom: 25px;
       padding-bottom: 18px;
       border-bottom: 2px solid #f1f5f9;
+      flex-wrap: wrap;
+      gap: 15px;
     }
     .card-top-bar h2 {
       font-size: 1.35rem;
@@ -132,6 +134,7 @@
       gap: 12px;
       box-shadow: 0 8px 22px rgba(60, 235, 195, 0.35);
       transition: all 0.25s ease;
+      font-family: inherit;
     }
     .btn-brand-primary:hover {
       transform: translateY(-2px);
@@ -151,6 +154,7 @@
       font-size: 0.85rem;
       cursor: pointer;
       transition: all 0.2s ease;
+      font-family: inherit;
     }
     .btn-outline-danger:hover {
       background: #dc2626;
@@ -171,6 +175,171 @@
       height: 170px;
       object-fit: cover;
       display: block;
+    }
+
+    /* Super Admin Branch Controls */
+    .branch-controls-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 25px;
+      margin-top: 20px;
+    }
+    .branch-control-card {
+      background: #ffffff;
+      border-radius: 22px;
+      border: 1.5px solid #e2e8f0;
+      padding: 26px 28px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 6px 20px rgba(26, 43, 75, 0.04);
+      position: relative;
+      transition: all 0.3s ease;
+    }
+    .branch-control-card.frozen {
+      border-color: #fda4af;
+      background: #fff8f8;
+      box-shadow: 0 8px 24px rgba(225, 29, 72, 0.08);
+    }
+    .branch-control-card.active {
+      border-color: #99f6e4;
+      background: #ffffff;
+    }
+    .branch-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 18px;
+      gap: 10px;
+    }
+    .branch-card-title {
+      font-size: 1.18rem;
+      font-weight: 700;
+      color: #1a2b4b;
+      margin: 0 0 6px 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .branch-status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 50px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .branch-status-pill.active {
+      background: #dcfce7;
+      color: #15803d;
+      border: 1px solid #bbf7d0;
+    }
+    .branch-status-pill.frozen {
+      background: #ffe4e6;
+      color: #be123c;
+      border: 1px solid #fecdd3;
+      animation: pulse-frozen 2s infinite;
+    }
+    @keyframes pulse-frozen {
+      0% { box-shadow: 0 0 0 0 rgba(225, 29, 72, 0.25); }
+      70% { box-shadow: 0 0 0 6px rgba(225, 29, 72, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(225, 29, 72, 0); }
+    }
+    .branch-info-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 9px 0;
+      border-bottom: 1px dashed #f1f5f9;
+      font-size: 0.88rem;
+    }
+    .branch-info-label {
+      color: #64748b;
+      font-weight: 500;
+    }
+    .branch-info-val {
+      color: #1e293b;
+      font-weight: 700;
+    }
+    .btn-toggle-branch {
+      margin-top: 20px;
+      width: 100%;
+      padding: 13px 20px;
+      border-radius: 50px;
+      font-family: inherit;
+      font-weight: 700;
+      font-size: 0.95rem;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: all 0.25s ease;
+    }
+    .btn-toggle-freeze {
+      background: #fee2e2;
+      color: #b91c1c;
+      border: 1.5px solid #fca5a5;
+    }
+    .btn-toggle-freeze:hover {
+      background: #dc2626;
+      color: #ffffff;
+      box-shadow: 0 8px 20px rgba(220, 38, 38, 0.25);
+    }
+    .btn-toggle-unfreeze {
+      background: #ccfbf1;
+      color: #0f766e;
+      border: 1.5px solid #99f6e4;
+    }
+    .btn-toggle-unfreeze:hover {
+      background: #0d9488;
+      color: #ffffff;
+      box-shadow: 0 8px 20px rgba(13, 148, 136, 0.25);
+    }
+    .btn-refresh-status {
+      background: #ffffff;
+      color: #0f766e;
+      border: 1.5px solid #00c4a7;
+      padding: 8px 18px;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 0.88rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
+    .btn-refresh-status:hover {
+      background: #00c4a7;
+      color: #0d112b;
+    }
+
+    /* Branch Frozen Alert Banner */
+    .branch-frozen-alert {
+      background: #fff1f2;
+      border: 2px solid #f43f5e;
+      border-radius: 24px;
+      padding: 24px 28px;
+      box-shadow: 0 10px 30px rgba(244, 63, 94, 0.12);
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .branch-frozen-icon {
+      background: #e11d48;
+      color: #ffffff;
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      flex-shrink: 0;
     }
 
     /* News Items Grid */
@@ -277,7 +446,7 @@
         <div class="banner-text-content">
           <div class="breadcrumbs" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
             <div>
-              <a href="index.html" title="العودة إلى الصفحة الرئيسية">الرئيسية</a><span>></span><span class="current">لوحة الإدارة</span>
+              <a href="index.html" title="العودة إلى الصفحة الرئيسية">الرئيسية</a><span>></span><span class="current">لوحة الإدارة والتحكم</span>
             </div>
             <div style="display: flex; align-items: center; gap: 12px;">
               <span id="userBadge" style="display: none; background: rgba(0, 196, 167, 0.18); color: #00e0bf; border: 1px solid rgba(0, 196, 167, 0.4); padding: 5px 14px; border-radius: 50px; font-size: 0.85rem; font-weight: 700;">
@@ -288,7 +457,7 @@
               </button>
             </div>
           </div>
-          <h1 class="page-title">لوحة إدارة الأخبار</h1>
+          <h1 class="page-title">لوحة إدارة الأخبار والتحكم بالفروع</h1>
         </div>
       </div>
     </section>
@@ -296,9 +465,50 @@
     <!-- Main Content -->
     <section class="admin-main-section container reveal">
       <div class="admin-grid-layout">
+
+        <!-- Branch Frozen Warning Banner (Displayed for Frozen Branch Admins) -->
+        <div id="branchFrozenBanner" class="branch-frozen-alert" style="display: none;">
+          <div class="branch-frozen-icon">
+            <i class="fa-solid fa-ban"></i>
+          </div>
+          <div>
+            <h3 style="color: #9f1239; margin: 0 0 6px 0; font-size: 1.2rem; font-weight: 800;">
+              تم تجميد حساب وصلاحيات هذا الفرع كلياً بقرار مركزي من المقر الرئيسي (مصر)
+            </h3>
+            <p style="color: #be123c; margin: 0; font-size: 0.94rem; line-height: 1.6;">
+              تم تعليق كافة حركات النشر والتعديل والحذف لحساب هذا الفرع بناءً على توجيهات الإدارة العامة بمصر. يرجى التواصل مع رئاسة الاتحاد بالمقر العام لأي استفسار أو لطلب إعادة التفعيل.
+            </p>
+          </div>
+        </div>
+
+        <!-- Super Admin Branch Control Center (مقر مصر - حصري للمشرف العام) -->
+        <div id="superAdminBranchControlPanel" class="admin-surface-card" style="display: none; border: 2px solid #00c4a7; background: linear-gradient(145deg, #ffffff 0%, #f4fbf9 100%);">
+          <div class="card-top-bar" style="border-bottom: 2px solid rgba(0, 196, 167, 0.2);">
+            <div>
+              <h2 style="color: #0d112b; font-size: 1.35rem; display: flex; align-items: center; gap: 10px;">
+                <i class="fa-solid fa-tower-broadcast" style="color: #00c4a7;"></i>
+                مركز التحكم والسيطرة المركزية بالفروع (المقر الرئيسي - مصر)
+              </h2>
+              <p style="color: #64748b; font-size: 0.88rem; margin: 6px 0 0 0;">
+                صلاحية حصرية للمقر العام للاتحاد للتحكم بفعالية وتجميد حسابات المشرفين وحركات الفروع الإقليمية فورياً وبأعلى درجات الأمان
+              </p>
+            </div>
+            <button onclick="loadBranchControls()" class="btn-refresh-status" title="تحديث حالة الفروع الآن">
+              <i class="fa-solid fa-arrows-rotate" id="refreshControlsIcon"></i> تحديث حالة الفروع
+            </button>
+          </div>
+
+          <!-- Dynamic Branch Cards Grid -->
+          <div id="branchControlsContainer" class="branch-controls-grid">
+            <div style="grid-column: 1 / -1; text-align: center; color: #64748b; padding: 30px;">
+              <i class="fa-solid fa-circle-notch fa-spin" style="font-size: 1.6rem; color: #00c4a7; margin-bottom: 10px; display: block;"></i>
+              جاري فحص وتحديث حالات الفروع...
+            </div>
+          </div>
+        </div>
         
         <!-- Add News Form Card -->
-        <div class="admin-surface-card">
+        <div class="admin-surface-card" id="newsFormCard">
           <div class="card-top-bar">
             <h2><i class="fa-solid fa-pen-to-square"></i> إضافة خبر جديد</h2>
           </div>
@@ -332,7 +542,7 @@
 
             <div class="form-group">
               <label>صورة الخبر *</label>
-              <div class="file-upload-box" onclick="document.getElementById('imageFile').click()">
+              <div class="file-upload-box" id="fileUploadBox" onclick="document.getElementById('imageFile').click()">
                 <i class="fa-solid fa-cloud-arrow-up"></i>
                 <span style="font-weight: 600; color: #1a2b4b; display: block; margin-bottom: 4px;">اختيار صورة من الجهاز</span>
                 <span style="font-size: 0.82rem; color: #64748b;">(الصيغ المدعومة: JPG, PNG, WebP)</span>
@@ -411,6 +621,39 @@
     </section>
   </main>
 
+  <!-- Branch Action Confirmation Modal -->
+  <div id="branchModalOverlay" class="auth-overlay" style="display: none; z-index: 100000;">
+    <div class="auth-card" style="max-width: 480px; text-align: right; padding: 36px 30px;">
+      <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 18px;">
+        <div id="modalIconContainer" style="width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; flex-shrink: 0;">
+          <i id="modalActionIcon" class="fa-solid fa-triangle-exclamation"></i>
+        </div>
+        <div>
+          <h3 id="modalTitle" style="margin: 0; color: #1a2b4b; font-size: 1.25rem; font-weight: 800;">تأكيد الإجراء</h3>
+          <p id="modalSubtitle" style="margin: 3px 0 0 0; color: #64748b; font-size: 0.85rem;">المقر الرئيسي للاتحاد (مصر)</p>
+        </div>
+      </div>
+      
+      <div id="modalPromptText" style="color: #334155; line-height: 1.6; font-size: 0.95rem; margin-bottom: 18px;"></div>
+      
+      <div class="form-group" style="margin-bottom: 22px; text-align: right;">
+        <label for="branchActionReason" style="font-weight: 700; font-size: 0.88rem; color: #1a2b4b; margin-bottom: 6px; display: block;">
+          سبب الإجراء (اختياري، يوثّق في السجلات):
+        </label>
+        <input type="text" id="branchActionReason" class="form-control" placeholder="مثال: إجراء إداري مؤقت / استكمال تجهيزات...">
+      </div>
+
+      <div style="display: flex; gap: 12px; justify-content: flex-end;">
+        <button type="button" onclick="closeBranchActionModal()" style="padding: 10px 22px; border-radius: 50px; border: 1.5px solid #cbd5e1; background: #ffffff; color: #475569; font-weight: 700; cursor: pointer; font-family: inherit;">
+          إلغاء
+        </button>
+        <button type="button" id="modalConfirmBtn" onclick="executeBranchAction()" style="padding: 10px 26px; border-radius: 50px; border: none; font-weight: 700; cursor: pointer; font-family: inherit; display: inline-flex; align-items: center; gap: 8px;">
+          <span>تأكيد الإجراء</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- Auth Modal -->
   <div id="authModal" class="auth-overlay">
     <div class="auth-card" style="max-width: 420px; padding: 40px 30px;">
@@ -418,7 +661,7 @@
       <h3 style="color: #1a2b4b; font-size: 1.3rem; margin-bottom: 6px; font-weight: 800;">تسجيل دخول المشرفين</h3>
       <p style="color: #64748b; font-size: 0.88rem; margin-bottom: 25px;">الاتحاد العربي لحماية حقوق الملكية الفكرية</p>
       
-      <div id="loginErrorMsg" style="display: none; background: #fff1f2; color: #e11d48; border: 1px solid #fecdd3; padding: 10px 14px; border-radius: 12px; font-size: 0.88rem; margin-bottom: 18px; text-align: right;">
+      <div id="loginErrorMsg" style="display: none; background: #fff1f2; color: #e11d48; border: 1px solid #fecdd3; padding: 12px 16px; border-radius: 12px; font-size: 0.88rem; margin-bottom: 18px; text-align: right; line-height: 1.5;">
         <i class="fa-solid fa-circle-exclamation" style="margin-left: 6px;"></i><span id="loginErrorText"></span>
       </div>
 
@@ -459,6 +702,17 @@
       currentUser = JSON.parse(localStorage.getItem('auipr_admin_user') || 'null');
     } catch(e) {}
 
+    // Security Helper: Prevent Stored XSS
+    function escapeHtml(str) {
+      if (str === null || str === undefined) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
     function togglePasswordVisibility() {
       const p = document.getElementById('passwordInput');
       const icon = document.querySelector('#toggleEyeBtn i');
@@ -485,6 +739,26 @@
         userBadge.style.display = 'inline-flex';
       }
 
+      const superAdminPanel = document.getElementById('superAdminBranchControlPanel');
+      const frozenBanner = document.getElementById('branchFrozenBanner');
+
+      if (user.role === 'super_admin') {
+        if (superAdminPanel) superAdminPanel.style.display = 'block';
+        if (frozenBanner) frozenBanner.style.display = 'none';
+        enableFormInputs();
+        loadBranchControls();
+      } else {
+        if (superAdminPanel) superAdminPanel.style.display = 'none';
+        if (user.isFrozen) {
+          if (frozenBanner) frozenBanner.style.display = 'flex';
+          disableFormInputs();
+        } else {
+          if (frozenBanner) frozenBanner.style.display = 'none';
+          enableFormInputs();
+        }
+      }
+
+      // Branch Checkboxes Permissions
       const cbMain = document.getElementById('branchMainCb');
       const cbLebanon = document.getElementById('branchLebanonCb');
       const cbJordan = document.getElementById('branchJordanCb');
@@ -510,8 +784,245 @@
         if (cbLebanon) cbLebanon.disabled = false;
         if (cbJordan) cbJordan.disabled = false;
         if (helpText) {
-          helpText.innerHTML = '<span style="color: #0d9488; font-weight: 700;"><i class="fa-solid fa-shield-halved"></i> صلاحيات المشرف العام: يمكنك نشر الخبر في كافة الفروع أو تحديد فروع معينة.</span>';
+          helpText.innerHTML = '<span style="color: #0d9488; font-weight: 700;"><i class="fa-solid fa-shield-halved"></i> صلاحيات المشرف العام (مصر): يمكنك نشر الخبر في كافة الفروع أو تحديد فروع معينة، وتجميد/تفعيل أي فرع.</span>';
         }
+      }
+    }
+
+    function disableFormInputs() {
+      const ids = ['title', 'slug', 'summary', 'content', 'imageFile', 'newsDate', 'category', 'btnSubmit'];
+      ids.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.disabled = true;
+      });
+      const btn = document.getElementById('btnSubmit');
+      if (btn) {
+        btn.style.opacity = '0.5';
+        btn.style.cursor = 'not-allowed';
+        btn.innerHTML = '<span>النشر معطّل (الفرع مجمّد كلياً)</span> <i class="fa-solid fa-lock"></i>';
+      }
+      const uploadBox = document.getElementById('fileUploadBox');
+      if (uploadBox) {
+        uploadBox.style.pointerEvents = 'none';
+        uploadBox.style.opacity = '0.5';
+      }
+    }
+
+    function enableFormInputs() {
+      const ids = ['title', 'slug', 'summary', 'content', 'imageFile', 'newsDate', 'category', 'btnSubmit'];
+      ids.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.disabled = false;
+      });
+      const btn = document.getElementById('btnSubmit');
+      if (btn) {
+        btn.style.opacity = '1';
+        btn.style.cursor = 'pointer';
+        btn.innerHTML = '<span>نشر الخبر</span> <span class="btn-icon-circle-dark">←</span>';
+      }
+      const uploadBox = document.getElementById('fileUploadBox');
+      if (uploadBox) {
+        uploadBox.style.pointerEvents = 'auto';
+        uploadBox.style.opacity = '1';
+      }
+    }
+
+    // Load Branch Controls from MongoDB (Super Admin Only)
+    async function loadBranchControls() {
+      const container = document.getElementById('branchControlsContainer');
+      const refreshIcon = document.getElementById('refreshControlsIcon');
+      if (refreshIcon) refreshIcon.classList.add('fa-spin');
+
+      try {
+        const res = await fetch(`${API_URL}?action=get_branch_controls`, {
+          headers: { 'x-admin-token': encodeURIComponent(adminToken) }
+        });
+        const data = await res.json();
+        if (res.ok && data.ok) {
+          renderBranchControls(data.controls);
+        } else {
+          container.innerHTML = `<div style="color: #e11d48; padding: 25px; text-align: center; grid-column: 1 / -1;">تعذر تحميل بيانات الفروع: ${escapeHtml(data.error || 'خطأ غير مصرح به')}</div>`;
+        }
+      } catch (err) {
+        console.error('Error loading branch controls:', err);
+        container.innerHTML = '<div style="color: #e11d48; padding: 25px; text-align: center; grid-column: 1 / -1;">حدث خطأ في الاتصال بالخادم أثناء تحميل حالات الفروع.</div>';
+      } finally {
+        if (refreshIcon) refreshIcon.classList.remove('fa-spin');
+      }
+    }
+
+    // Render Branch Controls Cards
+    function renderBranchControls(controls) {
+      const container = document.getElementById('branchControlsContainer');
+      if (!container || !controls) return;
+
+      const branches = [
+        {
+          id: 'lebanon',
+          name: 'ممثل الجمهورية اللبنانية (بيروت)',
+          icon: 'fa-landmark-flag',
+          username: 'admin_lebanon',
+          data: controls.lebanon || {}
+        },
+        {
+          id: 'jordan',
+          name: 'فرع المملكة الأردنية الهاشمية (عمّان)',
+          icon: 'fa-building-shield',
+          username: 'admin_jordan',
+          data: controls.jordan || {}
+        }
+      ];
+
+      container.innerHTML = branches.map(b => {
+        const isFrozen = Boolean(b.data.isFrozen);
+        const cardClass = isFrozen ? 'frozen' : 'active';
+        const statusBadge = isFrozen 
+          ? `<span class="branch-status-pill frozen"><i class="fa-solid fa-snowflake"></i> مجمّد كلياً بقرار مركزي</span>`
+          : `<span class="branch-status-pill active"><i class="fa-solid fa-circle-check"></i> الحساب نشط ومفعّل</span>`;
+        
+        const movementsStatus = isFrozen
+          ? `<span style="color: #e11d48; font-weight: 700;"><i class="fa-solid fa-ban"></i> معلّقة ومحظورة بالكامل</span>`
+          : `<span style="color: #0d9488; font-weight: 700;"><i class="fa-solid fa-check-double"></i> متاحة ومصرّح بها</span>`;
+
+        const lastUpdated = b.data.updatedAt
+          ? new Date(b.data.updatedAt).toLocaleString('ar-EG', { dateStyle: 'medium', timeStyle: 'short' })
+          : 'الحالة الافتراضية النشطة';
+
+        const actionButton = isFrozen
+          ? `<button onclick="openBranchActionModal('${b.id}', false, '${escapeHtml(b.name)}')" class="btn-toggle-branch btn-toggle-unfreeze">
+               <i class="fa-solid fa-play"></i> <span>فك التجميد وتفعيل حساب وحركات الفرع</span>
+             </button>`
+          : `<button onclick="openBranchActionModal('${b.id}', true, '${escapeHtml(b.name)}')" class="btn-toggle-branch btn-toggle-freeze">
+               <i class="fa-solid fa-snowflake"></i> <span>تجميد حساب وحركات الفرع كلياً</span>
+             </button>`;
+
+        const reasonRow = b.data.reason ? `
+          <div class="branch-info-row" style="background: rgba(0,0,0,0.02); padding: 8px 12px; border-radius: 8px; margin-top: 6px;">
+            <span class="branch-info-label">ملاحظة القرار:</span>
+            <span class="branch-info-val" style="font-weight: 500; font-size: 0.82rem; color: #475569;">${escapeHtml(b.data.reason)}</span>
+          </div>
+        ` : '';
+
+        return `
+          <div class="branch-control-card ${cardClass}">
+            <div class="branch-card-header">
+              <div>
+                <h3 class="branch-card-title">
+                  <i class="fa-solid ${b.icon}" style="color: #00c4a7;"></i>
+                  ${escapeHtml(b.name)}
+                </h3>
+                <span style="font-size: 0.82rem; color: #64748b;">حساب المشرف: <strong>${escapeHtml(b.username)}</strong></span>
+              </div>
+              ${statusBadge}
+            </div>
+
+            <div style="flex-grow: 1;">
+              <div class="branch-info-row">
+                <span class="branch-info-label">حالة حركات النشر والتعديل:</span>
+                <span class="branch-info-val">${movementsStatus}</span>
+              </div>
+              <div class="branch-info-row">
+                <span class="branch-info-label">تسجيل الدخول للوحة التحكم:</span>
+                <span class="branch-info-val">${isFrozen ? '<span style="color: #e11d48; font-weight: 700;">مغلق ومحجوب</span>' : '<span style="color: #0d9488; font-weight: 700;">متاح ومصرح</span>'}</span>
+              </div>
+              <div class="branch-info-row">
+                <span class="branch-info-label">آخر تحديث للحالة:</span>
+                <span class="branch-info-val" style="font-size: 0.82rem;">${lastUpdated} ${b.data.updatedBy ? `(${escapeHtml(b.data.updatedBy)})` : ''}</span>
+              </div>
+              ${reasonRow}
+            </div>
+
+            ${actionButton}
+          </div>
+        `;
+      }).join('');
+    }
+
+    // Branch Action Modal Logic
+    let currentActionBranchId = null;
+    let currentActionTargetFreeze = null;
+
+    function openBranchActionModal(branchId, targetFreeze, branchName) {
+      currentActionBranchId = branchId;
+      currentActionTargetFreeze = targetFreeze;
+      const overlay = document.getElementById('branchModalOverlay');
+      const title = document.getElementById('modalTitle');
+      const prompt = document.getElementById('modalPromptText');
+      const confirmBtn = document.getElementById('modalConfirmBtn');
+      const iconContainer = document.getElementById('modalIconContainer');
+      const actionIcon = document.getElementById('modalActionIcon');
+      const reasonInput = document.getElementById('branchActionReason');
+      reasonInput.value = '';
+
+      if (targetFreeze) {
+        title.innerText = 'تأكيد تجميد حساب وحركات الفرع';
+        prompt.innerHTML = `هل أنت متأكد من رغبتك في <strong>تجميد كافة صلاحيات وحركات [${escapeHtml(branchName)}]</strong>؟<br><br><span style="color: #be123c;">⚠️ سيترتب على هذا القرار فوراً: منع مشرف الفرع من تسجيل الدخول، وحظر أي عمليات نشر أو تعديل أو حذف لأي أخبار بشكل فوري ومطلق.</span>`;
+        confirmBtn.style.background = '#dc2626';
+        confirmBtn.style.color = '#ffffff';
+        confirmBtn.innerHTML = '<i class="fa-solid fa-snowflake"></i> <span>تأكيد التجميد الفوري</span>';
+        iconContainer.style.background = '#fee2e2';
+        iconContainer.style.color = '#dc2626';
+        actionIcon.className = 'fa-solid fa-snowflake';
+      } else {
+        title.innerText = 'تأكيد فك التجميد وتفعيل الفرع';
+        prompt.innerHTML = `هل أنت متأكد من رغبتك في <strong>فك التجميد وإعادة تفعيل حساب [${escapeHtml(branchName)}]</strong>؟<br><br><span style="color: #0d9488;">✅ سيتمكن مشرف الفرع فوراً من تسجيل الدخول ومباشرة نشر الأخبار التابعة لفرعه بصورة طبيعية.</span>`;
+        confirmBtn.style.background = '#0d9488';
+        confirmBtn.style.color = '#ffffff';
+        confirmBtn.innerHTML = '<i class="fa-solid fa-play"></i> <span>تأكيد فك التجميد والتفعيل</span>';
+        iconContainer.style.background = '#ccfbf1';
+        iconContainer.style.color = '#0d9488';
+        actionIcon.className = 'fa-solid fa-play';
+      }
+
+      overlay.style.display = 'flex';
+    }
+
+    function closeBranchActionModal() {
+      document.getElementById('branchModalOverlay').style.display = 'none';
+      currentActionBranchId = null;
+      currentActionTargetFreeze = null;
+    }
+
+    async function executeBranchAction() {
+      if (!currentActionBranchId) return;
+      const reason = document.getElementById('branchActionReason').value.trim();
+      const confirmBtn = document.getElementById('modalConfirmBtn');
+      const originalHTML = confirmBtn.innerHTML;
+      confirmBtn.disabled = true;
+      confirmBtn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> جاري التنفيذ...';
+
+      try {
+        const res = await fetch(`${API_URL}?action=toggle_branch_control`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'x-admin-token': encodeURIComponent(adminToken)
+          },
+          body: JSON.stringify({
+            branchId: currentActionBranchId,
+            isFrozen: currentActionTargetFreeze,
+            reason: reason
+          })
+        });
+
+        const data = await res.json();
+        if (res.ok && data.ok) {
+          closeBranchActionModal();
+          alert(data.message || 'تم تحديث حالة الفرع بنجاح');
+          if (data.controls) {
+            renderBranchControls(data.controls);
+          } else {
+            loadBranchControls();
+          }
+        } else {
+          alert('خطأ: ' + (data.error || 'تعذر تحديث حالة الفرع'));
+        }
+      } catch (err) {
+        console.error('Action error:', err);
+        alert('حدث خطأ أثناء الاتصال بالخادم.');
+      } finally {
+        confirmBtn.disabled = false;
+        confirmBtn.innerHTML = originalHTML;
       }
     }
 
@@ -541,11 +1052,25 @@
             applyUserPermissions(data.user);
             fetchNewsList();
           } else {
-            localStorage.removeItem('auipr_admin_token'); localStorage.removeItem('auipr_admin_user');
-            localStorage.removeItem('auipr_admin_user');
-            adminToken = null;
-            document.getElementById('authModal').style.display = 'flex';
-            setTimeout(() => document.getElementById('usernameInput').focus(), 150);
+            // Check if branch was frozen while token was stored
+            if (data && data.isFrozen) {
+              localStorage.removeItem('auipr_admin_token');
+              localStorage.removeItem('auipr_admin_user');
+              adminToken = null;
+              currentUser = null;
+              document.getElementById('authModal').style.display = 'flex';
+              const errBox = document.getElementById('loginErrorMsg');
+              const errText = document.getElementById('loginErrorText');
+              errText.innerHTML = escapeHtml(data.error || '⛔ تم تجميد حساب وصلاحيات هذا الفرع كلياً بقرار مركزي من المقر الرئيسي.');
+              errBox.style.display = 'block';
+            } else {
+              localStorage.removeItem('auipr_admin_token');
+              localStorage.removeItem('auipr_admin_user');
+              adminToken = null;
+              currentUser = null;
+              document.getElementById('authModal').style.display = 'flex';
+              setTimeout(() => document.getElementById('usernameInput').focus(), 150);
+            }
           }
         }).catch(() => {
           document.getElementById('authModal').style.display = 'flex';
@@ -597,7 +1122,7 @@
           document.getElementById('authModal').style.display = 'none';
           fetchNewsList();
         } else {
-          errText.innerText = data.error || 'اسم المستخدم أو كلمة المرور غير صحيحة';
+          errText.innerHTML = escapeHtml(data.error || 'اسم المستخدم أو كلمة المرور غير صحيحة');
           errBox.style.display = 'block';
           document.getElementById('passwordInput').value = '';
           document.getElementById('passwordInput').focus();
@@ -613,7 +1138,8 @@
     }
 
     function logout() {
-      localStorage.removeItem('auipr_admin_token'); localStorage.removeItem('auipr_admin_user');
+      localStorage.removeItem('auipr_admin_token');
+      localStorage.removeItem('auipr_admin_user');
       location.reload();
     }
 
@@ -708,29 +1234,50 @@
         if (item.branches && Array.isArray(item.branches)) {
           if (item.branches.includes('lebanon') && !item.branches.includes('main') && !item.branches.includes('all')) {
             branchBadge = '<span style="background: rgba(217,119,6,0.12); color: #b45309; font-size: 0.75rem; font-weight: 700; padding: 2px 8px; border-radius: 12px; margin-right: 6px;">ممثل الجمهورية اللبنانية</span>';
+          } else if (item.branches.includes('jordan') && !item.branches.includes('lebanon') && !item.branches.includes('all')) {
+            branchBadge = '<span style="background: rgba(13,148,136,0.12); color: #0d9488; font-size: 0.75rem; font-weight: 700; padding: 2px 8px; border-radius: 12px; margin-right: 6px;">فرع الأردن</span>';
           } else if (item.branches.includes('main') && !item.branches.includes('lebanon') && !item.branches.includes('all')) {
             branchBadge = '<span style="background: rgba(100,116,139,0.12); color: #475569; font-size: 0.75rem; font-weight: 700; padding: 2px 8px; border-radius: 12px; margin-right: 6px;">المقر العام</span>';
           }
         }
 
+        // Determine delete button visibility based on RBAC and freeze status
+        let canDelete = true;
+        if (currentUser && currentUser.isFrozen) {
+          canDelete = false;
+        } else if (currentUser && currentUser.role !== 'super_admin') {
+          const itemBranches = item.branches || (item.branch ? [item.branch] : ['all']);
+          canDelete = itemBranches.some(b => (currentUser.allowedBranches || []).includes(b));
+        }
+
+        const deleteBtn = canDelete ? `
+          <button onclick="deleteNews('${escapeHtml(item._id)}')" class="btn-outline-danger">
+            <i class="fa-solid fa-trash"></i> حذف
+          </button>
+        ` : `
+          <span style="font-size: 0.78rem; color: #94a3b8;"><i class="fa-solid fa-lock"></i> محمي</span>
+        `;
+
+        const safeImg = (item.imageUrl && (item.imageUrl.startsWith('http') || item.imageUrl.startsWith('data:') || item.imageUrl.startsWith('img/')))
+          ? item.imageUrl
+          : 'img/ip_conference_2026.png';
+
         return `
         <div class="admin-news-card">
-          <img src="${item.imageUrl}" class="admin-news-img" onerror="this.src='img/ip_conference_2026.png'" alt="${item.title}">
+          <img src="${safeImg}" class="admin-news-img" onerror="this.src='img/ip_conference_2026.png'" alt="${escapeHtml(item.title)}">
           <div class="admin-news-body">
             <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
-              <span class="admin-news-category">${item.category || 'أخبار الاتحاد'}</span>
+              <span class="admin-news-category">${escapeHtml(item.category || 'أخبار الاتحاد')}</span>
               ${branchBadge}
             </div>
-            <h3 class="admin-news-title">${item.title}</h3>
-            <span class="admin-news-date"><i class="fa-regular fa-calendar"></i> ${item.date || ''}</span>
-            <p style="font-size: 0.9rem; color: #475569; line-height: 1.5; margin-bottom: 15px;">${item.summary ? item.summary.substring(0, 80) + '...' : ''}</p>
+            <h3 class="admin-news-title">${escapeHtml(item.title)}</h3>
+            <span class="admin-news-date"><i class="fa-regular fa-calendar"></i> ${escapeHtml(item.date || '')}</span>
+            <p style="font-size: 0.9rem; color: #475569; line-height: 1.5; margin-bottom: 15px;">${escapeHtml(item.summary ? item.summary.substring(0, 90) + '...' : '')}</p>
             <div class="admin-news-footer">
-              <a href="${targetUrl}" target="_blank" style="color: #0f766e; text-decoration: none; font-weight: 600; font-size: 0.88rem; display: inline-flex; align-items: center; gap: 5px;">
+              <a href="${escapeHtml(targetUrl)}" target="_blank" style="color: #0f766e; text-decoration: none; font-weight: 600; font-size: 0.88rem; display: inline-flex; align-items: center; gap: 5px;">
                 معاينة الخبر <i class="fa-solid fa-arrow-up-right-from-square"></i>
               </a>
-              <button onclick="deleteNews('${item._id}')" class="btn-outline-danger">
-                <i class="fa-solid fa-trash"></i> حذف
-              </button>
+              ${deleteBtn}
             </div>
           </div>
         </div>
@@ -740,6 +1287,11 @@
     // Submit News
     async function handleFormSubmit(event) {
       event.preventDefault();
+
+      if (currentUser && currentUser.isFrozen) {
+        alert('⛔ حساب هذا الفرع مجمّد كلياً بقرار مركزي من المقر الرئيسي (مصر). لا يمكن نشر الأخبار.');
+        return;
+      }
 
       const title = document.getElementById('title').value.trim();
       let slug = document.getElementById('slug').value.trim().replace(/\s+/g, '-');
@@ -791,6 +1343,16 @@
           return;
         }
 
+        if (res.status === 403) {
+          alert(result.error || '⛔ تم تجميد حساب هذا الفرع أو أنك لا تملك صلاحية النشر.');
+          if (currentUser && currentUser.role !== 'super_admin') {
+            disableFormInputs();
+            const frozenBanner = document.getElementById('branchFrozenBanner');
+            if (frozenBanner) frozenBanner.style.display = 'flex';
+          }
+          return;
+        }
+
         if (res.ok) {
           alert('تم نشر الخبر بنجاح');
           document.getElementById('newsForm').reset();
@@ -815,6 +1377,11 @@
 
     // Delete News
     async function deleteNews(id) {
+      if (currentUser && currentUser.isFrozen) {
+        alert('⛔ حساب هذا الفرع مجمّد كلياً بقرار مركزي من المقر الرئيسي (مصر). لا يمكن حذف الأخبار.');
+        return;
+      }
+
       if (!confirm('هل أنت متأكد من حذف هذا الخبر؟')) return;
 
       try {
