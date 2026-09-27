@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, nofollow">
-  <title>لوحة إدارة الأخبار والتحكم بالفروع - الاتحاد العربي للملكية الفكرية</title>
+  <title>لوحة التحكم المركزية - المقر الرئيسي (مصر) | الاتحاد العربي للملكية الفكرية</title>
   <link rel="icon" type="image/png" href="https://static.wixstatic.com/media/215eb2_98e65620ebb04f4d96de0b8ae685fcee~mv2.png" sizes="32x32">
   <link rel="apple-touch-icon" href="https://static.wixstatic.com/media/215eb2_98e65620ebb04f4d96de0b8ae685fcee~mv2.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -318,6 +318,34 @@
       color: #0d112b;
     }
 
+    /* Branch Account Chips */
+    .btn-account-chip {
+      padding: 7px 16px;
+      border-radius: 50px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+      border: 1.5px solid #cbd5e1;
+      background: #ffffff;
+      color: #475569;
+      font-family: inherit;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .btn-account-chip:hover {
+      border-color: #00c4a7;
+      color: #0d9488;
+      background: #f0fdf9;
+    }
+    .btn-account-chip.active {
+      background: #0d9488 !important;
+      color: #ffffff !important;
+      border-color: #0d9488 !important;
+      box-shadow: 0 4px 12px rgba(13, 148, 136, 0.25);
+    }
+
     /* Branch Frozen Alert Banner */
     .branch-frozen-alert {
       background: #fff1f2;
@@ -420,17 +448,17 @@
     }
     .auth-card {
       background: #ffffff;
-      padding: 45px 35px;
+      padding: 40px 32px;
       border-radius: 30px;
       width: 90%;
-      max-width: 440px;
+      max-width: 450px;
       text-align: center;
       box-shadow: 0 25px 60px rgba(0,0,0,0.3);
       border: 1px solid rgba(60, 235, 195, 0.3);
     }
     .auth-logo {
       width: 75px;
-      margin-bottom: 15px;
+      margin-bottom: 12px;
     }
   </style>
 </head>
@@ -446,18 +474,22 @@
         <div class="banner-text-content">
           <div class="breadcrumbs" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
             <div>
-              <a href="index.html" title="العودة إلى الصفحة الرئيسية">الرئيسية</a><span>></span><span class="current">لوحة الإدارة والتحكم</span>
+              <a href="index.html" title="العودة إلى الصفحة الرئيسية">الرئيسية</a><span>></span><span>المقر الرئيسي (مصر)</span><span>></span><span class="current">لوحة التحكم والسيطرة</span>
             </div>
             <div style="display: flex; align-items: center; gap: 12px;">
               <span id="userBadge" style="display: none; background: rgba(0, 196, 167, 0.18); color: #00e0bf; border: 1px solid rgba(0, 196, 167, 0.4); padding: 5px 14px; border-radius: 50px; font-size: 0.85rem; font-weight: 700;">
-                <i class="fa-solid fa-circle-user" style="margin-left: 5px;"></i><span id="userNameText"></span>
+                <span id="userNameText"></span>
               </span>
               <button onclick="logout()" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.25); color: #ffffff; padding: 5px 14px; border-radius: 50px; font-size: 0.8rem; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; font-family: inherit;">
                 <i class="fa-solid fa-arrow-right-from-bracket"></i> خروج
               </button>
             </div>
           </div>
-          <h1 class="page-title">لوحة إدارة الأخبار والتحكم بالفروع</h1>
+          
+          <div style="display: inline-flex; align-items: center; gap: 8px; background: rgba(0, 196, 167, 0.2); color: #00e0bf; border: 1.5px solid rgba(0, 196, 167, 0.5); padding: 5px 16px; border-radius: 50px; font-size: 0.85rem; font-weight: 800; margin-top: 15px; margin-bottom: 8px;">
+            <i class="fa-solid fa-building-columns"></i> المقر الرئيسي للاتحاد العربي لحماية حقوق الملكية الفكرية (جمهورية مصر العربية)
+          </div>
+          <h1 class="page-title">لوحة الإدارة والتحكم المركزي بالفروع</h1>
         </div>
       </div>
     </section>
@@ -465,6 +497,24 @@
     <!-- Main Content -->
     <section class="admin-main-section container reveal">
       <div class="admin-grid-layout">
+
+        <!-- Branch Admin Alert Notice: If logged in as Jordan/Lebanon branch admin on main domain -->
+        <div id="branchAdminNoticeBar" style="display: none; background: #f0f9ff; border: 2px solid #38bdf8; border-radius: 20px; padding: 18px 24px; box-shadow: 0 4px 15px rgba(56, 189, 248, 0.1);">
+          <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 15px;">
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <div style="background: #0284c7; color: white; width: 42px; height: 42px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.25rem; flex-shrink: 0;">
+                <i class="fa-solid fa-circle-info"></i>
+              </div>
+              <div>
+                <strong style="color: #0369a1; font-size: 1rem; display: block;">تنبيه: أنت مسجل حالياً بحساب فرعي: (<span id="branchNoticeName"></span>)</strong>
+                <span style="color: #475569; font-size: 0.88rem;">رابط auipr.org/admin مخصص لإدارة المقر الرئيسي (مصر). للوصول لصلاحيات المشرف العام وتجميد الفروع، يرجى الدخول بحساب المقر الرئيسي.</span>
+              </div>
+            </div>
+            <button onclick="switchToMainAdminLogin()" style="background: #0284c7; color: white; border: none; padding: 9px 22px; border-radius: 50px; font-weight: 700; font-size: 0.88rem; cursor: pointer; font-family: inherit; display: inline-flex; align-items: center; gap: 8px;">
+              <i class="fa-solid fa-arrow-right-to-bracket"></i> الدخول بحساب المقر الرئيسي (مصر)
+            </button>
+          </div>
+        </div>
 
         <!-- Branch Frozen Warning Banner (Displayed for Frozen Branch Admins) -->
         <div id="branchFrozenBanner" class="branch-frozen-alert" style="display: none;">
@@ -487,10 +537,10 @@
             <div>
               <h2 style="color: #0d112b; font-size: 1.35rem; display: flex; align-items: center; gap: 10px;">
                 <i class="fa-solid fa-tower-broadcast" style="color: #00c4a7;"></i>
-                مركز التحكم والسيطرة المركزية بالفروع (المقر الرئيسي - مصر)
+                مركز التحكم والسيطرة المركزية بالفروع (المقر الرئيسي - جمهورية مصر العربية)
               </h2>
               <p style="color: #64748b; font-size: 0.88rem; margin: 6px 0 0 0;">
-                صلاحية حصرية للمقر العام للاتحاد للتحكم بفعالية وتجميد حسابات المشرفين وحركات الفروع الإقليمية فورياً وبأعلى درجات الأمان
+                صلاحية سيادية حصرية للمقر العام للاتحاد للتحكم بفعالية وتجميد حسابات المشرفين وحركات الفروع الإقليمية فورياً وبأعلى درجات الأمان
               </p>
             </div>
             <button onclick="loadBranchControls()" class="btn-refresh-status" title="تحديث حالة الفروع الآن">
@@ -656,11 +706,29 @@
 
   <!-- Auth Modal -->
   <div id="authModal" class="auth-overlay">
-    <div class="auth-card" style="max-width: 420px; padding: 40px 30px;">
-      <img src="https://static.wixstatic.com/media/215eb2_98e65620ebb04f4d96de0b8ae685fcee~mv2.png" alt="شعار الاتحاد" class="auth-logo" style="width: 75px; margin-bottom: 12px;">
-      <h3 style="color: #1a2b4b; font-size: 1.3rem; margin-bottom: 6px; font-weight: 800;">تسجيل دخول المشرفين</h3>
-      <p style="color: #64748b; font-size: 0.88rem; margin-bottom: 25px;">الاتحاد العربي لحماية حقوق الملكية الفكرية</p>
+    <div class="auth-card">
+      <img src="https://static.wixstatic.com/media/215eb2_98e65620ebb04f4d96de0b8ae685fcee~mv2.png" alt="شعار الاتحاد" class="auth-logo">
+      <h3 style="color: #1a2b4b; font-size: 1.3rem; margin-bottom: 4px; font-weight: 800;">تسجيل دخول المشرفين</h3>
+      <p style="color: #64748b; font-size: 0.85rem; margin-bottom: 16px;">الاتحاد العربي لحماية حقوق الملكية الفكرية</p>
       
+      <!-- Account Selection Chips -->
+      <div style="background: #f0fdf9; border: 1.5px solid #a7f3d0; border-radius: 16px; padding: 12px; margin-bottom: 18px; text-align: right;">
+        <span style="font-size: 0.8rem; font-weight: 700; color: #065f46; display: block; margin-bottom: 8px;">
+          <i class="fa-solid fa-building-columns"></i> اختر الحساب المطلوب:
+        </span>
+        <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+          <button type="button" onclick="selectLoginAccount('admin_general')" class="btn-account-chip active" id="chipGeneral">
+            <i class="fa-solid fa-star"></i> المقر الرئيسي (مصر)
+          </button>
+          <button type="button" onclick="selectLoginAccount('admin_lebanon')" class="btn-account-chip" id="chipLebanon">
+            ممثل لبنان
+          </button>
+          <button type="button" onclick="selectLoginAccount('admin_jordan')" class="btn-account-chip" id="chipJordan">
+            فرع الأردن
+          </button>
+        </div>
+      </div>
+
       <div id="loginErrorMsg" style="display: none; background: #fff1f2; color: #e11d48; border: 1px solid #fecdd3; padding: 12px 16px; border-radius: 12px; font-size: 0.88rem; margin-bottom: 18px; text-align: right; line-height: 1.5;">
         <i class="fa-solid fa-circle-exclamation" style="margin-left: 6px;"></i><span id="loginErrorText"></span>
       </div>
@@ -669,7 +737,7 @@
         <label for="usernameInput" style="display: block; font-weight: 700; font-size: 0.88rem; margin-bottom: 7px; color: #1a2b4b;">
           <i class="fa-solid fa-user-shield" style="color: #00c4a7; margin-left: 5px;"></i> اسم المستخدم
         </label>
-        <input type="text" id="usernameInput" dir="ltr" class="form-control" placeholder="اسم المستخدم" style="text-align: left; font-weight: 600;" onkeydown="if(event.key==='Enter') document.getElementById('passwordInput').focus()">
+        <input type="text" id="usernameInput" dir="ltr" class="form-control" value="admin_general" placeholder="اسم المستخدم" style="text-align: left; font-weight: 600;" onkeydown="if(event.key==='Enter') document.getElementById('passwordInput').focus()">
       </div>
 
       <div style="text-align: right; margin-bottom: 25px;">
@@ -695,12 +763,56 @@
 
   <script src="js/main.js"></script>
   <script>
+    // Ensure admin page always operates in Main Headquarters (Egypt) context
+    try {
+      sessionStorage.setItem('auipr_active_branch', 'main');
+      document.body.classList.remove('branch-mode-jordan', 'branch-mode-lebanon');
+      document.body.classList.add('branch-mode-main');
+    } catch(e) {}
+
     const API_URL = '/.netlify/functions/news';
     let adminToken = localStorage.getItem('auipr_admin_token');
     let currentUser = null;
     try {
       currentUser = JSON.parse(localStorage.getItem('auipr_admin_user') || 'null');
     } catch(e) {}
+
+    // Account selector helper
+    function selectLoginAccount(uname) {
+      const uInput = document.getElementById('usernameInput');
+      const pInput = document.getElementById('passwordInput');
+      if (uInput) uInput.value = uname;
+      if (pInput) {
+        pInput.value = '';
+        pInput.focus();
+      }
+
+      const chips = {
+        'admin_general': document.getElementById('chipGeneral'),
+        'admin_lebanon': document.getElementById('chipLebanon'),
+        'admin_jordan': document.getElementById('chipJordan')
+      };
+
+      Object.keys(chips).forEach(k => {
+        if (chips[k]) {
+          if (k === uname) {
+            chips[k].classList.add('active');
+          } else {
+            chips[k].classList.remove('active');
+          }
+        }
+      });
+    }
+
+    function switchToMainAdminLogin() {
+      localStorage.removeItem('auipr_admin_token');
+      localStorage.removeItem('auipr_admin_user');
+      adminToken = null;
+      currentUser = null;
+      selectLoginAccount('admin_general');
+      document.getElementById('authModal').style.display = 'flex';
+      setTimeout(() => document.getElementById('passwordInput').focus(), 150);
+    }
 
     // Security Helper: Prevent Stored XSS
     function escapeHtml(str) {
@@ -735,20 +847,33 @@
       const userBadge = document.getElementById('userBadge');
       const userNameText = document.getElementById('userNameText');
       if (userBadge && userNameText) {
-        userNameText.innerText = user.name || user.username;
+        if (user.role === 'super_admin') {
+          userNameText.innerHTML = '<i class="fa-solid fa-shield-halved" style="color: #00e0bf; margin-left: 6px;"></i> المشرف العام (المقر الرئيسي - مصر)';
+        } else {
+          userNameText.innerHTML = `<i class="fa-solid fa-circle-user" style="color: #38bdf8; margin-left: 6px;"></i> ${escapeHtml(user.name || user.username)} (حساب فرعي)`;
+        }
         userBadge.style.display = 'inline-flex';
       }
 
       const superAdminPanel = document.getElementById('superAdminBranchControlPanel');
       const frozenBanner = document.getElementById('branchFrozenBanner');
+      const branchNoticeBar = document.getElementById('branchAdminNoticeBar');
+      const branchNoticeName = document.getElementById('branchNoticeName');
 
       if (user.role === 'super_admin') {
         if (superAdminPanel) superAdminPanel.style.display = 'block';
         if (frozenBanner) frozenBanner.style.display = 'none';
+        if (branchNoticeBar) branchNoticeBar.style.display = 'none';
         enableFormInputs();
         loadBranchControls();
       } else {
+        // Non-super admin (branch admin logged into the main admin portal)
         if (superAdminPanel) superAdminPanel.style.display = 'none';
+        if (branchNoticeBar) {
+          if (branchNoticeName) branchNoticeName.innerText = user.name || user.username;
+          branchNoticeBar.style.display = 'block';
+        }
+
         if (user.isFrozen) {
           if (frozenBanner) frozenBanner.style.display = 'flex';
           disableFormInputs();
@@ -779,7 +904,7 @@
           helpText.innerHTML = '<span style="color: #0369a1; font-weight: 700;"><i class="fa-solid fa-lock"></i> نطاق النشر مقفل تلقائياً لـ (فرع الأردن / المقر العام) وفق صلاحيات حسابك.</span>';
         }
       } else {
-        // Super admin
+        // Super admin (Egypt HQ)
         if (cbMain) cbMain.disabled = false;
         if (cbLebanon) cbLebanon.disabled = false;
         if (cbJordan) cbJordan.disabled = false;
@@ -1068,16 +1193,18 @@
               localStorage.removeItem('auipr_admin_user');
               adminToken = null;
               currentUser = null;
+              selectLoginAccount('admin_general');
               document.getElementById('authModal').style.display = 'flex';
-              setTimeout(() => document.getElementById('usernameInput').focus(), 150);
+              setTimeout(() => document.getElementById('passwordInput').focus(), 150);
             }
           }
         }).catch(() => {
           document.getElementById('authModal').style.display = 'flex';
         });
       } else {
+        selectLoginAccount('admin_general');
         document.getElementById('authModal').style.display = 'flex';
-        setTimeout(() => document.getElementById('usernameInput').focus(), 150);
+        setTimeout(() => document.getElementById('passwordInput').focus(), 150);
       }
     });
 
