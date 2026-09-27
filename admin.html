@@ -578,14 +578,7 @@
         </div>
       </div>
       
-      <div id="modalPromptText" style="color: #334155; line-height: 1.6; font-size: 0.95rem; margin-bottom: 18px;"></div>
-      
-      <div class="form-group" style="margin-bottom: 22px; text-align: right;">
-        <label for="branchActionReason" style="font-weight: 700; font-size: 0.88rem; color: #1a2b4b; margin-bottom: 6px; display: block;">
-          سبب الإجراء (اختياري، يوثّق في السجلات):
-        </label>
-        <input type="text" id="branchActionReason" class="form-control" placeholder="مثال: إجراء إداري مؤقت / استكمال تجهيزات...">
-      </div>
+      <div id="modalPromptText" style="color: #334155; line-height: 1.6; font-size: 0.95rem; margin-bottom: 24px;"></div>
 
       <div style="display: flex; gap: 12px; justify-content: flex-end;">
         <button type="button" onclick="closeBranchActionModal()" style="padding: 10px 22px; border-radius: 50px; border: 1.5px solid #cbd5e1; background: #ffffff; color: #475569; font-weight: 700; cursor: pointer; font-family: inherit;">
@@ -850,12 +843,6 @@
                <i class="fa-solid fa-lock"></i> <span>تجميد الفرع</span>
              </button>`;
 
-        const reasonRow = b.data.reason ? `
-          <div style="background: rgba(225, 29, 72, 0.05); border: 1px solid rgba(225, 29, 72, 0.18); border-radius: 8px; padding: 6px 10px; margin-bottom: 14px; font-size: 0.8rem; color: #be123c;">
-            ${escapeHtml(b.data.reason)}
-          </div>
-        ` : '';
-
         return `
           <div class="c2-branch-box ${cardClass}">
             <div class="c2-box-header">
@@ -868,8 +855,6 @@
               </div>
               ${statusPill}
             </div>
-
-            ${reasonRow}
 
             <div style="margin-top: auto;">
               ${actionButton}
@@ -892,8 +877,6 @@
       const confirmBtn = document.getElementById('modalConfirmBtn');
       const iconContainer = document.getElementById('modalIconContainer');
       const actionIcon = document.getElementById('modalActionIcon');
-      const reasonInput = document.getElementById('branchActionReason');
-      reasonInput.value = '';
 
       if (targetFreeze) {
         title.innerText = 'تأكيد تجميد الفرع';
@@ -926,7 +909,6 @@
 
     async function executeBranchAction() {
       if (!currentActionBranchId) return;
-      const reason = document.getElementById('branchActionReason').value.trim();
       const confirmBtn = document.getElementById('modalConfirmBtn');
       const originalHTML = confirmBtn.innerHTML;
       confirmBtn.disabled = true;
@@ -941,8 +923,7 @@
           },
           body: JSON.stringify({
             branchId: currentActionBranchId,
-            isFrozen: currentActionTargetFreeze,
-            reason: reason
+            isFrozen: currentActionTargetFreeze
           })
         });
 

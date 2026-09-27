@@ -49,8 +49,7 @@ const DEFAULT_BRANCH_CONTROLS = {
     adminUsername: 'admin_lebanon',
     isFrozen: false,
     updatedAt: null,
-    updatedBy: null,
-    reason: ''
+    updatedBy: null
   },
   jordan: {
     branchId: 'jordan',
@@ -58,8 +57,7 @@ const DEFAULT_BRANCH_CONTROLS = {
     adminUsername: 'admin_jordan',
     isFrozen: false,
     updatedAt: null,
-    updatedBy: null,
-    reason: ''
+    updatedBy: null
   }
 };
 
@@ -199,8 +197,7 @@ async function getBranchControls(db) {
         ...controls[doc.branchId],
         isFrozen: Boolean(doc.isFrozen),
         updatedAt: doc.updatedAt || null,
-        updatedBy: doc.updatedBy || null,
-        reason: doc.reason || ''
+        updatedBy: doc.updatedBy || null
       };
     }
   }
@@ -432,7 +429,6 @@ exports.handler = async (event, context) => {
       try { payload = JSON.parse(event.body || '{}'); } catch(e) {}
       const targetBranchId = (payload.branchId || '').trim().toLowerCase();
       const shouldFreeze = Boolean(payload.isFrozen);
-      const reason = sanitizeText(payload.reason || '', 300);
 
       // Validation
       if (!['lebanon', 'jordan'].includes(targetBranchId)) {
@@ -449,13 +445,15 @@ exports.handler = async (event, context) => {
         branchName: targetBranchId === 'lebanon' ? 'ممثل الجمهورية اللبنانية (بيروت)' : 'فرع المملكة الأردنية الهاشمية (عمّان)',
         isFrozen: shouldFreeze,
         updatedAt: new Date(),
-        updatedBy: user.username,
-        reason: reason
+        updatedBy: user.username
       };
 
       await db.collection('branch_controls').updateOne(
         { branchId: targetBranchId },
-        { $set: branchUpdate },
+        { 
+          $set: branchUpdate,
+          $unset: { reason: "" }
+        },
         { upsert: true }
       );
 
@@ -466,8 +464,7 @@ exports.handler = async (event, context) => {
           branchId: targetBranchId,
           performedBy: user.username,
           clientIp,
-          timestamp: new Date(),
-          reason: reason
+          timestamp: new Date()
         });
       } catch (auditErr) {
         console.error('Audit log failed:', auditErr);
