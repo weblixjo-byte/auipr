@@ -234,6 +234,20 @@
   }
   .reg-field-row {
     grid-template-columns: 1fr;
-    gap: 12px;
-  }
 }
+
+/* ========================================================
+   BRANCH SPECIFIC CUSTOMIZATIONS (CONTACT PAGE)
+   ======================================================== */
+body.branch-mode-jordan .address-item-eg,
+body.branch-mode-jordan .address-item-lb,
+body.branch-mode-jordan .zoom-contact-item,
+body.branch-mode-jordan .phone-link-eg,
+body.branch-mode-jordan .map-tab-eg {
+  display: none !important;
+}
+
+body.branch-mode-lebanon .address-item-jo {
+  display: none !important;
+}
+

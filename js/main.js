@@ -1,11 +1,14 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. تشغيل الوظائف الأساسية
+    // 1. تفعيل نظام الفروع مبكراً لسرعة تحديث الواجهة
+    initBranchSystem();
+
+    // 2. تشغيل الوظائف الأساسية وتحميل الهيدر والفوتر
     initApp();
     
-    // 2. تفعيل مراقب التمرير (Scroll Reveal)
+    // 3. تفعيل مراقب التمرير (Scroll Reveal)
     initScrollReveal();
 
-    // 3. تفعيل بطاقات المبدعين (Modal)
+    // 4. تفعيل بطاقات المبدعين (Modal)
     initCreatorsModal();
 });
 
@@ -524,12 +527,30 @@ function initBranchSystem() {
                 if (emailLink) {
                     emailLink.href = 'mailto:lebanon@auipr.org';
                     emailLink.innerText = 'lebanon@auipr.org';
+                    emailLink.title = 'راسل ممثل الجمهورية اللبنانية';
                 }
 
+                const itemEg = document.querySelector('.address-item-eg');
                 const itemJo = document.querySelector('.address-item-jo');
                 const itemLb = document.querySelector('.address-item-lb');
                 if (itemLb) itemLb.style.display = 'flex';
                 if (itemJo) itemJo.style.display = 'none';
+                if (itemEg) itemEg.style.display = 'flex';
+
+                const zoomItem = document.querySelector('.zoom-contact-item');
+                if (zoomItem) zoomItem.style.display = 'flex';
+
+                const phoneJo = document.querySelector('.phone-link-jo');
+                if (phoneJo) {
+                    phoneJo.href = 'tel:00962795555015';
+                    phoneJo.innerText = '00962795555015';
+                    phoneJo.style.display = 'inline-block';
+                }
+                const phoneEg = document.querySelector('.phone-link-eg');
+                if (phoneEg) phoneEg.style.display = 'inline-block';
+
+                const mapTabEg = document.querySelector('.map-tab-eg');
+                if (mapTabEg) mapTabEg.style.display = 'inline-block';
             }
         } else if (isJordan) {
             document.body.classList.remove('branch-mode-lebanon');
@@ -557,15 +578,40 @@ function initBranchSystem() {
                 const breadcrumbCurrent = document.querySelector('.breadcrumbs .current');
                 if (breadcrumbCurrent) breadcrumbCurrent.innerText = 'فرع المملكة الأردنية الهاشمية';
 
+                // 1. تغيير إيميل فرع الأردن إلى rd@auipr.org بدلاً من ceo@auipr.org
                 const emailLink = document.querySelector('.contact-item a[href^="mailto:"]');
                 if (emailLink) {
-                    emailLink.href = 'mailto:jordan@auipr.org';
-                    emailLink.innerText = 'jordan@auipr.org';
+                    emailLink.href = 'mailto:rd@auipr.org';
+                    emailLink.innerText = 'rd@auipr.org';
+                    emailLink.title = 'راسل فرع الأردن';
                 }
 
+                // 2. تغيير رقم الهاتف لـ +962 795555190 وإخفاء رقم مصر
+                const phoneJo = document.querySelector('.phone-link-jo');
+                if (phoneJo) {
+                    phoneJo.href = 'tel:+962795555190';
+                    phoneJo.innerText = '+962 795555190';
+                    phoneJo.style.display = 'inline-block';
+                }
+                const phoneEg = document.querySelector('.phone-link-eg');
+                if (phoneEg) {
+                    phoneEg.style.display = 'none';
+                }
+
+                // 3. إزالة مقر مصر بالكامل
                 const itemEg = document.querySelector('.address-item-eg');
-                const itemJo = document.querySelector('.address-item-jo');
+                if (itemEg) itemEg.style.display = 'none';
+
+                // 4. إزالة عنوان ممثل الجمهورية اللبنانية
                 const itemLb = document.querySelector('.address-item-lb');
+                if (itemLb) itemLb.style.display = 'none';
+
+                // 5. إزالة زر اجتماع زووم (Zoom Meeting)
+                const zoomItem = document.querySelector('.zoom-contact-item');
+                if (zoomItem) zoomItem.style.display = 'none';
+
+                // 6. عرض مقر فرع الأردن بالقرار الرسمي
+                const itemJo = document.querySelector('.address-item-jo');
                 if (itemJo) {
                     itemJo.style.display = 'flex';
                     const addrP = itemJo.querySelector('address');
@@ -573,11 +619,17 @@ function initBranchSystem() {
                         addrP.innerHTML = '<p><strong>مقر الفرع الإقليمي:</strong> 240-شارع الملك حسين -العبدلي -الطابق الخامس، عمان.</p><p style="font-size:0.85em;color:#64748b;margin-top:4px;">الصادر بالقرار رقم (1371/96/9) عن وزارة الخارجية</p>';
                     }
                 }
-                if (itemLb) itemLb.style.display = 'none';
 
-                if (typeof switchMap === 'function') {
-                    const btnJo = document.querySelector('.map-tabs .tab-btn');
-                    if (btnJo) switchMap('jo', btnJo);
+                // 7. إخفاء تاب فرع مصر في الخريطة وتفعيل خريطة الأردن
+                const mapTabEg = document.querySelector('.map-tab-eg');
+                if (mapTabEg) mapTabEg.style.display = 'none';
+
+                const mapTabJo = document.querySelector('.map-tab-jo');
+                if (mapTabJo) {
+                    mapTabJo.classList.add('active');
+                    if (typeof switchMap === 'function') {
+                        switchMap('jo', mapTabJo);
+                    }
                 }
             }
         } else {
@@ -585,12 +637,48 @@ function initBranchSystem() {
             sessionStorage.setItem('auipr_active_branch', 'main');
 
             if (window.location.pathname.includes('contact.html')) {
+                const pageTitle = document.querySelector('.page-title');
+                if (pageTitle) pageTitle.innerText = 'تواصل مع اتحاد الملكية الفكرية';
+
+                const breadcrumbCurrent = document.querySelector('.breadcrumbs .current');
+                if (breadcrumbCurrent) breadcrumbCurrent.innerText = 'اتصل بنا';
+
+                const emailLink = document.querySelector('.contact-item a[href^="mailto:"]');
+                if (emailLink) {
+                    emailLink.href = 'mailto:ceo@auipr.org';
+                    emailLink.innerText = 'ceo@auipr.org';
+                    emailLink.title = 'راسل المدير التنفيذي للاتحاد';
+                }
+
+                const phoneJo = document.querySelector('.phone-link-jo');
+                if (phoneJo) {
+                    phoneJo.href = 'tel:00962795555015';
+                    phoneJo.innerText = '00962795555015';
+                    phoneJo.style.display = 'inline-block';
+                }
+                const phoneEg = document.querySelector('.phone-link-eg');
+                if (phoneEg) {
+                    phoneEg.style.display = 'inline-block';
+                }
+
                 const itemEg = document.querySelector('.address-item-eg');
                 const itemJo = document.querySelector('.address-item-jo');
                 const itemLb = document.querySelector('.address-item-lb');
                 if (itemEg) itemEg.style.display = 'flex';
-                if (itemJo) itemJo.style.display = 'flex';
+                if (itemJo) {
+                    itemJo.style.display = 'flex';
+                    const addrP = itemJo.querySelector('address');
+                    if (addrP) {
+                        addrP.innerHTML = '<p><strong>مقر الفرع الإقليمي:</strong> 240-شارع الملك حسين -العبدلي -الطابق الخامس، عمان.</p>';
+                    }
+                }
                 if (itemLb) itemLb.style.display = 'flex';
+
+                const zoomItem = document.querySelector('.zoom-contact-item');
+                if (zoomItem) zoomItem.style.display = 'flex';
+
+                const mapTabEg = document.querySelector('.map-tab-eg');
+                if (mapTabEg) mapTabEg.style.display = 'inline-block';
             }
         }
 
