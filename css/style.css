@@ -242,8 +242,7 @@
 body.branch-mode-jordan .address-item-eg,
 body.branch-mode-jordan .address-item-lb,
 body.branch-mode-jordan .zoom-contact-item,
-body.branch-mode-jordan .phone-link-eg,
-body.branch-mode-jordan .map-tab-eg {
+body.branch-mode-jordan .phone-link-eg {
   display: none !important;
 }
 

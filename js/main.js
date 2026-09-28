@@ -552,8 +552,7 @@ function initBranchSystem() {
                 const phoneEg = document.querySelector('.phone-link-eg');
                 if (phoneEg) phoneEg.style.display = 'inline-block';
 
-                const mapTabEg = document.querySelector('.map-tab-eg');
-                if (mapTabEg) mapTabEg.style.display = 'inline-block';
+
             }
         } else if (isJordan) {
             document.body.classList.remove('branch-mode-lebanon');
@@ -622,18 +621,6 @@ function initBranchSystem() {
                         addrP.innerHTML = '<p><strong>مقر الفرع الإقليمي:</strong> 240-شارع الملك حسين -العبدلي -الطابق الخامس، عمان.</p><p style="font-size:0.85em;color:#64748b;margin-top:4px;">الصادر بالقرار رقم (1371/96/9) عن وزارة الخارجية</p>';
                     }
                 }
-
-                // 7. إخفاء تاب فرع مصر في الخريطة وتفعيل خريطة الأردن
-                const mapTabEg = document.querySelector('.map-tab-eg');
-                if (mapTabEg) mapTabEg.style.display = 'none';
-
-                const mapTabJo = document.querySelector('.map-tab-jo');
-                if (mapTabJo) {
-                    mapTabJo.classList.add('active');
-                    if (typeof switchMap === 'function') {
-                        switchMap('jo', mapTabJo);
-                    }
-                }
             }
         } else {
             document.body.classList.remove('branch-mode-lebanon', 'branch-mode-jordan');
@@ -680,8 +667,7 @@ function initBranchSystem() {
                 const zoomItem = document.querySelector('.zoom-contact-item');
                 if (zoomItem) zoomItem.style.display = 'flex';
 
-                const mapTabEg = document.querySelector('.map-tab-eg');
-                if (mapTabEg) mapTabEg.style.display = 'inline-block';
+
             }
         }
 
