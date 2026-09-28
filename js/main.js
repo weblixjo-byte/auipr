@@ -443,6 +443,9 @@ function initBranchSystem() {
 
     const updateBranchUI = () => {
         const currentPath = window.location.pathname;
+        const isContactPage = currentPath.includes('contact') || 
+                              document.body.classList.contains('contact-page-body') || 
+                              !!document.querySelector('.contact-grid');
 
         const mainTabs = document.querySelectorAll('.branch-tab-main, .branch-nav-main');
         const lbTabs = document.querySelectorAll('.branch-tab-lebanon, .branch-nav-lebanon');
@@ -516,7 +519,7 @@ function initBranchSystem() {
                 el.innerHTML = `ممثل الجمهورية اللبنانية<span style="display:block;font-size:0.85em;color:#94a3b8;margin-top:4px;">للاتحاد العربي لحماية حقوق الملكية الفكرية</span>`;
             });
 
-            if (window.location.pathname.includes('contact.html')) {
+            if (isContactPage) {
                 const pageTitle = document.querySelector('.page-title');
                 if (pageTitle) pageTitle.innerText = 'تواصل مع ممثل الجمهورية اللبنانية';
 
@@ -571,7 +574,7 @@ function initBranchSystem() {
                 el.innerHTML = `فرع المملكة الأردنية الهاشمية<span style="display:block;font-size:0.85em;color:#94a3b8;margin-top:4px;">للاتحاد العربي لحماية حقوق الملكية الفكرية (قرار 1371/96/9)</span>`;
             });
 
-            if (window.location.pathname.includes('contact.html')) {
+            if (isContactPage) {
                 const pageTitle = document.querySelector('.page-title');
                 if (pageTitle) pageTitle.innerText = 'تواصل مع فرع المملكة الأردنية الهاشمية';
 
@@ -636,7 +639,7 @@ function initBranchSystem() {
             document.body.classList.remove('branch-mode-lebanon', 'branch-mode-jordan');
             sessionStorage.setItem('auipr_active_branch', 'main');
 
-            if (window.location.pathname.includes('contact.html')) {
+            if (isContactPage) {
                 const pageTitle = document.querySelector('.page-title');
                 if (pageTitle) pageTitle.innerText = 'تواصل مع اتحاد الملكية الفكرية';
 
