@@ -246,7 +246,12 @@ body.branch-mode-jordan .phone-link-eg {
   display: none !important;
 }
 
-body.branch-mode-lebanon .address-item-jo {
+body.branch-mode-lebanon .email-contact-item,
+body.branch-mode-lebanon .phone-contact-item,
+body.branch-mode-lebanon .address-item-eg,
+body.branch-mode-lebanon .address-item-jo,
+body.branch-mode-lebanon .zoom-contact-item,
+body.branch-mode-lebanon .map-tab-jo {
   display: none !important;
 }
 

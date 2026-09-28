@@ -526,33 +526,42 @@ function initBranchSystem() {
                 const breadcrumbCurrent = document.querySelector('.breadcrumbs .current');
                 if (breadcrumbCurrent) breadcrumbCurrent.innerText = 'ممثل الجمهورية اللبنانية';
 
-                const emailLink = document.querySelector('.contact-item a[href^="mailto:"]');
-                if (emailLink) {
-                    emailLink.href = 'mailto:lebanon@auipr.org';
-                    emailLink.innerText = 'lebanon@auipr.org';
-                    emailLink.title = 'راسل ممثل الجمهورية اللبنانية';
-                }
+                // 1. إخفاء البريد الإلكتروني بالكامل
+                const emailItem = document.querySelector('.email-contact-item');
+                if (emailItem) emailItem.style.display = 'none';
 
+                // 2. إخفاء أرقام التواصل بالكامل
+                const phoneItem = document.querySelector('.phone-contact-item');
+                if (phoneItem) phoneItem.style.display = 'none';
+
+                // 3. إخفاء مقر مصر
                 const itemEg = document.querySelector('.address-item-eg');
+                if (itemEg) itemEg.style.display = 'none';
+
+                // 4. إخفاء الفرع الإقليمي
                 const itemJo = document.querySelector('.address-item-jo');
+                if (itemJo) itemJo.style.display = 'none';
+
+                // 5. إظهار عنوان ممثل الجمهورية اللبنانية فقط
                 const itemLb = document.querySelector('.address-item-lb');
                 if (itemLb) itemLb.style.display = 'flex';
-                if (itemJo) itemJo.style.display = 'none';
-                if (itemEg) itemEg.style.display = 'flex';
 
+                // 6. إخفاء زر اجتماع زووم
                 const zoomItem = document.querySelector('.zoom-contact-item');
-                if (zoomItem) zoomItem.style.display = 'flex';
+                if (zoomItem) zoomItem.style.display = 'none';
 
-                const phoneJo = document.querySelector('.phone-link-jo');
-                if (phoneJo) {
-                    phoneJo.href = 'tel:00962795555015';
-                    phoneJo.innerText = '00962795555015';
-                    phoneJo.style.display = 'inline-block';
+                // 7. إخفاء الفرع الإقليمي من الخريطة وتفعيل خريطة مصر فقط
+                const mapTabJo = document.querySelector('.map-tab-jo');
+                if (mapTabJo) mapTabJo.style.display = 'none';
+
+                const mapTabEg = document.querySelector('.map-tab-eg');
+                if (mapTabEg) {
+                    mapTabEg.style.display = 'inline-block';
+                    mapTabEg.classList.add('active');
+                    if (typeof switchMap === 'function') {
+                        switchMap('eg', mapTabEg);
+                    }
                 }
-                const phoneEg = document.querySelector('.phone-link-eg');
-                if (phoneEg) phoneEg.style.display = 'inline-block';
-
-
             }
         } else if (isJordan) {
             document.body.classList.remove('branch-mode-lebanon');
@@ -581,6 +590,9 @@ function initBranchSystem() {
                 if (breadcrumbCurrent) breadcrumbCurrent.innerText = 'فرع المملكة الأردنية الهاشمية';
 
                 // 1. تغيير إيميل فرع الأردن إلى rd@auipr.org بدلاً من ceo@auipr.org
+                const emailItem = document.querySelector('.email-contact-item');
+                if (emailItem) emailItem.style.display = 'flex';
+
                 const emailLink = document.querySelector('.contact-item a[href^="mailto:"]');
                 if (emailLink) {
                     emailLink.href = 'mailto:rd@auipr.org';
@@ -589,6 +601,9 @@ function initBranchSystem() {
                 }
 
                 // 2. تغيير رقم الهاتف لـ +962 795555190 وإخفاء رقم مصر
+                const phoneItem = document.querySelector('.phone-contact-item');
+                if (phoneItem) phoneItem.style.display = 'flex';
+
                 const phoneJo = document.querySelector('.phone-link-jo');
                 if (phoneJo) {
                     phoneJo.href = 'tel:+962795555190';
@@ -621,6 +636,12 @@ function initBranchSystem() {
                         addrP.innerHTML = '<p><strong>مقر الفرع الإقليمي:</strong> 240-شارع الملك حسين -العبدلي -الطابق الخامس، عمان.</p><p style="font-size:0.85em;color:#64748b;margin-top:4px;">الصادر بالقرار رقم (1371/96/9) عن وزارة الخارجية</p>';
                     }
                 }
+
+                // 7. تبويبات الخريطة لفرع الأردن (كلاهما ظاهر)
+                const mapTabJo = document.querySelector('.map-tab-jo');
+                if (mapTabJo) mapTabJo.style.display = 'inline-block';
+                const mapTabEg = document.querySelector('.map-tab-eg');
+                if (mapTabEg) mapTabEg.style.display = 'inline-block';
             }
         } else {
             document.body.classList.remove('branch-mode-lebanon', 'branch-mode-jordan');
@@ -633,12 +654,18 @@ function initBranchSystem() {
                 const breadcrumbCurrent = document.querySelector('.breadcrumbs .current');
                 if (breadcrumbCurrent) breadcrumbCurrent.innerText = 'اتصل بنا';
 
+                const emailItem = document.querySelector('.email-contact-item');
+                if (emailItem) emailItem.style.display = 'flex';
+
                 const emailLink = document.querySelector('.contact-item a[href^="mailto:"]');
                 if (emailLink) {
                     emailLink.href = 'mailto:ceo@auipr.org';
                     emailLink.innerText = 'ceo@auipr.org';
                     emailLink.title = 'راسل المدير التنفيذي للاتحاد';
                 }
+
+                const phoneItem = document.querySelector('.phone-contact-item');
+                if (phoneItem) phoneItem.style.display = 'flex';
 
                 const phoneJo = document.querySelector('.phone-link-jo');
                 if (phoneJo) {
@@ -667,7 +694,10 @@ function initBranchSystem() {
                 const zoomItem = document.querySelector('.zoom-contact-item');
                 if (zoomItem) zoomItem.style.display = 'flex';
 
-
+                const mapTabJo = document.querySelector('.map-tab-jo');
+                if (mapTabJo) mapTabJo.style.display = 'inline-block';
+                const mapTabEg = document.querySelector('.map-tab-eg');
+                if (mapTabEg) mapTabEg.style.display = 'inline-block';
             }
         }
 
