@@ -17,7 +17,7 @@ const DB_NAME = process.env.MONGODB_DB_NAME || 'auipr_db';
 const USERS = {
   admin_general: {
     username: 'admin_general',
-    password: process.env.ADMIN_GENERAL_PASS || 'Auipr#Gen@2026!Sec',
+    password: process.env.ADMIN_GENERAL_PASS || 'Auipr@mhsn98',
     role: 'super_admin',
     name: 'المشرف العام',
     branchId: 'main',
@@ -25,7 +25,7 @@ const USERS = {
   },
   admin_lebanon: {
     username: 'admin_lebanon',
-    password: process.env.ADMIN_LEBANON_PASS || 'Auipr#Lb@2026!Beir',
+    password: process.env.ADMIN_LEBANON_PASS || 'Auipr#Lb@2026',
     role: 'lebanon_admin',
     name: 'المشرف',
     branchId: 'lebanon',
@@ -33,7 +33,7 @@ const USERS = {
   },
   admin_jordan: {
     username: 'admin_jordan',
-    password: process.env.ADMIN_JORDAN_PASS || 'Auipr#Jor@2026!Amm',
+    password: process.env.ADMIN_JORDAN_PASS || 'Auipr*mstf@2026',
     role: 'jordan_admin',
     name: 'المشرف',
     branchId: 'jordan',
