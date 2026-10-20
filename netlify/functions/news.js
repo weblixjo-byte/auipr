@@ -14,6 +14,12 @@ const MONGODB_URI = process.env.MONGODB_URI;
 const DB_NAME = process.env.MONGODB_DB_NAME || 'auipr_db';
 
 // 3 Admin Accounts with Role-Based Access Control (RBAC) & Branch Association
+const USER_ALIASES = {
+  'general_admin': 'admin_general',
+  'lebanon_branch': 'admin_lebanon',
+  'jordan_branch': 'admin_jordan'
+};
+
 const USERS = {
   admin_general: {
     username: 'admin_general',
@@ -268,7 +274,8 @@ exports.handler = async (event, context) => {
     const username = (body.username || query.username || '').trim();
     const password = (body.password || query.password || '').trim();
 
-    const user = USERS[username];
+    const normalizedUsername = USER_ALIASES[username] || username;
+    const user = USERS[normalizedUsername];
     if (user && verifyPassword(password, user.password)) {
       // Connect to DB to verify branch freeze status
       if (MONGODB_URI && user.branchId !== 'main') {
